@@ -1,0 +1,86 @@
+{
+  "scp_id": "replicant/protocol/run-v1",
+  "scp_version": "1.0.0",
+  "created": "2026-08-11T00:00:00Z",
+  "inherits": [
+    "forge-stack/governance-v3",
+    "forge-stack/docs/tools-reference-v1",
+    "forge-stack/docs/documentation-style-v1"
+  ],
+  "declaration": {
+    "intent": "Define the protocol and governance parameters for a Replicant swarm run. This capsule is inherited by every agent capsule minted during a run, establishing the rules of engagement, energy economics, and trust mechanics that govern the swarm.",
+    "parameters": {
+      "version": "1.0.0",
+      "status": "pre-alpha",
+      "description": "A hybrid bio-inspired swarm where agents forage, deposit claims, attest to each other's claims, and replicate at a cost.",
+
+      "spine_mapping": {
+        "declare": "SCP → sc (agent genome capsule)",
+        "classify": "DataCube → cube (six-lens claim network: FACT, COUNTER, OPINION, FICTION, CONTEXT, UNKNOWN)",
+        "trust_score": "Leighton Weight Engine → λ (0.00–2.00, neutral attractor at 1.00, quarantine below 0.60)",
+        "audit": "ChronoSCRIBE → ledger (hash-chained events, Merkle roots per tick, one signature per tick)",
+        "act": "HAL → seal (tier ladder 1–5, separation field)"
+      },
+
+      "energy_economics": {
+        "currency": "Energy is the only currency. It does not appear from nowhere.",
+        "sources": ["Resource nodes (finite)", "Recharging at Home (draws from shared store)"],
+        "sinks": ["Movement", "Sensing", "Broadcast radius", "Attestation", "Birth overhead"],
+        "replication": "Transfer with loss: parent pays REPLICATION_COST, child receives REPLICATION_COST - BIRTH_OVERHEAD",
+        "attestation": "Costs energy. If checking is free, COUNTER fills trivially. If too expensive, swarm runs on unverified OPINION."
+      },
+
+      "replication_rules": {
+        "parent_requirement": "energy >= 70.0 AND lambda >= 1.10 (tier 3)",
+        "cost": 40.0,
+        "birth_overhead": 10.0,
+        "child_lambda": 1.00,
+        "child_traits": "Inherited from parent with small perturbation (mutation_sigma = 0.05)",
+        "cooldown": 25
+      },
+
+      "trait_vector": {
+        "forage_bias": "0.00–1.00: explore vs exploit",
+        "deposit_rate": "0.00–1.00: how loudly it marks claims",
+        "scepticism": "0.00–1.00: energy it will spend attesting others' claims",
+        "broadcast_cost": "0.00–1.00: range vs efficiency"
+      },
+
+      "lens_classification": {
+        "OPINION": "Default state of every new trail. An agent finds a resource and marks it.",
+        "FACT": "A second, independent agent follows the trail and confirms the resource.",
+        "COUNTER": "An agent follows the trail and finds nothing. Counterevidence only.",
+        "FICTION": "A deliberately fabricated trail. The adversary's instrument.",
+        "CONTEXT": "Terrain, Home markers, boundaries. Environmental, not asserted.",
+        "UNKNOWN": "Unexplored space. Not absence of resource — absence of observation."
+      },
+
+      "hal_tiers": {
+        "1": {"name": "Routine", "actions": ["move", "sense", "deposit_OPINION"], "lambda_required": 0.60},
+        "2": {"name": "Commit", "actions": ["commit_to_FACT"], "lambda_required": 0.90},
+        "3": {"name": "Replicate", "actions": ["replicate"], "lambda_required": 1.10},
+        "4": {"name": "Quarantine", "actions": ["quarantine_agent", "demolish_structure"], "lambda_required": 1.40},
+        "5": {"name": "Deploy", "actions": ["deploy_hardware", "exceed_population_ceiling"], "lambda_required": 1.70}
+      },
+
+      "single_operator_disclosure": {
+        "separation": "none",
+        "note": "This run operates in a stack without multiple independent validators. All seals carry separation = 'none'. This records deliberation and intent, not enforced separation of duties."
+      },
+
+      "falsification_tests": [
+        "Population grows to max_agents in every environment → replication isn't costly enough.",
+        "Trait distribution doesn't shift between rich and poor environments → selection isn't operating.",
+        "COUNTER bin stays empty across a full run → the swarm never disconfirms anything.",
+        "A poisoned environment doesn't select for higher scepticism → the classification layer is decorative.",
+        "Same seed produces a different ledger head → the parallel phases are unsound."
+      ]
+    }
+  },
+  "licence": "MSL-1.0",
+  "signature": {
+    "key_id": "did:key:z6MktudRY5LBZJeE13BiF4BeisAwWs7gvg6srh2GwLAMKDwJ",
+    "algorithm": "Ed25519",
+    "value": ""
+  }
+}

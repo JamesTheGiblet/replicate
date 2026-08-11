@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🧬 Replicant Live</title>
+    <style>
+        body { background: #0B0E14; color: #CCC; font-family: monospace; padding: 20px; }
+        canvas { border: 1px solid #2A3040; border-radius: 8px; background: #0B0E14; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+        .stat { background: #1A2030; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #2A3040; }
+        .stat .value { font-size: 24px; font-weight: bold; }
+        .controls button { background: #2A3040; color: #CCC; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; margin-right: 8px; }
+        .controls button:hover { background: #3A4050; }
+        .green { color: #50C850; }
+        .yellow { color: #C8C850; }
+        .red { color: #C85050; }
+        .cyan { color: #50C8C8; }
+    </style>
+</head>
+<body>
+    <h1>🧬 Replicant — Live</h1>
+    <div class="stats">
+        <div class="stat"><div>👥 Agents</div><div class="value green" id="agents">0</div></div>
+        <div class="stat"><div>📋 Claims</div><div class="value yellow" id="claims">0</div></div>
+        <div class="stat"><div>🔍 COUNTER</div><div class="value red" id="counters">0</div></div>
+        <div class="stat"><div>🌿 Health</div><div class="value cyan" id="health">0.000</div></div>
+    </div>
+    <div class="controls">
+        <button id="step">⏭ Step</button>
+        <button id="auto">▶ Auto</button>
+        <button id="reset">⟳ Reset</button>
+        <span id="status" style="margin-left: 20px; color: #666;">Ready</span>
+    </div>
+    <canvas id="canvas" width="800" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let auto = false;
+        let interval = null;
+
+        async function fetchStats() {
+            const r = await fetch('http://localhost:5000/api/status');
+            return await r.json();
+        }
+
+        async function step() {
+            const r = await fetch('http://localhost:5000/api/step');
+            return await r.json();
+        }
+
+        function render(data) {
+            document.getElementById('agents').textContent = data.agents;
+            document.getElementById('claims').textContent = data.claims;
+            document.getElementById('counters').textContent = data.counters;
+            document.getElementById('health').textContent = data.health;
+            document.getElementById('status').textContent = `Tick ${data.tick} | Season: ${data.season}`;
+
+            ctx.fillStyle = '#0B0E14';
+            ctx.fillRect(0, 0, 800, 500);
+            ctx.fillStyle = '#2A3040';
+            ctx.font = '14px monospace';
+            ctx.fillText(`👥 ${data.agents}  📋 ${data.claims}  🔍 ${data.counters}  🌿 ${data.health}  ${data.season}`, 20, 30);
+            ctx.fillText(`🧬 Replicant v1.0 — Tick ${data.tick}`, 20, 60);
+        }
+
+        document.getElementById('step').addEventListener('click', async () => {
+            const data = await step();
+            render(data);
+        });
+
+        document.getElementById('auto').addEventListener('click', () => {
+            auto = !auto;
+            document.getElementById('auto').textContent = auto ? '⏸ Pause' : '▶ Auto';
+            if (auto) {
+                interval = setInterval(async () => {
+                    const data = await step();
+                    render(data);
+                }, 200);
+            } else {
+                clearInterval(interval);
+            }
+        });
+
+        document.getElementById('reset').addEventListener('click', () => {
+            location.reload();
+        });
+
+        // Initial load
+        fetchStats().then(render);
+    </script>
+</body>
+</html>

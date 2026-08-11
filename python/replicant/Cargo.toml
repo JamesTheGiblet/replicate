@@ -1,0 +1,17 @@
+[package]
+name = "replicant"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.10"
+rayon = "1.12"
+serde = { version = "1.0", features = ["derive"] }
+ed25519-dalek = "3.0"
+sha2 = "0.11"
+serde_json = "1.0"
+
+[features]
+default = ["std"]
+std = []
+no_std = []

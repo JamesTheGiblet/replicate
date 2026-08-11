@@ -1,0 +1,51 @@
+
+[run]
+seed = 42
+ticks = 200
+key_id = "did:key:z6Mktu…"
+
+[swarm]
+initial_agents = 10
+max_agents = 1000
+
+[replication]
+threshold = 70.0
+cost = 40.0
+birth_overhead = 10.0
+cooldown = 25
+mutation_sigma = 0.05
+required_lambda = 1.10
+
+[energy]
+max = 100.0
+move_cost = 0.10
+sense_cost = 0.01
+attest_cost = 0.50
+broadcast_cost_per_radius = 0.02
+low_power_threshold = 25.0
+low_power_multiplier = 0.2
+recharge_rate = 0.5
+
+[claims.food]
+retention_per_tick = 0.90
+commit_attestations = 2
+min_strength = 0.01
+
+[claims.structure]
+retention_per_tick = 0.995
+commit_attestations = 3
+min_strength = 0.001
+
+[claims.threat]
+retention_per_tick = 0.70
+commit_attestations = 1
+min_strength = 0.05
+
+[leighton]
+initial = 1.00
+quarantine_below = 0.60
+k_per_day_forage = 0.05
+k_per_day_signal = 0.02
+
+[hal]
+separation = "none"
