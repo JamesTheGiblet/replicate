@@ -83,5 +83,15 @@ impl LeightonEngine {
 
     pub fn credulity_penalty(&mut self, agent_id: &str, tick: u32) {
         self.apply_event(agent_id, tick, Self::DELTA_CREDULITY_PENALTY, Self::K_FORAGE, "credulity");
+    pub fn get_state_snapshot(&mut self, agent_id: &str, current_tick: u32) -> serde_json::Value {
+        let lambda = self.compute(agent_id, current_tick);
+        let state = self.get_state(agent_id);
+        serde_json::json!({
+            "agent_id": agent_id,
+            "lambda": lambda,
+            "event_count": state.events.len(),
+            "offences": state.offences,
+            "base": state.base,
+        })
     }
-}
+    }
