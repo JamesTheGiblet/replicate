@@ -40,12 +40,8 @@ def status():
     counters = sum(1 for c in world.claims.values() if c.lens == "COUNTER")
     health = world.environment.metrics["overall_health"]
     
-    # Get season from environment - check if method exists
-    try:
-        season = "Rich" if world.environment.season_factor() > 1.0 else "Poor"
-    except AttributeError:
-        # Fallback if season_factor doesn't exist
-        season = "Unknown"
+    # Get season from environment
+    season = "Unknown"
     
     return jsonify({
         "tick": world.tick,
@@ -86,15 +82,38 @@ def agents():
             })
     return jsonify(agent_list)
 
+@app.route('/api/environment')
+def environment():
+    """Returns the state of the environment (patches, threats)."""
+    patches = []
+    for patch in world.environment.patches:
+        patches.append({
+            "x": patch.x,
+            "y": patch.y,
+            "energy": patch.energy,
+            "max_energy": patch.max_energy,
+            "depleted": patch.depleted,
+        })
+    
+    threats = []
+    for threat in world.environment.threats:
+        threats.append({
+            "x": threat.x,
+            "y": threat.y,
+            "radius": threat.radius,
+            "intensity": threat.intensity,
+        })
+    return jsonify({"patches": patches, "threats": threats, "width": world.environment.width, "height": world.environment.height})
+
 @app.route('/')
 def serve_index():
     """Serves the main index.html file."""
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(app.static_folder or static_folder_path, 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
     """Serves other static files like CSS, JS, or images."""
-    return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder or static_folder_path, path)
 
 @app.route('/api/reset')
 def reset():
@@ -114,6 +133,7 @@ if __name__ == '__main__':
     print("  GET /api/status  - Current swarm status")
     print("  GET /api/step    - Advance one tick")
     print("  GET /api/run/10  - Advance 10 ticks")
+    print("  GET /api/environment - Get environment state (patches, threats)")
     print("  GET /api/agents  - List all agents")
     print("=" * 40)
     print("\nPress Ctrl+C to stop\n")
