@@ -3,21 +3,27 @@ Curses-based TUI dashboard for Replicant.
 Works in Termux with full keyboard controls.
 """
 
-import curses
 import time
 from typing import Dict, List, Any
 
 try:
     import curses
-except ImportError:
-    print("Curses not available. Run with: pip install windows-curses (Windows) or use terminal viz.")
-    sys.exit(1)
+except ModuleNotFoundError:
+    curses = None
+
+
+def _require_curses():
+    if curses is None:
+        raise RuntimeError(
+            "TUIViz requires curses. Install windows-curses on Windows or use the terminal visualizer."
+        )
 
 
 class TUIViz:
     """Curses-based TUI dashboard."""
     
     def __init__(self, world):
+        _require_curses()
         self.world = world
         self.paused = False
         self.speed = 1.0

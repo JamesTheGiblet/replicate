@@ -1,5 +1,9 @@
-"""Replicant - Hybrid bio-inspired swarm consumer for the Forge Stack."""
+"""
+Replicant: A hybrid bio-inspired swarm framework.
+This package contains the core simulation logic.
+"""
 
-__version__ = "0.1.0-beta"
-__consumer__ = "replicant"
-
+__all__ = [
+    'agent', 'capsule', 'environment', 'founders',
+    'hal', 'leighton', 'world', 'viz'
+]

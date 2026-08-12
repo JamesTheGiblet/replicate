@@ -76,7 +76,8 @@ class Agent:
             "energy": self.energy,
             "lambda": world.leighton.compute(self.scp_id, world.tick),
             "can_replicate": self.can_replicate,
-            "tick": world.tick
+            "tick": world.tick,
+            "environment": world.environment
         }
 
     def decide(self, percepts: Dict[str, Any]) -> Intent:
@@ -93,13 +94,20 @@ class Agent:
         # ATTESTATION FIRST - scepticism drives verification
         nearby_claims = percepts.get("nearby_claims", [])
         if self.traits and nearby_claims and random.random() < self.traits.scepticism * 0.4:
-            claim = random.choice(nearby_claims)
-            resource_present = random.random() < 0.7
-            outcome = "confirmed" if resource_present else "countered"
-            return Intent(
-                kind="attest",
-                payload={"claim_id": claim["id"], "outcome": outcome}
-            )
+            claim_to_check = random.choice(nearby_claims)
+
+            if claim_to_check.get("lens") == "OPINION":
+                # Organic detection: prefer environment evidence when available.
+                environment = percepts.get("environment")
+                outcome = "confirmed"
+                if environment:
+                    resource_at_claim = environment.get_resource_at(claim_to_check["x"], claim_to_check["y"])
+                    outcome = "confirmed" if resource_at_claim > 0.1 else "countered"
+
+                return Intent(
+                    kind="attest",
+                    payload={"claim_id": claim_to_check["id"], "outcome": outcome}
+                )
 
         # Ant: follow strongest pheromone
         pheromones = percepts.get("nearby_pheromones", [])

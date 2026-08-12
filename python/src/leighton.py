@@ -118,9 +118,9 @@ class LeightonEngine:
         """An agent attacked another agent. Escalates with priors."""
         self._apply_with_recidivism(agent_id, tick, self.DELTA_ATTACK, self.K_ATTACK, "attack")
     
-    def counter_reward(self, agent_id: str, tick: int) -> None:
+    def counter_reward(self, agent_id: str, tick: int, share: float = 1.0) -> None:
         """An agent correctly countered a false claim."""
-        self.apply_event(agent_id, tick, self.DELTA_COUNTER_REWARD, self.K_FORAGE, "counter_reward")
+        self.apply_event(agent_id, tick, self.DELTA_COUNTER_REWARD * share, self.K_FORAGE, "counter_reward")
     
     def credulity_penalty(self, agent_id: str, tick: int) -> None:
         """An agent attested FOR a false claim."""

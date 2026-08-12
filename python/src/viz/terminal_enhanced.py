@@ -168,9 +168,9 @@ class EnhancedTerminalViz:
         os.system('clear' if os.name == 'posix' else 'cls')
         print('\n'.join(lines))
     
-    def animate(self, world_func, steps: int = 100, delay: float = 0.2):
+    def animate(self, world, steps: int = 100, delay: float = 0.2):
         """Animate the simulation."""
         for tick in range(steps):
-            world_func()
+            world.step()
             self.render(world, tick)
             time.sleep(delay)

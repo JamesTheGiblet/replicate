@@ -53,6 +53,7 @@ class World:
         self.pheromones: List[Pheromone] = []
         self.claims: Dict[str, Claim] = {}
         self.ledger: List[Dict] = []
+        self.archived_claims: Dict[str, Claim] = {}
 
         self.leighton = LeightonEngine()
         self._next_claim_id = 0
@@ -102,16 +103,20 @@ class World:
     def get_nearby_claims(self, x: float, y: float, radius: float) -> List[Dict]:
         result = []
         for cid, claim in self.claims.items():
+            if claim.strength <= 0.01:
+                continue
             if ((claim.x - x)**2 + (claim.y - y)**2)**0.5 < radius:
                 result.append({
                     "id": cid,
                     "x": claim.x,
                     "y": claim.y,
+                    "strength": claim.strength,
                     "lens": claim.lens,
                     "kind": claim.kind,
                     "attestations": len(claim.attestations),
                     "agent_id": claim.agent_id
                 })
+        result.sort(key=lambda c: (-c["strength"], c["id"]))
         return result
 
     def deposit_claim(self, agent_id: str, x: float, y: float, kind: str, lens: str, strength: float, tick: int, is_fiction_ground_truth: bool = False) -> None:
@@ -154,6 +159,10 @@ class World:
             return
         
         claim = self.claims[claim_id]
+        if claim.lens != "OPINION":
+            return
+        if any(a["agent_id"] == agent_id for a in claim.attestations):
+            return
         claim.attestations.append({"agent_id": agent_id, "outcome": outcome, "tick": tick})
         
         required = self.config.get("claims", {}).get(claim.kind, {}).get("commit_attestations", 2)
@@ -188,9 +197,10 @@ class World:
                     self.leighton.credulity_penalty(a["agent_id"], tick)
             
             # Reward agents who countered it
+            share = 1.0 / max(1, len(counters))
             for a in claim.attestations:
                 if a["outcome"] == "countered":
-                    self.leighton.counter_reward(a["agent_id"], tick)
+                    self.leighton.counter_reward(a["agent_id"], tick, share=share)
             
             self._log_event({
                 "type": "claim.adjudicated_false",
@@ -205,6 +215,11 @@ class World:
         elif len(confirmations) >= required and claim.lens == "OPINION":
             claim.lens = "FACT"
             self.leighton.claim_verified(claim.agent_id, tick)
+            # obstruction penalty: countered a claim that proved true
+            for a in claim.attestations:
+                if a["outcome"] == "countered":
+                    self.leighton.credulity_penalty(a["agent_id"], tick)
+
             self.adversary_stats["claims_verified"] += 1
             
             self._log_event({
@@ -256,7 +271,7 @@ class World:
         
         intents = {}
         for aid, agent in self.agents.items():
-            if agent.alive and not agent.is_rogue:
+            if agent.alive:
                 percepts = agent.sense(self)
                 percepts["resource_energy"] = self.environment.get_resource_at(agent.x, agent.y)
                 percepts["threat_detected"], percepts["threat_intensity"] = self.environment.detect_threat(agent.x, agent.y)
@@ -326,6 +341,7 @@ class World:
         })
 
         self._decay_pheromones()
+        self._decay_claims()
         self.leighton.sweep(self.tick)
         
         self.tick += 1
@@ -342,6 +358,16 @@ class World:
         for p in self.pheromones:
             p.strength *= retention
         self.pheromones = [p for p in self.pheromones if p.strength > 0.01]
+
+    def _decay_claims(self) -> None:
+        retention = self.config.get("claims", {}).get("food", {}).get("retention_per_tick", 0.90)
+        expired = []
+        for cid, claim in self.claims.items():
+            claim.strength *= retention
+            if claim.strength <= 0.01 and claim.lens == "OPINION":
+                expired.append(cid)
+        for cid in expired:
+            self.archived_claims[cid] = self.claims.pop(cid)
 
     def _log_event(self, event: Dict) -> None:
         if self.ledger:

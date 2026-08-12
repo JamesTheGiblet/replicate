@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧬 Replicant Live</title>
     <style>
         body { background: #0B0E14; color: #CCC; font-family: monospace; padding: 20px; }
@@ -15,6 +16,7 @@
         .yellow { color: #C8C850; }
         .red { color: #C85050; }
         .cyan { color: #50C8C8; }
+        #status { margin-left: 20px; color: #666; }
     </style>
 </head>
 <body>
@@ -29,7 +31,7 @@
         <button id="step">⏭ Step</button>
         <button id="auto">▶ Auto</button>
         <button id="reset">⟳ Reset</button>
-        <span id="status" style="margin-left: 20px; color: #666;">Ready</span>
+        <span id="status">Ready</span>
     </div>
     <canvas id="canvas" width="800" height="500"></canvas>
     <script>

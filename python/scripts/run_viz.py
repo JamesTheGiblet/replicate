@@ -3,25 +3,22 @@
 
 import sys
 import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
-
-from world import World
-from founders import create_founders
-from viz_terminal_enhanced import EnhancedTerminalViz
 import time
+
+# Adjust path to find the 'src' directory
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from src.world import World
+from src.founders import create_founders
+from src.config import get_default_config
+from src.viz import EnhancedTerminalViz
 
 def main():
     print("🧬 Replicant with Enhanced Visualization")
     print("Press Ctrl+C to exit\n")
     
-    config = {
-        'run': {'seed': 42, 'ticks': 200},
-        'leighton': {'k_per_day_forage': 0.05, 'k_per_day_signal': 0.02},
-        'claims': {'food': {'retention_per_tick': 0.90, 'commit_attestations': 2}},
-        'environment': {'n_patches': 10}
-    }
-    
-    world = World(42, config)
+    config = get_default_config()
+    world = World(config["run"]["seed"], config)
     founders = create_founders()
     for name, agent in founders.items():
         world.add_agent(agent)

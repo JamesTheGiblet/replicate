@@ -3,6 +3,7 @@ Adversary module for Replicant.
 Tests swarm resilience against malicious actors.
 The adversary acts; the world judges.
 """
+from typing import Any, Dict
 
 import random
 import math
@@ -203,8 +204,8 @@ class AdversaryAgent(Agent):
                 lens=intent.payload.get("lens", "OPINION"),
                 strength=intent.payload.get("strength", 0.5),
                 tick=tick,
-                # Ground truth flag passed through for scoring
-                is_fiction_ground_truth=True if self.malicious_acts > 0 else False
+                # Ground truth flag passed through for scoring.
+                is_fiction_ground_truth=True
             )
             self.energy -= 0.02
             self.tasks_done += 1

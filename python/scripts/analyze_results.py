@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """Statistical analysis of Replicant runs."""
 
+import sys
+import os
+
+# Adjust path to find the 'src' directory
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import json
 from src.world import World
+from src.config import get_default_config
 from src.founders import create_founders
 
 results = []
 
 for seed in range(5):
-    config = {
-        'run': {'seed': seed, 'ticks': 500},
-        'leighton': {'k_per_day_forage': 0.05, 'k_per_day_signal': 0.02},
-        'claims': {'food': {'retention_per_tick': 0.90, 'commit_attestations': 2}},
-        'environment': {'n_patches': 12}
-    }
+    config = get_default_config()
+    config['run']['seed'] = seed
+    config['run']['ticks'] = 500
 
     world = World(seed, config)
     for name, agent in create_founders().items():

@@ -24,12 +24,12 @@ class InteractiveViz:
     def _getch(self):
         """Get a single character from stdin."""
         fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
+        old_settings = termios.tcgetattr(fd)  # type: ignore
         try:
-            tty.setraw(sys.stdin.fileno())
+            tty.setraw(fd)  # type: ignore
             ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        finally: # type: ignore
+            termios.tcsetattr(fd, termios.TCSAFLUSH, old_settings) # type: ignore
         return ch
     
     def _kbhit(self):

@@ -3,25 +3,19 @@
 
 import sys
 import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from founders import create_founders
-from world import World
-
-
-def load_config():
-    return {
-        "run": {"seed": 42, "ticks": 200},
-        "leighton": {"k_per_day_forage": 0.05, "k_per_day_signal": 0.02},
-        "claims": {"food": {"retention_per_tick": 0.90, "commit_attestations": 2}}
-    }
+# Adjust path to find the 'src' directory
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.founders import create_founders
+from src.config import get_default_config
+from src.world import World
 
 
 def main():
     print("🧬 Replicant Beta (Python on Termux)")
     print("Born pregnant. Born ready. Born signed.\n")
 
-    config = load_config()
+    config = get_default_config()
     world = World(config["run"]["seed"], config)
 
     print("🌟 Founding 10 agents...")
