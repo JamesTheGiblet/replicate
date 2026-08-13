@@ -2,7 +2,6 @@
 
 use rand::Rng;
 use rand::SeedableRng;
-use rand::rngs::StdRng;
 use serde::{Deserialize, Serialize};
 /// Resource patch in the environment
 #[derive(Debug, Clone, Serialize, Deserialize)]

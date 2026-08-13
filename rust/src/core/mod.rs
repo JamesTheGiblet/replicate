@@ -2,10 +2,10 @@
 
 use std::collections::HashMap;
 use rand::Rng;
-use rand::rngs::StdRng;
 
 mod leighton;
 pub use leighton::*;
+
 /// Semantic Capsule Primitive - atomic unit of identity
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Capsule {

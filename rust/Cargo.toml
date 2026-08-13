@@ -1,27 +1,20 @@
-[workspace]
-members = ["wasm"]
-
 [package]
 name = "replicant"
 version = "0.1.0"
 edition = "2021"
 
-[lib]
-crate-type = ["cdylib", "rlib"]
-
 [dependencies]
-rand = { version = "0.8", features = ["std_rng"] }
+rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-uuid = { version = "1.6.1", features = ["v4", "wasm-bindgen"] } # Keep this as 1.6.1, it's not the issue
-wasm-bindgen = "0.2.92"
-wasm-bindgen-futures = "0.4.39"
-js-sys = "0.3.69"
-web-sys = { version = "0.3.69", features = ["console", "Document", "Element", "Window", "CanvasRenderingContext2d", "HtmlCanvasElement"] }
-getrandom = { version = "0.2", features = ["js"] }
+uuid = { version = "1.0", features = ["v4"] }
+rayon = "1.12"
+ed25519-dalek = "3.0"
+sha2 = "0.11"
 
 [features]
-default = []
+default = ["std"]
+std = []
 
 [dev-dependencies]
 rand = "0.8"

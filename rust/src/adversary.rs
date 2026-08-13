@@ -79,7 +79,7 @@ impl Adversary {
     }
 
     pub fn get_metrics(&self, current_tick: u32) -> serde_json::Value {
-        let lam = self.agent.get_lambda(current_tick);
+        let lam = self.agent.get_lambda(current_tick, &mut world.leighton);
         serde_json::json!({
             "lambda": lam,
             "malicious_acts": self.malicious_acts,
