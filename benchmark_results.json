@@ -1,7 +1,7 @@
 {
   "python": {
     "agents_10_ticks_50": {
-      "time": 0.015148853999562562,
+      "time": 0.015108646010048687,
       "stats": {
         "alive": 10,
         "claims": 3,
@@ -11,7 +11,7 @@
       }
     },
     "agents_10_ticks_100": {
-      "time": 0.040579583001090214,
+      "time": 0.03039093699771911,
       "stats": {
         "alive": 10,
         "claims": 4,
@@ -21,7 +21,7 @@
       }
     },
     "agents_10_ticks_200": {
-      "time": 0.07585541700245813,
+      "time": 0.0645313020067988,
       "stats": {
         "alive": 9,
         "claims": 9,
@@ -31,7 +31,7 @@
       }
     },
     "agents_10_ticks_500": {
-      "time": 0.13340583299577702,
+      "time": 0.11806036399502773,
       "stats": {
         "alive": 6,
         "claims": 21,
@@ -41,7 +41,7 @@
       }
     },
     "agents_20_ticks_50": {
-      "time": 0.03892874998564366,
+      "time": 0.0374953650025418,
       "stats": {
         "alive": 20,
         "claims": 7,
@@ -51,17 +51,17 @@
       }
     },
     "agents_20_ticks_100": {
-      "time": 0.08588807300839107,
+      "time": 0.08647697899141349,
       "stats": {
         "alive": 20,
         "claims": 10,
         "counters": 9,
         "health": 0.8,
-        "ledger_entries": 239
+        "ledger_entries": 238
       }
     },
     "agents_20_ticks_200": {
-      "time": 0.1562822400010191,
+      "time": 0.1540005730057601,
       "stats": {
         "alive": 19,
         "claims": 22,
@@ -71,17 +71,17 @@
       }
     },
     "agents_20_ticks_500": {
-      "time": 0.3362335409910884,
+      "time": 0.3135841140028788,
       "stats": {
         "alive": 11,
         "claims": 49,
         "counters": 48,
         "health": 0.8,
-        "ledger_entries": 1616
+        "ledger_entries": 1625
       }
     },
     "agents_50_ticks_50": {
-      "time": 0.14742635400034487,
+      "time": 0.13556463600252755,
       "stats": {
         "alive": 50,
         "claims": 20,
@@ -91,7 +91,7 @@
       }
     },
     "agents_50_ticks_100": {
-      "time": 0.30358281200460624,
+      "time": 0.2618555730005028,
       "stats": {
         "alive": 50,
         "claims": 33,
@@ -101,27 +101,27 @@
       }
     },
     "agents_50_ticks_200": {
-      "time": 0.6259219789935742,
+      "time": 0.5474954679957591,
       "stats": {
         "alive": 43,
         "claims": 65,
         "counters": 64,
         "health": 0.766,
-        "ledger_entries": 1643
+        "ledger_entries": 1644
       }
     },
     "agents_50_ticks_500": {
-      "time": 1.1548377600120148,
+      "time": 1.0153152080019936,
       "stats": {
         "alive": 22,
         "claims": 133,
         "counters": 130,
         "health": 0.76,
-        "ledger_entries": 3750
+        "ledger_entries": 3742
       }
     },
     "agents_100_ticks_50": {
-      "time": 0.5275471880013356,
+      "time": 0.44651885399071034,
       "stats": {
         "alive": 100,
         "claims": 42,
@@ -131,177 +131,177 @@
       }
     },
     "agents_100_ticks_100": {
-      "time": 1.0594318229996134,
+      "time": 0.9141803640086437,
       "stats": {
         "alive": 94,
         "claims": 85,
         "counters": 79,
         "health": 0.743,
-        "ledger_entries": 1061
+        "ledger_entries": 1058
       }
     },
     "agents_100_ticks_200": {
-      "time": 1.9853697910002666,
+      "time": 1.6859346869896399,
       "stats": {
         "alive": 78,
         "claims": 146,
         "counters": 143,
         "health": 0.728,
-        "ledger_entries": 2736
+        "ledger_entries": 2733
       }
     },
     "agents_100_ticks_500": {
-      "time": 3.4992989049933385,
+      "time": 2.997243541001808,
       "stats": {
         "alive": 35,
-        "claims": 271,
-        "counters": 261,
-        "health": 0.752,
-        "ledger_entries": 6698
+        "claims": 277,
+        "counters": 265,
+        "health": 0.8,
+        "ledger_entries": 6493
       }
     }
   },
   "rust": {
     "agents_10_ticks_50": {
-      "time": 0.11143015600100625,
+      "time": 3.389007863996085,
       "stats": {
         "alive": 10,
-        "claims": 8,
+        "claims": 7,
         "counters": 1,
         "health": 0.5
       }
     },
     "agents_10_ticks_100": {
-      "time": 0.09801901099854149,
+      "time": 0.10574630199698731,
       "stats": {
         "alive": 10,
         "claims": 16,
-        "counters": 3,
+        "counters": 0,
         "health": 0.5
       }
     },
     "agents_10_ticks_200": {
-      "time": 0.13663307299430016,
+      "time": 0.10841171799984295,
       "stats": {
         "alive": 10,
-        "claims": 26,
-        "counters": 2,
-        "health": 0.5
-      }
-    },
-    "agents_10_ticks_500": {
-      "time": 0.1476298959896667,
-      "stats": {
-        "alive": 10,
-        "claims": 58,
+        "claims": 30,
         "counters": 3,
         "health": 0.5
       }
     },
+    "agents_10_ticks_500": {
+      "time": 0.15355583299242426,
+      "stats": {
+        "alive": 10,
+        "claims": 49,
+        "counters": 1,
+        "health": 0.5
+      }
+    },
     "agents_20_ticks_50": {
-      "time": 0.11399890600296203,
+      "time": 0.1286906769964844,
       "stats": {
         "alive": 20,
-        "claims": 18,
+        "claims": 14,
         "counters": 1,
         "health": 0.5
       }
     },
     "agents_20_ticks_100": {
-      "time": 0.13077656300447416,
+      "time": 0.11915182300435845,
       "stats": {
         "alive": 20,
-        "claims": 31,
-        "counters": 4,
+        "claims": 27,
+        "counters": 1,
         "health": 0.5
       }
     },
     "agents_20_ticks_200": {
-      "time": 0.124007865000749,
+      "time": 0.12945203100389335,
       "stats": {
         "alive": 20,
-        "claims": 53,
-        "counters": 5,
+        "claims": 49,
+        "counters": 3,
         "health": 0.5
       }
     },
     "agents_20_ticks_500": {
-      "time": 0.17361567699117586,
+      "time": 0.16514354100218043,
       "stats": {
         "alive": 20,
-        "claims": 124,
-        "counters": 5,
+        "claims": 121,
+        "counters": 7,
         "health": 0.5
       }
     },
     "agents_50_ticks_50": {
-      "time": 0.13059599000553135,
+      "time": 0.12209312499908265,
       "stats": {
         "alive": 50,
-        "claims": 39,
-        "counters": 5,
+        "claims": 41,
+        "counters": 2,
         "health": 0.5
       }
     },
     "agents_50_ticks_100": {
-      "time": 0.12168322999787051,
+      "time": 0.13348760500957724,
       "stats": {
         "alive": 50,
-        "claims": 71,
-        "counters": 5,
+        "claims": 76,
+        "counters": 10,
         "health": 0.5
       }
     },
     "agents_50_ticks_200": {
-      "time": 0.14202744800422806,
+      "time": 0.1605813019996276,
       "stats": {
         "alive": 50,
-        "claims": 132,
-        "counters": 15,
+        "claims": 129,
+        "counters": 8,
         "health": 0.5
       }
     },
     "agents_50_ticks_500": {
-      "time": 0.22946171800140291,
+      "time": 0.24834703099622857,
       "stats": {
         "alive": 50,
-        "claims": 294,
-        "counters": 13,
+        "claims": 276,
+        "counters": 20,
         "health": 0.5
       }
     },
     "agents_100_ticks_50": {
-      "time": 0.14437692699721083,
+      "time": 0.1274915109970607,
       "stats": {
         "alive": 100,
-        "claims": 76,
-        "counters": 12,
+        "claims": 84,
+        "counters": 11,
         "health": 0.5
       }
     },
     "agents_100_ticks_100": {
-      "time": 0.13766552098968532,
+      "time": 0.15654838499904145,
       "stats": {
         "alive": 100,
-        "claims": 121,
-        "counters": 17,
+        "claims": 130,
+        "counters": 18,
         "health": 0.5
       }
     },
     "agents_100_ticks_200": {
-      "time": 0.18730859400238842,
+      "time": 0.20216656201228034,
       "stats": {
-        "alive": 99,
-        "claims": 232,
-        "counters": 23,
+        "alive": 100,
+        "claims": 259,
+        "counters": 26,
         "health": 0.5
       }
     },
     "agents_100_ticks_500": {
-      "time": 0.39918015598959755,
+      "time": 0.3933696879976196,
       "stats": {
         "alive": 100,
-        "claims": 536,
+        "claims": 547,
         "counters": 32,
         "health": 0.5
       }
@@ -309,100 +309,100 @@
   },
   "comparison": {
     "agents_10_ticks_50": {
-      "speedup": 0.13594932057194428,
+      "speedup": 0.004458132473093058,
       "faster": "Python",
-      "py_time": 0.015148853999562562,
-      "rust_time": 0.11143015600100625
+      "py_time": 0.015108646010048687,
+      "rust_time": 3.389007863996085
     },
     "agents_10_ticks_100": {
-      "speedup": 0.4139970663618921,
+      "speedup": 0.28739479701696746,
       "faster": "Python",
-      "py_time": 0.040579583001090214,
-      "rust_time": 0.09801901099854149
+      "py_time": 0.03039093699771911,
+      "rust_time": 0.10574630199698731
     },
     "agents_10_ticks_200": {
-      "speedup": 0.5551761029748817,
+      "speedup": 0.5952428685512786,
       "faster": "Python",
-      "py_time": 0.07585541700245813,
-      "rust_time": 0.13663307299430016
+      "py_time": 0.0645313020067988,
+      "rust_time": 0.10841171799984295
     },
     "agents_10_ticks_500": {
-      "speedup": 0.9036505248578832,
+      "speedup": 0.7688432389335044,
       "faster": "Python",
-      "py_time": 0.13340583299577702,
-      "rust_time": 0.1476298959896667
+      "py_time": 0.11806036399502773,
+      "rust_time": 0.15355583299242426
     },
     "agents_20_ticks_50": {
-      "speedup": 0.3414835400668861,
+      "speedup": 0.2913603834997784,
       "faster": "Python",
-      "py_time": 0.03892874998564366,
-      "rust_time": 0.11399890600296203
+      "py_time": 0.0374953650025418,
+      "rust_time": 0.1286906769964844
     },
     "agents_20_ticks_100": {
-      "speedup": 0.6567543222974338,
+      "speedup": 0.7257713462617374,
       "faster": "Python",
-      "py_time": 0.08588807300839107,
-      "rust_time": 0.13077656300447416
+      "py_time": 0.08647697899141349,
+      "rust_time": 0.11915182300435845
     },
     "agents_20_ticks_200": {
-      "speedup": 1.2602607100773418,
+      "speedup": 1.1896342746536623,
       "faster": "Rust",
-      "py_time": 0.1562822400010191,
-      "rust_time": 0.124007865000749
+      "py_time": 0.1540005730057601,
+      "rust_time": 0.12945203100389335
     },
     "agents_20_ticks_500": {
-      "speedup": 1.9366542631295771,
+      "speedup": 1.8988578790298463,
       "faster": "Rust",
-      "py_time": 0.3362335409910884,
-      "rust_time": 0.17361567699117586
+      "py_time": 0.3135841140028788,
+      "rust_time": 0.16514354100218043
     },
     "agents_50_ticks_50": {
-      "speedup": 1.128873512839871,
+      "speedup": 1.1103379981759507,
       "faster": "Rust",
-      "py_time": 0.14742635400034487,
-      "rust_time": 0.13059599000553135
+      "py_time": 0.13556463600252755,
+      "rust_time": 0.12209312499908265
     },
     "agents_50_ticks_100": {
-      "speedup": 2.4948615516691905,
+      "speedup": 1.9616470981085894,
       "faster": "Rust",
-      "py_time": 0.30358281200460624,
-      "rust_time": 0.12168322999787051
+      "py_time": 0.2618555730005028,
+      "rust_time": 0.13348760500957724
     },
     "agents_50_ticks_200": {
-      "speedup": 4.407049396359927,
+      "speedup": 3.409459639311112,
       "faster": "Rust",
-      "py_time": 0.6259219789935742,
-      "rust_time": 0.14202744800422806
+      "py_time": 0.5474954679957591,
+      "rust_time": 0.1605813019996276
     },
     "agents_50_ticks_500": {
-      "speedup": 5.032812314274375,
+      "speedup": 4.0882921125697385,
       "faster": "Rust",
-      "py_time": 1.1548377600120148,
-      "rust_time": 0.22946171800140291
+      "py_time": 1.0153152080019936,
+      "rust_time": 0.24834703099622857
     },
     "agents_100_ticks_50": {
-      "speedup": 3.653957726995582,
+      "speedup": 3.5023418461249927,
       "faster": "Rust",
-      "py_time": 0.5275471880013356,
-      "rust_time": 0.14437692699721083
+      "py_time": 0.44651885399071034,
+      "rust_time": 0.1274915109970607
     },
     "agents_100_ticks_100": {
-      "speedup": 7.695694719950916,
+      "speedup": 5.839602650734731,
       "faster": "Rust",
-      "py_time": 1.0594318229996134,
-      "rust_time": 0.13766552098968532
+      "py_time": 0.9141803640086437,
+      "rust_time": 0.15654838499904145
     },
     "agents_100_ticks_200": {
-      "speedup": 10.599459152285082,
+      "speedup": 8.339335002824207,
       "faster": "Rust",
-      "py_time": 1.9853697910002666,
-      "rust_time": 0.18730859400238842
+      "py_time": 1.6859346869896399,
+      "rust_time": 0.20216656201228034
     },
     "agents_100_ticks_500": {
-      "speedup": 8.766214583784391,
+      "speedup": 7.619406457723669,
       "faster": "Rust",
-      "py_time": 3.4992989049933385,
-      "rust_time": 0.39918015598959755
+      "py_time": 2.997243541001808,
+      "rust_time": 0.3933696879976196
     }
   }
 }

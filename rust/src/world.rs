@@ -3,6 +3,8 @@
 use crate::core::*;
 use crate::agent::*;
 use crate::environment::*;
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 use std::collections::HashMap;
 
 /// Configuration for the world
@@ -57,6 +59,7 @@ pub struct World {
     pub pheromones: Vec<Pheromone>,
     pub environment: Environment,
     pub leighton: LeightonEngine,
+    pub rng: StdRng,
     pub ledger: Vec<serde_json::Value>,
     pub next_claim_id: u32,
 }
@@ -64,6 +67,7 @@ pub struct World {
 impl World {
     pub fn new(config: WorldConfig) -> Self {
         let environment = Environment::new(100.0, 100.0, config.n_patches, config.seed);
+        let rng = StdRng::seed_from_u64(config.seed);
         Self {
             tick: 0,
             config,
@@ -72,6 +76,7 @@ impl World {
             pheromones: Vec::new(),
             environment,
             leighton: LeightonEngine::new(),
+            rng,
             ledger: Vec::new(),
             next_claim_id: 0,
         }
@@ -85,7 +90,7 @@ impl World {
     pub fn deposit_claim(&mut self, agent_id: &str, x: f32, y: f32, kind: &str, lens: Lens, strength: f32, tick: u32) -> String {
         let claim_id = format!("claim-{}", self.next_claim_id);
         self.next_claim_id += 1;
-        
+
         let claim = Claim {
             id: claim_id.clone(),
             x,
@@ -98,7 +103,7 @@ impl World {
             attestations: Vec::new(),
             is_ground_truth_fiction: false,
         };
-        
+
         self.pheromones.push(Pheromone {
             x,
             y,
@@ -108,7 +113,7 @@ impl World {
             strength,
             tick,
         });
-        
+
         self.claims.insert(claim_id.clone(), claim);
         claim_id
     }
@@ -136,20 +141,19 @@ impl World {
         if counters.len() >= required as usize && claim.lens == Lens::Opinion {
             claim.lens = Lens::Counter;
             self.leighton.claim_adjudicated_false(&claim.agent_id, tick);
-            
+
             for a in &claim.attestations {
                 if a.outcome == "confirmed" {
                     self.leighton.credulity_penalty(&a.agent_id, tick);
                 }
             }
-            
+
             for a in &claim.attestations {
                 if a.outcome == "countered" {
                     self.leighton.counter_reward(&a.agent_id, tick);
                 }
             }
-        }
-        else if confirmations.len() >= required as usize && claim.lens == Lens::Opinion {
+        } else if confirmations.len() >= required as usize && claim.lens == Lens::Opinion {
             claim.lens = Lens::Fact;
             self.leighton.claim_verified(&claim.agent_id, tick);
         }
@@ -217,22 +221,36 @@ impl World {
     pub fn tick(&mut self) {
         self.environment.update(self.agents.len() as u32);
 
-        // Collect agent info first, then process
-        let agent_data: Vec<(String, f32, f32, f32, bool, bool, Traits, u32)> = self.agents
+        // ============================================================
+        // PHASE 1: Collect agent data (immutable borrow of self.agents)
+        // ============================================================
+        let agent_ids: Vec<String> = self.agents
             .iter()
             .filter(|(_, a)| a.alive && !a.is_rogue)
-            .map(|(id, a)| (id.clone(), a.x, a.y, a.energy, a.can_replicate, a.is_rogue, a.traits.clone(), a.birth_tick))
+            .map(|(id, _)| id.clone())
             .collect();
 
+        // ============================================================
+        // PHASE 2: Build percepts and decide (uses immutable methods)
+        // ============================================================
         let mut intents = Vec::new();
-        let mut rng = rand::thread_rng();
 
-        for (agent_id, x, y, energy, can_replicate, is_rogue, traits, birth_tick) in agent_data {
+        for agent_id in &agent_ids {
+            // Get agent data
+            let (x, y, energy, can_replicate, is_rogue, traits, birth_tick) = {
+                if let Some(agent) = self.agents.get(agent_id) {
+                    (agent.x, agent.y, agent.energy, agent.can_replicate, agent.is_rogue, agent.traits.clone(), agent.birth_tick)
+                } else {
+                    continue;
+                }
+            };
+
+            // Sense the environment (immutable)
             let nearby_pheromones = self.get_nearby_pheromones(x, y, 10.0);
-            let nearby_agents = self.get_nearby_agents(&agent_id, x, y, 10.0);
+            let nearby_agents = self.get_nearby_agents(agent_id, x, y, 10.0);
             let nearby_claims = self.get_nearby_claims(x, y, 10.0);
 
-            let lambda = self.leighton.compute(&agent_id, self.tick);
+            let lambda = self.leighton.compute(agent_id, self.tick);
 
             let percepts = Percepts {
                 nearby_pheromones,
@@ -243,6 +261,7 @@ impl World {
                 can_replicate,
             };
 
+            // Create temp agent for decision
             let mut temp_agent = Agent {
                 scp_id: agent_id.clone(),
                 capsule: Capsule::mint(vec![], serde_json::json!({})),
@@ -262,11 +281,13 @@ impl World {
                 last_find_dir: 0.0,
             };
 
-            let intent = temp_agent.decide(&percepts, &mut rng);
+            let intent = temp_agent.decide(&percepts, &mut self.rng);
             intents.push((agent_id.clone(), intent));
         }
 
-        // Process intents - collect changes first
+        // ============================================================
+        // PHASE 3: Resolve intents (mutable)
+        // ============================================================
         let mut deposits = Vec::new();
         let mut attestations = Vec::new();
         let mut moves = Vec::new();
@@ -297,7 +318,7 @@ impl World {
             }
         }
 
-        // Apply changes
+        // Apply deposits
         for (agent_id, _claim_id) in deposits {
             if let Some(agent) = self.agents.get_mut(&agent_id) {
                 agent.energy -= 0.05;
@@ -305,6 +326,7 @@ impl World {
             }
         }
 
+        // Apply attestations
         for (agent_id, claim_id, outcome) in attestations {
             self.attest_claim(&claim_id, &agent_id, &outcome, self.tick);
             if let Some(agent) = self.agents.get_mut(&agent_id) {
@@ -313,6 +335,7 @@ impl World {
             }
         }
 
+        // Apply moves
         for (agent_id, dx, dy) in moves {
             if let Some(agent) = self.agents.get_mut(&agent_id) {
                 agent.x += dx;
@@ -322,6 +345,7 @@ impl World {
             }
         }
 
+        // Apply replications
         for agent_id in replications {
             if let Some(agent) = self.agents.get_mut(&agent_id) {
                 if agent.can_replicate && agent.energy >= 70.0 {
@@ -332,6 +356,7 @@ impl World {
             }
         }
 
+        // Apply recharges
         for agent_id in recharges {
             if let Some(agent) = self.agents.get_mut(&agent_id) {
                 agent.energy += 0.5;
@@ -339,10 +364,12 @@ impl World {
             }
         }
 
-        // Check quarantine/expulsion
+        // ============================================================
+        // PHASE 4: Check quarantine/expulsion
+        // ============================================================
         let mut to_remove = Vec::new();
         let agent_ids: Vec<String> = self.agents.keys().cloned().collect();
-        
+
         for agent_id in agent_ids {
             if let Some(agent) = self.agents.get_mut(&agent_id) {
                 if !agent.alive {
@@ -350,7 +377,7 @@ impl World {
                 }
 
                 let lam = agent.get_lambda(self.tick, &mut self.leighton);
-                
+
                 agent.is_rogue = lam < 0.60;
 
                 if lam < 0.15 {
@@ -379,6 +406,9 @@ impl World {
             self.agents.remove(&agent_id);
         }
 
+        // ============================================================
+        // PHASE 5: Decay and sweep
+        // ============================================================
         self.decay_pheromones();
         self.leighton.sweep(self.tick);
         self.tick += 1;
@@ -399,7 +429,7 @@ impl World {
         let claims = self.claims.len();
         let counters = self.claims.iter().filter(|(_, c)| c.lens == Lens::Counter).count();
         let health = self.environment.metrics.overall_health;
-        
+
         serde_json::json!({
             "tick": self.tick,
             "alive": alive,
