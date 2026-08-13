@@ -57,13 +57,13 @@ impl Default for Traits {
 
 impl Traits {
     pub fn mutate(&self, sigma: f32) -> Self {
-        use rand::RngExt;
-        let mut rng = rand::rng();
+        use rand::Rng;
+        let mut rng = rand::thread_rng();
         Self {
-            forage_bias: (self.forage_bias + rng.random_range(-sigma..sigma)).clamp(0.0, 1.0),
-            deposit_rate: (self.deposit_rate + rng.random_range(-sigma..sigma)).clamp(0.0, 1.0),
-            scepticism: (self.scepticism + rng.random_range(-sigma..sigma)).clamp(0.0, 1.0),
-            broadcast_cost: (self.broadcast_cost + rng.random_range(-sigma..sigma)).clamp(0.0, 1.0),
+            forage_bias: (self.forage_bias + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
+            deposit_rate: (self.deposit_rate + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
+            scepticism: (self.scepticism + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
+            broadcast_cost: (self.broadcast_cost + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
         }
     }
 }

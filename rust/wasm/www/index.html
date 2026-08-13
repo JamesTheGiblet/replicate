@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!--
+        Replicant Web Visualization Dashboard
+        This file provides the user interface for interacting with the Replicant simulation
+        running in WebAssembly (WASM). It displays real-time statistics and a graphical
+        representation of the swarm's activity on a canvas.
+    -->
     <meta charset="UTF-8">
     <title>🧬 Replicant Live</title>
     <style>
@@ -10,83 +16,137 @@
         .stat { background: #1A2030; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #2A3040; }
         .stat .value { font-size: 24px; font-weight: bold; }
         .controls button { background: #2A3040; color: #CCC; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; margin-right: 8px; }
+        .controls button.export { background: #4CAF50; } /* Green for export */
         .controls button:hover { background: #3A4050; }
         .green { color: #50C850; }
         .yellow { color: #C8C850; }
         .red { color: #C85050; }
         .cyan { color: #50C8C8; }
+        .help {
+            font-size: 11px;
+            color: #666;
+            cursor: help;
+            border-bottom: 1px dashed #666;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
+    <!-- Main title of the application -->
     <h1>🧬 Replicant — Live</h1>
+    
+    <!-- Section for displaying key simulation statistics -->
     <div class="stats">
-        <div class="stat"><div>👥 Agents</div><div class="value green" id="agents">0</div></div>
-        <div class="stat"><div>📋 Claims</div><div class="value yellow" id="claims">0</div></div>
-        <div class="stat"><div>🔍 COUNTER</div><div class="value red" id="counters">0</div></div>
-        <div class="stat"><div>🌿 Health</div><div class="value cyan" id="health">0.000</div></div>
+        <!-- Stat: Number of living agents -->
+        <div class="stat"><div>👥 Agents<span class="help" title="Total number of living agents in the swarm.">(?)</span></div><div class="value green" id="agents">0</div></div>
+        <!-- Stat: Total number of claims made -->
+        <div class="stat"><div>📋 Claims<span class="help" title="Total number of claims (OPINION, FACT, COUNTER) made by agents.">(?)</span></div><div class="value yellow" id="claims">0</div></div>
+        <!-- Stat: Number of successfully countered claims -->
+        <div class="stat"><div>🔍 COUNTER<span class="help" title="Number of claims successfully disputed and marked as COUNTER.">(?)</span></div><div class="value red" id="counters">0</div></div>
+        <!-- Stat: Overall swarm health -->
+        <div class="stat"><div>🌿 Health<span class="help" title="Overall swarm homeostasis (0.0-1.0), a measure of stability and resource utilization.">(?)</span></div><div class="value cyan" id="health">0.000</div></div>
     </div>
+    
+    <!-- Section for simulation controls -->
     <div class="controls">
-        <button id="step">⏭ Step</button>
-        <button id="auto">▶ Auto</button>
-        <button id="reset">⟳ Reset</button>
+        <button id="step" title="Advance the simulation by a single tick.">⏭ Step</button>
+        <button id="auto" title="Automatically advance the simulation every 200ms.">▶ Auto</button>
+        <button id="reset" title="Reload the simulation from tick 0.">⟳ Reset</button>
+        <button id="export" class="export" title="Download a JSON snapshot of the entire simulation state.">⬇ Export Data</button>
         <span id="status" style="margin-left: 20px; color: #666;">Ready</span>
     </div>
+    <!-- Canvas for graphical visualization of the swarm -->
     <canvas id="canvas" width="800" height="500"></canvas>
     <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
         let auto = false;
         let interval = null;
+        let replicantWASM = null;
 
-        async function fetchStats() {
-            const r = await fetch('http://localhost:5000/api/status');
-            return await r.json();
+        async function initWasm() {
+            try {
+                // First, import the generated JS module.
+                const wasm = await import('./pkg/replicant_wasm.js');
+                // Then, call the default export, which is an async function that initializes the WASM module.
+                await wasm.default();
+                // Now that the WASM is loaded, we can instantiate our main struct.
+                replicantWASM = new wasm.ReplicantWASM("canvas");
+                console.log("Replicant WASM initialized.");
+                updateDisplay();
+            } catch (e) {
+                console.error("Error initializing WASM:", e);
+                document.getElementById('status').textContent = "Error loading simulation.";
+            }
         }
 
-        async function step() {
-            const r = await fetch('http://localhost:5000/api/step');
-            return await r.json();
+        // Decision: Centralize display updates to ensure consistency.
+        // Blurb: Updates the dashboard statistics and triggers the WASM rendering.
+        // Title: updateDisplay Function
+        function updateDisplay() {
+            if (!replicantWASM) return;
+
+            const rawStats = replicantWASM.get_stats();
+            const stats = (rawStats && typeof rawStats === 'object') ? rawStats : null;
+
+            const getStat = (key, fallback) => {
+                if (!stats) return fallback;
+                if (stats instanceof Map) return stats.get(key) ?? fallback;
+                return stats[key] ?? fallback;
+            };
+
+            const agents = Number(getStat('agents', 0));
+            const claims = Number(getStat('claims', 0));
+            const counters = Number(getStat('counters', 0));
+            const health = Number(getStat('health', 0));
+            const tick = Number(getStat('tick', 0));
+            const season = String(getStat('season', 'Unknown'));
+
+            document.getElementById('agents').textContent = Number.isFinite(agents) ? String(agents) : '0';
+            document.getElementById('claims').textContent = Number.isFinite(claims) ? String(claims) : '0';
+            document.getElementById('counters').textContent = Number.isFinite(counters) ? String(counters) : '0';
+            document.getElementById('health').textContent = Number.isFinite(health) ? health.toFixed(3) : '0.000';
+            document.getElementById('status').textContent = `Tick ${Number.isFinite(tick) ? tick : 0} | Season: ${season}`;
+
+            if (typeof replicantWASM.render === 'function') {
+                replicantWASM.render();
+            }
         }
 
-        function render(data) {
-            document.getElementById('agents').textContent = data.agents;
-            document.getElementById('claims').textContent = data.claims;
-            document.getElementById('counters').textContent = data.counters;
-            document.getElementById('health').textContent = data.health;
-            document.getElementById('status').textContent = `Tick ${data.tick} | Season: ${data.season}`;
-
-            ctx.fillStyle = '#0B0E14';
-            ctx.fillRect(0, 0, 800, 500);
-            ctx.fillStyle = '#2A3040';
-            ctx.font = '14px monospace';
-            ctx.fillText(`👥 ${data.agents}  📋 ${data.claims}  🔍 ${data.counters}  🌿 ${data.health}  ${data.season}`, 20, 30);
-            ctx.fillText(`🧬 Replicant v1.0 — Tick ${data.tick}`, 20, 60);
-        }
-
-        document.getElementById('step').addEventListener('click', async () => {
-            const data = await step();
-            render(data);
+        // Decision: Event listener for the "Step" button.
+        // Blurb: Advances the simulation by one tick when clicked.
+        document.getElementById('step').addEventListener('click', () => {
+            if (replicantWASM) {
+                replicantWASM.step();
+                updateDisplay();
+            }
         });
 
+        // Decision: Event listener for the "Auto/Pause" button.
+        // Blurb: Toggles automatic simulation advancement.
         document.getElementById('auto').addEventListener('click', () => {
             auto = !auto;
             document.getElementById('auto').textContent = auto ? '⏸ Pause' : '▶ Auto';
             if (auto) {
-                interval = setInterval(async () => {
-                    const data = await step();
-                    render(data);
+                interval = setInterval(() => {
+                    if (replicantWASM) {
+                        replicantWASM.step();
+                        updateDisplay();
+                    }
                 }, 200);
             } else {
                 clearInterval(interval);
             }
         });
 
+        // Decision: Event listener for the "Reset" button.
+        // Blurb: Reloads the page to reset the simulation.
         document.getElementById('reset').addEventListener('click', () => {
             location.reload();
         });
 
-        // Initial load
-        fetchStats().then(render);
+        // Decision: Initialize WASM on page load.
+        // Blurb: Kicks off the WASM loading process as soon as the page is ready.
+        // Initialize WASM on page load
+        initWasm();
     </script>
 </body>
 </html>

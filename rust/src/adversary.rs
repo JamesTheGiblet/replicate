@@ -2,7 +2,6 @@
 
 use crate::core::*;
 use crate::agent::*;
-use rand::RngExt;
 
 /// Adversary configuration
 #[derive(Debug, Clone)]
@@ -51,8 +50,8 @@ impl Adversary {
         }
 
         // Plant fiction
-        if rng.random_bool(self.config.fiction_rate as f64) {
-            let quality = rng.random_range(0.6..0.9);
+        if rng.gen_bool(self.config.fiction_rate as f64) {
+            let quality = rng.gen_range(0.6..0.9);
             self.malicious_acts += 1;
             
             // Record ground truth

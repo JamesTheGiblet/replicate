@@ -1,10 +1,10 @@
 //! Agent module - individual swarm agents
 
 use crate::core::*;
-use rand::RngExt;
 
+use serde::{Serialize, Deserialize};
 /// Agent configuration
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AgentConfig {
     pub initial_energy: f32,
     pub move_cost: f32,
@@ -47,7 +47,8 @@ pub struct Agent {
     pub can_replicate: bool,
     pub replication_cooldown: u32,
     pub last_find_quality: f32,
-    pub last_find_dir: f32,
+    pub last_find_dir: f32, // Re-adding this field
+    pub self_state: SelfState,
 }
 
 impl Agent {
@@ -77,7 +78,8 @@ impl Agent {
             can_replicate: true,
             replication_cooldown: 0,
             last_find_quality: 0.0,
-            last_find_dir: 0.0,
+            last_find_dir: 0.0, // Initializing it
+            self_state: SelfState::default(),
         }
     }
 
@@ -105,7 +107,7 @@ impl Agent {
         }
 
         // Scepticism: attest claims
-        if !percepts.nearby_claims.is_empty() && rng.random_bool((self.traits.scepticism * 0.4) as f64) {
+        if !percepts.nearby_claims.is_empty() && rng.gen_bool((self.traits.scepticism * 0.4) as f64) {
             let claim = &percepts.nearby_claims[0];
             return Intent::Attest {
                 claim_id: claim.id.clone(),
@@ -126,15 +128,15 @@ impl Agent {
         }
 
         // Explore or exploit
-        if rng.random_bool(self.traits.forage_bias as f64) {
-            let dx = rng.random_range(-1.0..1.0);
-            let dy = rng.random_range(-1.0..1.0);
+        if rng.gen_bool(self.traits.forage_bias as f64) {
+            let dx = rng.gen_range(-1.0..=1.0);
+            let dy = rng.gen_range(-1.0..=1.0);
             return Intent::Move { dx, dy };
         }
 
         // Find resource and deposit
-        if rng.random_bool(0.2) {
-            let quality = rng.random::<f32>();
+        if rng.gen_bool(0.2) {
+            let quality = rng.gen::<f32>();
             return Intent::Deposit {
                 kind: "food".to_string(),
                 lens: Lens::Opinion,

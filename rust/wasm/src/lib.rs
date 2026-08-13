@@ -1,12 +1,9 @@
 //! Replicant WASM - Browser visualization bindings
 
-use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
-// Import the Replicant core
-mod replicant_core;
-use replicant_core::*;
+use replicant::*;
 
 /// WebAssembly bindings for Replicant
 #[wasm_bindgen]
@@ -14,8 +11,6 @@ pub struct ReplicantWASM {
     world: World,
     canvas: HtmlCanvasElement,
     ctx: CanvasRenderingContext2d,
-    running: bool,
-    tick: u32,
 }
 
 #[wasm_bindgen]
@@ -44,100 +39,77 @@ impl ReplicantWASM {
         };
         let world = World::new(config);
         
-        // Add founders
-        let founders = create_founders();
-        for (name, agent) in founders {
-            // Log in JS console
-            web_sys::console::log_1(&format!("Founder: {}", name).into());
-        }
-        
-        Ok(ReplicantWASM {
+        let mut wasm_app = ReplicantWASM {
             world,
             canvas,
             ctx,
-            running: false,
-            tick: 0,
-        })
+        };
+
+        for (_name, agent) in create_founders() {
+            wasm_app.world.add_agent(agent);
+        }
+        
+        Ok(wasm_app)
     }
     
     pub fn start(&mut self) -> Result<(), JsValue> {
-        self.running = true;
-        self.run_loop()?;
+        // This will be used for a proper animation loop later
         Ok(())
     }
     
     pub fn pause(&mut self) {
-        self.running = !self.running;
+        // Placeholder for pause functionality
     }
     
     pub fn step(&mut self) -> Result<(), JsValue> {
-        if !self.running {
-            self.world.tick();
-            self.tick += 1;
-            self.render()?;
-        }
+        self.world.tick();
+        self.render()?;
         Ok(())
     }
     
-    fn run_loop(&mut self) -> Result<(), JsValue> {
-        while self.running && self.tick < 1000 {
-            self.world.tick();
-            self.tick += 1;
-            self.render()?;
-            
-            // Yield to browser event loop
-            // Using request_animation_frame would be better, but this is simpler
-            // for a demo
-            if self.tick % 10 == 0 {
-                break;
-            }
-        }
-        Ok(())
-    }
-    
-    fn render(&self) -> Result<(), JsValue> {
+    pub fn render(&self) -> Result<(), JsValue> {
         let width = self.canvas.width() as f64;
         let height = self.canvas.height() as f64;
         
         self.ctx.clear_rect(0.0, 0.0, width, height);
         
         // Draw background
-        self.ctx.set_fill_style(&"#0B0E14".into());
+        self.ctx.set_fill_style(&JsValue::from_str("#0B0E14"));
         self.ctx.fill_rect(0.0, 0.0, width, height);
         
         // Draw resources
         for patch in &self.world.environment.patches {
-            let x = (patch.x / 100.0) * width;
-            let y = (patch.y / 100.0) * height;
+            let x = (patch.x / self.world.environment.width as f32) as f64 * width;
+            let y = (patch.y / self.world.environment.height as f32) as f64 * height;
             let size = 6.0;
             
             let color = if patch.depleted {
                 "#333333"
-            } else if patch.energy > patch.max_energy * 0.7 {
+            } else if patch.energy > patch.max_energy * 0.75 {
                 "#50C850"
-            } else if patch.energy > patch.max_energy * 0.3 {
+            } else if patch.energy > patch.max_energy * 0.25 {
                 "#C8C850"
             } else {
                 "#C85050"
             };
             
-            self.ctx.set_fill_style(&color.into());
+            self.ctx.set_fill_style(&JsValue::from_str(color));
             self.ctx.fill_rect(x - size/2.0, y - size/2.0, size, size);
         }
         
         // Draw threats
         for threat in &self.world.environment.threats {
             if threat.active {
-                let x = (threat.x / 100.0) * width;
-                let y = (threat.y / 100.0) * height;
-                let radius = (threat.radius / 100.0) * width;
+                let x = (threat.x / self.world.environment.width as f32) as f64 * width;
+                let y = (threat.y / self.world.environment.height as f32) as f64 * height;
+                let radius = (threat.radius / self.world.environment.width as f32) as f64 * width;
                 
-                self.ctx.set_fill_style(&"rgba(255, 50, 50, 0.2)".into());
+                self.ctx.set_fill_style(&JsValue::from_str("rgba(255, 50, 50, 0.2)"));
                 self.ctx.begin_path();
                 self.ctx.arc(x, y, radius, 0.0, 2.0 * std::f64::consts::PI)?;
                 self.ctx.fill();
                 
-                self.ctx.set_fill_style(&"#FF3232".into());
+                self.ctx.set_fill_style(&JsValue::from_str("#FF3232"));
                 self.ctx.begin_path();
                 self.ctx.arc(x, y, 5.0, 0.0, 2.0 * std::f64::consts::PI)?;
                 self.ctx.fill();
@@ -150,8 +122,8 @@ impl ReplicantWASM {
                 continue;
             }
             
-            let x = (agent.x / 100.0) * width;
-            let y = (agent.y / 100.0) * height;
+            let x = (agent.x / self.world.environment.width as f32) as f64 * width;
+            let y = (agent.y / self.world.environment.height as f32) as f64 * height;
             let size = 4.0;
             
             let color = match agent.role {
@@ -163,7 +135,7 @@ impl ReplicantWASM {
                 Role::Broadcaster => "#00CED1",
                 Role::Explorer => "#FFD700",
                 Role::Healer => "#32CD32",
-                Role::Signal => "#FF00FF",
+                Role::Signal => "#FFA500",
                 Role::Observer => "#666666",
                 _ => "#FFFFFF",
             };
@@ -176,17 +148,17 @@ impl ReplicantWASM {
                 color
             };
             
-            self.ctx.set_fill_style(&actual_color.into());
+            self.ctx.set_fill_style(&JsValue::from_str(actual_color));
             self.ctx.begin_path();
             self.ctx.arc(x, y, size, 0.0, 2.0 * std::f64::consts::PI)?;
             self.ctx.fill();
             
             // Draw energy ring
             let energy_pct = agent.energy / 100.0;
-            self.ctx.set_stroke_style(&"rgba(255,255,255,0.3)".into());
+            self.ctx.set_stroke_style(&JsValue::from_str("rgba(255,255,255,0.3)"));
             self.ctx.set_line_width(1.0);
             self.ctx.begin_path();
-            self.ctx.arc(x, y, size + 3.0, 0.0, 2.0 * std::f64::consts::PI * energy_pct)?;
+            self.ctx.arc(x, y, size + 3.0, -std::f64::consts::FRAC_PI_2, 2.0 * std::f64::consts::PI * energy_pct as f64 - std::f64::consts::FRAC_PI_2)?;
             self.ctx.stroke();
         }
         
@@ -200,13 +172,13 @@ impl ReplicantWASM {
             "👥 {} | 📋 {} | 🔍 {} | 🌿 {:.3}",
             alive, claims, counters, health
         );
-        
-        self.ctx.set_fill_style(&"#CCCCCC".into());
+
+        self.ctx.set_fill_style(&JsValue::from_str("#CCCCCC"));
         self.ctx.set_font("14px monospace");
         self.ctx.fill_text(&stats, 10.0, 30.0)?;
         
         // Tick counter
-        let tick_text = format!("Tick: {}", self.tick);
+        let tick_text = format!("Tick: {}", self.world.tick);
         self.ctx.fill_text(&tick_text, 10.0, 50.0)?;
         
         // Season indicator
@@ -221,14 +193,22 @@ impl ReplicantWASM {
         let claims = self.world.claims.len();
         let counters = self.world.claims.values().filter(|c| c.lens == Lens::Counter).count();
         let health = self.world.environment.metrics.overall_health;
-        
-        JsValue::from_serde(&serde_json::json!({
+
+        serde_wasm_bindgen::to_value(&serde_json::json!({
             "agents": alive,
             "claims": claims,
             "counters": counters,
             "health": health,
-            "tick": self.tick,
+            "tick": self.world.tick,
             "season": if self.world.environment.season_factor() > 1.0 { "Rich" } else { "Poor" },
-        })).unwrap()
+        }))
+        .unwrap_or_else(|_| JsValue::NULL)
+    }
+
+    #[wasm_bindgen(js_name = exportData)]
+    pub fn export_data(&self) -> Result<JsValue, JsValue> {
+        let json_string = to_string_pretty(&self.world)
+            .map_err(|e| JsValue::from_str(&format!("Failed to serialize world: {}", e)))?;
+        Ok(JsValue::from_str(&json_string))
     }
 }
