@@ -95,3 +95,11 @@ The reputation system was renamed to **Leighton Weight Engine** to reflect its a
 
 *“Born pregnant. Born ready. Born signed.”*  
 *“The swarm learns. The liar pays.”*
+
+## Known Issues
+
+### WASM Demo: Agents Are Static
+- **Issue**: In the WASM browser demo, agents do not move or update their positions.
+- **Status**: Under investigation.
+- **Workaround**: Use the Python or Rust terminal versions for full swarm behavior.
+- **Fix planned**: Add proper agent decision-making and movement logic to the WASM `step()` function.
