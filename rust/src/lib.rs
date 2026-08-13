@@ -8,8 +8,6 @@ pub mod agent;
 pub mod world;
 pub mod environment;
 pub mod adversary;
-pub mod founders;
-pub mod awareness;
 pub mod viz;
 
 // Re-exports
@@ -18,6 +16,4 @@ pub use agent::*;
 pub use world::*;
 pub use environment::*;
 pub use adversary::*;
-pub use founders::*;
-pub use awareness::*;
 pub use viz::*;

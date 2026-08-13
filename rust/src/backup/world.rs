@@ -1,15 +1,17 @@
 //! World module - manages the simulation
 
-use rand::Rng;
 use crate::core::*;
 use crate::agent::*;
 use crate::environment::*;
 use std::collections::HashMap;
+use serde::{Serialize, Deserialize};
+
 /// Configuration for the world
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorldConfig {
     pub seed: u64,
     pub ticks: u32,
+    #[serde(default = "default_commit_attestations")]
     pub commit_attestations: u32,
     pub n_patches: usize,
 }
@@ -23,6 +25,10 @@ impl Default for WorldConfig {
             n_patches: 10,
         }
     }
+}
+
+fn default_commit_attestations() -> u32 {
+    2
 }
 
 /// The world - contains all agents, claims, and environment
@@ -124,9 +130,18 @@ impl World {
                 continue;
             }
 
+            // Sense nearby claims
+            let nearby_claims: Vec<ClaimRef> = self.claims.values()
+                .filter(|c| ((c.x - agent.x).powi(2) + (c.y - agent.y).powi(2)).sqrt() < 5.0)
+                .map(|c| ClaimRef {
+                    id: c.id.clone(),
+                    x: c.x, y: c.y, lens: c.lens, kind: c.kind.clone(),
+                    attestations: c.attestations.len(), agent_id: c.agent_id.clone()
+                })
+                .collect();
+
             let nearby_pheromones = Vec::new();
             let nearby_agents = Vec::new();
-            let nearby_claims = Vec::new();
 
             let percepts = Percepts {
                 nearby_pheromones,
@@ -141,10 +156,38 @@ impl World {
             intents.push((agent_id.clone(), intent));
         }
 
+        let mut pending_deposits: Vec<(String, f32, f32, String, Lens, f32)> = Vec::new();
+        let mut pending_attestations: Vec<(String, String, String)> = Vec::new();
+
         for (agent_id, intent) in intents {
             if let Some(agent) = self.agents.get_mut(&agent_id) {
                 agent.apply_intent(&intent);
+
+                match intent {
+                    Intent::Deposit { kind, lens, strength } => {
+                        pending_deposits.push((
+                            agent_id.clone(),
+                            agent.x,
+                            agent.y,
+                            kind,
+                            lens,
+                            strength,
+                        ));
+                    }
+                    Intent::Attest { claim_id, outcome } => {
+                        pending_attestations.push((claim_id, agent_id.clone(), outcome));
+                    }
+                    _ => {}
+                }
             }
+        }
+
+        for (agent_id, x, y, kind, lens, strength) in pending_deposits {
+            self.deposit_claim(&agent_id, x, y, &kind, lens, strength, self.tick);
+        }
+
+        for (claim_id, agent_id, outcome) in pending_attestations {
+            self.attest_claim(&claim_id, &agent_id, &outcome, self.tick);
         }
 
         let mut to_remove = Vec::new();

@@ -1,10 +1,11 @@
 //! Core types and utilities
 
 use std::collections::HashMap;
+use rand::Rng;
+use rand::rngs::StdRng;
 
 mod leighton;
 pub use leighton::*;
-
 /// Semantic Capsule Primitive - atomic unit of identity
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Capsule {
@@ -57,13 +58,12 @@ impl Default for Traits {
 
 impl Traits {
     pub fn mutate(&self, sigma: f32) -> Self {
-        use rand::Rng;
         let mut rng = rand::thread_rng();
         Self {
-            forage_bias: (self.forage_bias + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
-            deposit_rate: (self.deposit_rate + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
-            scepticism: (self.scepticism + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
-            broadcast_cost: (self.broadcast_cost + rng.gen_range(-sigma..=sigma)).clamp(0.0, 1.0),
+            forage_bias: (self.forage_bias + rng.gen_range(-sigma..sigma)).clamp(0.0, 1.0),
+            deposit_rate: (self.deposit_rate + rng.gen_range(-sigma..sigma)).clamp(0.0, 1.0),
+            scepticism: (self.scepticism + rng.gen_range(-sigma..sigma)).clamp(0.0, 1.0),
+            broadcast_cost: (self.broadcast_cost + rng.gen_range(-sigma..sigma)).clamp(0.0, 1.0),
         }
     }
 }

@@ -2,8 +2,8 @@
 
 use rand::Rng;
 use rand::SeedableRng;
+use rand::rngs::StdRng;
 use serde::{Deserialize, Serialize};
-
 /// Resource patch in the environment
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ResourcePatch {
@@ -180,7 +180,7 @@ impl Environment {
         (false, 0.0)
     }
 
-    pub fn update(&mut self, population: u32) {
+    pub fn update(&mut self, _population: u32) {
         self.tick += 1;
         self.season_phase = (self.season_phase + 1) % self.season_cycle;
 
@@ -214,57 +214,6 @@ impl Environment {
             }
         }
         self.threats.retain(|t| t.active);
-
-        let total_energy: f32 = self.patches.iter().map(|p| p.energy).sum();
-        let max_energy: f32 = self.patches.iter().map(|p| p.max_energy).sum();
-        let energy_ratio = if max_energy > 0.0 {
-            (total_energy / max_energy).clamp(0.0, 1.0)
-        } else {
-            0.0
-        };
-
-        self.population_history.push(population);
-        self.energy_history.push(total_energy);
-        if self.population_history.len() > 120 {
-            self.population_history.remove(0);
-        }
-        if self.energy_history.len() > 120 {
-            self.energy_history.remove(0);
-        }
-
-        let pop_stability = if self.carrying_capacity > 0 {
-            let cap = self.carrying_capacity as f32;
-            (1.0 - ((population as f32 - cap).abs() / cap)).clamp(0.0, 1.0)
-        } else {
-            0.5
-        };
-
-        let energy_stability = if self.energy_history.len() >= 2 {
-            let prev = self.energy_history[self.energy_history.len() - 2];
-            if prev > 0.0 {
-                (1.0 - ((total_energy - prev).abs() / prev)).clamp(0.0, 1.0)
-            } else {
-                0.5
-            }
-        } else {
-            0.5
-        };
-
-        let threat_pressure = (self.threats.len() as f32 / 3.0).clamp(0.0, 1.0);
-        let threat_response = (1.0 - threat_pressure).clamp(0.0, 1.0);
-        let resource_utilization = (0.5 + 0.5 * energy_ratio).clamp(0.0, 1.0);
-
-        self.metrics.population_stability = pop_stability;
-        self.metrics.energy_stability = energy_stability;
-        self.metrics.threat_response = threat_response;
-        self.metrics.resource_utilization = resource_utilization;
-        self.metrics.overall_health = (
-            0.30 * pop_stability
-                + 0.25 * energy_stability
-                + 0.25 * threat_response
-                + 0.20 * resource_utilization
-        )
-        .clamp(0.0, 1.0);
     }
 
     pub fn is_stable(&self, threshold: f32) -> bool {
