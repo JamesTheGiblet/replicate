@@ -234,3 +234,48 @@ Severity rating: 1.0/10
 ```
 
 *"The swarm learns. The liar pays."*
+
+---
+
+## The Good 1.1
+Confidence rating: 9.5/10
+
+- **WASM demo is now live.** Browser build is working end-to-end with `wasm-pack build --target web`, and the web package is generated successfully for the simulation UI.
+- **Rust compile path stabilized.** Fixed a sequence of Rust build blockers including an unclosed delimiter in `src/core/leighton.rs` and `rand` API/version mismatches across `src/core/mod.rs`, `src/agent.rs`, `src/adversary.rs`, `src/world.rs`, and `src/environment.rs`.
+- **Stats serialization bridge fixed.** Replaced brittle stats conversion in WASM with a robust JS-compatible conversion path so browser-side `get_stats()` no longer fails when decoding payloads.
+- **Render API exposed cleanly.** `render()` is exported from WASM and callable from the web UI, allowing first-frame rendering and explicit redraws from JavaScript.
+- **Simulation counters now mutate in real time.** The world tick pipeline now applies `Deposit` and `Attest` intents to actual world state, which means claim creation and COUNTER transitions are reflected in live metrics.
+- **Environment health is no longer static.** Health metrics are recomputed each tick from population pressure, energy trends, threat pressure, and utilization, so `health` now changes with system dynamics.
+- **Spec sheets added for next phase.** Two implementation specs were drafted at repo root for bounded self-awareness and ESP32 robotics extension planning:
+  - `self-awareness-spec.md`
+  - `esp32-robotics-extension-spec.md`
+
+## The Bad 1.1
+Risk rating: 4.0/10
+
+- **Integration regressions surfaced under UI load.** The browser layer initially masked simulation issues (Map/object stat shape mismatch and defaulted zeros), so UI looked alive while core counters were not actually advancing.
+- **Tooling friction still present on Windows shell paths.** A few commands were executed from incorrect working directories (`rust/rust/...`) and had to be re-run from explicit absolute paths.
+
+## The Ugly 1.1
+Severity rating: 3.0/10
+
+- **"Working visuals" can hide dead state transitions.** The canvas rendered correctly before the simulation state plumbing was fully wired. This was a reminder that visual liveness is not state correctness.
+
+---
+
+## 🧬 Replicant v1.1 - Current Status
+
+
+```
+
+✅ Rust core compiles cleanly
+✅ WASM package builds successfully
+✅ Browser simulation initializes without stats errors
+✅ Claims and COUNTER metrics now update during runtime
+✅ Environment health updates dynamically per tick
+✅ Stats decoding hardened on the JS side
+✅ Spec sheets created for self-awareness + ESP32 robotics extension
+
+```
+
+*"From static demo to observable dynamics."*
