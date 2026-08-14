@@ -165,6 +165,7 @@ impl AdversaryManager {
             traits,
             lambda_state,
             Role::Adversary,
+            Archetype::Generalist, // Adversaries are generalists by default
             world.tick,
         );
 

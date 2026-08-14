@@ -1,8 +1,10 @@
 //! Replicant WASM - Browser visualization bindings
 
+use serde_json::to_string_pretty;
 use wasm_bindgen::prelude::*;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
+use replicant::founders::create_founders;
 use replicant::*;
 
 /// WebAssembly bindings for Replicant
@@ -46,7 +48,7 @@ impl ReplicantWASM {
         };
 
         for (_name, agent) in create_founders() {
-            wasm_app.world.add_agent(agent);
+            wasm_app.world.agents.insert(agent.scp_id.clone(), agent);
         }
         
         Ok(wasm_app)
@@ -62,8 +64,13 @@ impl ReplicantWASM {
     }
     
     pub fn step(&mut self) -> Result<(), JsValue> {
+        // The core logic update. Instead of just incrementing the tick,
+        // we now run the full sense-decide-resolve loop. This is what
+        // enables agent movement, claim creation, and other behaviors.
         self.world.tick();
-        self.render()?;
+        // The render call was already here, but now it will draw the
+        // updated agent positions and world state from the tick() execution.
+        // self.render()?; // render() is called from JS side now for better control.
         Ok(())
     }
     
@@ -72,9 +79,9 @@ impl ReplicantWASM {
         let height = self.canvas.height() as f64;
         
         self.ctx.clear_rect(0.0, 0.0, width, height);
-        
+
         // Draw background
-        self.ctx.set_fill_style(&JsValue::from_str("#0B0E14"));
+        self.ctx.set_fill_style_str("#0B0E14");
         self.ctx.fill_rect(0.0, 0.0, width, height);
         
         // Draw resources
@@ -93,7 +100,7 @@ impl ReplicantWASM {
                 "#C85050"
             };
             
-            self.ctx.set_fill_style(&JsValue::from_str(color));
+            self.ctx.set_fill_style_str(color);
             self.ctx.fill_rect(x - size/2.0, y - size/2.0, size, size);
         }
         
@@ -104,12 +111,12 @@ impl ReplicantWASM {
                 let y = (threat.y / self.world.environment.height as f32) as f64 * height;
                 let radius = (threat.radius / self.world.environment.width as f32) as f64 * width;
                 
-                self.ctx.set_fill_style(&JsValue::from_str("rgba(255, 50, 50, 0.2)"));
+                self.ctx.set_fill_style_str("rgba(255, 50, 50, 0.2)");
                 self.ctx.begin_path();
                 self.ctx.arc(x, y, radius, 0.0, 2.0 * std::f64::consts::PI)?;
                 self.ctx.fill();
                 
-                self.ctx.set_fill_style(&JsValue::from_str("#FF3232"));
+                self.ctx.set_fill_style_str("#FF3232");
                 self.ctx.begin_path();
                 self.ctx.arc(x, y, 5.0, 0.0, 2.0 * std::f64::consts::PI)?;
                 self.ctx.fill();
@@ -148,20 +155,64 @@ impl ReplicantWASM {
                 color
             };
             
-            self.ctx.set_fill_style(&JsValue::from_str(actual_color));
+            self.ctx.set_fill_style_str(actual_color);
             self.ctx.begin_path();
             self.ctx.arc(x, y, size, 0.0, 2.0 * std::f64::consts::PI)?;
             self.ctx.fill();
             
             // Draw energy ring
             let energy_pct = agent.energy / 100.0;
-            self.ctx.set_stroke_style(&JsValue::from_str("rgba(255,255,255,0.3)"));
+            self.ctx.set_stroke_style_str("rgba(255,255,255,0.3)");
             self.ctx.set_line_width(1.0);
             self.ctx.begin_path();
             self.ctx.arc(x, y, size + 3.0, -std::f64::consts::FRAC_PI_2, 2.0 * std::f64::consts::PI * energy_pct as f64 - std::f64::consts::FRAC_PI_2)?;
             self.ctx.stroke();
         }
         
+        // Draw claims and connections to agents
+        for claim in self.world.claims.values() {
+            // Find the agent who made the claim
+            if let Some(agent) = self.world.agents.get(&claim.agent_id) {
+                if !agent.alive {
+                    continue;
+                }
+
+                // Agent position (scaled)
+                let ax = (agent.x / 100.0) as f64 * width;
+                let ay = (agent.y / 100.0) as f64 * height;
+
+                // Claim position (scaled)
+                let cx = (claim.x / 100.0) as f64 * width;
+                let cy = (claim.y / 100.0) as f64 * height;
+
+                // Draw the line connecting agent to claim
+                self.ctx.begin_path();
+                self.ctx.move_to(ax, ay);
+                self.ctx.line_to(cx, cy);
+
+                // Style the line based on claim lens
+                let line_color = match claim.lens {
+                    Lens::Fact => "rgba(255, 255, 255, 0.4)", // White for facts
+                    Lens::Opinion => "rgba(255, 255, 0, 0.25)", // Yellow for opinions
+                    Lens::Counter => "rgba(255, 0, 0, 0.3)",   // Red for counters
+                    _ => "rgba(100, 100, 100, 0.2)",         // Grey for others
+                };
+                self.ctx.set_stroke_style_str(line_color);
+                self.ctx.set_line_width(1.0);
+                self.ctx.stroke();
+
+                // Draw the claim itself as a small square
+                let claim_color = match claim.lens {
+                    Lens::Fact => "#FFFFFF",
+                    Lens::Opinion => "#FFFF00",
+                    Lens::Counter => "#FF0000",
+                    _ => "#888888",
+                };
+                self.ctx.set_fill_style_str(claim_color);
+                self.ctx.fill_rect(cx - 2.0, cy - 2.0, 4.0, 4.0);
+            }
+        }
+
         // Draw stats
         let alive = self.world.agents.values().filter(|a| a.alive).count();
         let claims = self.world.claims.len();
@@ -173,7 +224,7 @@ impl ReplicantWASM {
             alive, claims, counters, health
         );
 
-        self.ctx.set_fill_style(&JsValue::from_str("#CCCCCC"));
+        self.ctx.set_fill_style_str("#CCCCCC");
         self.ctx.set_font("14px monospace");
         self.ctx.fill_text(&stats, 10.0, 30.0)?;
         
@@ -205,10 +256,39 @@ impl ReplicantWASM {
         .unwrap_or_else(|_| JsValue::NULL)
     }
 
-    #[wasm_bindgen(js_name = exportData)]
-    pub fn export_data(&self) -> Result<JsValue, JsValue> {
-        let json_string = to_string_pretty(&self.world)
-            .map_err(|e| JsValue::from_str(&format!("Failed to serialize world: {}", e)))?;
-        Ok(JsValue::from_str(&json_string))
+    #[wasm_bindgen(js_name = export_state)]
+    pub fn export_state(&self) -> Result<String, JsValue> {
+        // World isn't Serialize (contains StdRng etc.), so build a JSON snapshot manually.
+        let agents: Vec<_> = self.world.agents.values().map(|a| serde_json::json!({
+            "id": a.scp_id,
+            "x": a.x,
+            "y": a.y,
+            "energy": a.energy,
+            "role": a.role,
+            "alive": a.alive,
+            "is_rogue": a.is_rogue,
+            "tasks_done": a.tasks_done,
+        })).collect();
+
+        let claims: Vec<_> = self.world.claims.values().map(|c| serde_json::json!({
+            "id": c.id,
+            "x": c.x,
+            "y": c.y,
+            "agent_id": c.agent_id,
+            "kind": c.kind,
+            "lens": c.lens,
+            "strength": c.strength,
+            "tick": c.tick,
+        })).collect();
+
+        let state = serde_json::json!({
+            "tick": self.world.tick,
+            "health": self.world.environment.metrics.overall_health,
+            "agents": agents,
+            "claims": claims,
+        });
+
+        to_string_pretty(&state)
+            .map_err(|e| JsValue::from_str(&format!("Failed to serialize world: {}", e)))
     }
 }

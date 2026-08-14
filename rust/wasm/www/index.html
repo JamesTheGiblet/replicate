@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <!--
         Replicant Web Visualization Dashboard
         This file provides the user interface for interacting with the Replicant simulation
         running in WebAssembly (WASM). It displays real-time statistics and a graphical
         representation of the swarm's activity on a canvas.
     -->
-    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧬 Replicant Live</title>
     <style>
         body { background: #0B0E14; color: #CCC; font-family: monospace; padding: 20px; }
@@ -28,6 +30,10 @@
             cursor: help;
             border-bottom: 1px dashed #666;
             margin-left: 5px;
+        }
+        #status {
+            margin-left: 20px;
+            color: #666;
         }
     </style>
 </head>
@@ -53,7 +59,7 @@
         <button id="auto" title="Automatically advance the simulation every 200ms.">▶ Auto</button>
         <button id="reset" title="Reload the simulation from tick 0.">⟳ Reset</button>
         <button id="export" class="export" title="Download a JSON snapshot of the entire simulation state.">⬇ Export Data</button>
-        <span id="status" style="margin-left: 20px; color: #666;">Ready</span>
+        <span id="status">Ready</span>
     </div>
     <!-- Canvas for graphical visualization of the swarm -->
     <canvas id="canvas" width="800" height="500"></canvas>
@@ -141,6 +147,25 @@
         // Blurb: Reloads the page to reset the simulation.
         document.getElementById('reset').addEventListener('click', () => {
             location.reload();
+        });
+
+        // Decision: Event listener for the "Export Data" button.
+        // Blurb: Exports the full simulation state to a JSON file.
+        document.getElementById('export').addEventListener('click', () => {
+            if (replicantWASM && typeof replicantWASM.export_state === 'function') {
+                const stateJson = replicantWASM.export_state();
+                const blob = new Blob([stateJson], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                const tick = document.getElementById('status').textContent.split(' ')[1] || '0';
+                a.download = `replicant_state_tick_${tick}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                console.log(`Exported state at tick ${tick}.`);
+            }
         });
 
         // Decision: Initialize WASM on page load.

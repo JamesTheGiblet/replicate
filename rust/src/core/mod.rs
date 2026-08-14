@@ -85,6 +85,19 @@ pub enum Role {
     Adversary,
 }
 
+/// Agent archetype - the agent's core "philosophy" for decision-making
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum Archetype {
+    /// The reliable majority. Reacts to global swarm needs.
+    Generalist,
+    /// The true specialist. Focuses on innate traits, ignoring swarm needs.
+    Purist,
+    /// Actively seeks to fill the least common role.
+    Contrarian,
+    /// Seeks the most personally profitable role based on history.
+    Opportunist,
+}
+
 /// Lens classification for claims
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum Lens {
@@ -116,9 +129,19 @@ pub enum Intent {
     Deposit { kind: String, lens: Lens, strength: f32 },
     Attest { claim_id: String, outcome: String },
     Replicate,
+    Forage,
     Recharge,
+    /// Travel a longer distance toward a known resource-rich area
+    Migrate { dx: f32, dy: f32 },
+    /// Search unexplored territory for previously unknown resource patches
+    Discover,
+    /// Builder-only: create a new resource patch at the agent's location
+    Terraform,
+    /// Emergent self-organization: adopt a different role to fill a local swarm gap
+    AdoptRole(Role),
     Idle,
 }
+
 
 /// LambdaEvent - append-only reputation event
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]

@@ -1,0 +1,128 @@
+{
+  "agents": [
+    {
+      "alive": true,
+      "energy": 99.70000457763672,
+      "id": "replicant/agent/01e1f180-89d6-4d9e-b4e4-e3fbf3a16479",
+      "is_rogue": false,
+      "role": "Broadcaster",
+      "tasks_done": 0,
+      "x": 61.34884262084961,
+      "y": 59.52287673950195
+    },
+    {
+      "alive": true,
+      "energy": 98.95000457763672,
+      "id": "replicant/agent/653f488a-59cb-495c-bda1-8c227643f157",
+      "is_rogue": false,
+      "role": "Healer",
+      "tasks_done": 2,
+      "x": 35.5,
+      "y": 65.0
+    },
+    {
+      "alive": true,
+      "energy": 98.45000457763672,
+      "id": "replicant/agent/130d2640-dd5f-4368-83cf-7aa8d068b9dc",
+      "is_rogue": false,
+      "role": "Attester",
+      "tasks_done": 3,
+      "x": 52.23484802246094,
+      "y": 51.82991409301758
+    },
+    {
+      "alive": true,
+      "energy": 99.20001220703125,
+      "id": "replicant/agent/86c728be-9df9-47a6-9956-9343943f8220",
+      "is_rogue": false,
+      "role": "Scout",
+      "tasks_done": 0,
+      "x": 47.125762939453125,
+      "y": 54.22746658325195
+    },
+    {
+      "alive": true,
+      "energy": 99.30001068115234,
+      "id": "replicant/agent/c036bcd7-9661-4a36-b2a4-b92291920b92",
+      "is_rogue": false,
+      "role": "Builder",
+      "tasks_done": 0,
+      "x": 53.97235107421875,
+      "y": 46.83967208862305
+    },
+    {
+      "alive": true,
+      "energy": 99.50000762939453,
+      "id": "replicant/agent/86154d45-217b-4d34-8bf5-220530f9fe92",
+      "is_rogue": false,
+      "role": "Explorer",
+      "tasks_done": 0,
+      "x": 39.85627365112305,
+      "y": 41.43089294433594
+    },
+    {
+      "alive": true,
+      "energy": 98.90000915527344,
+      "id": "replicant/agent/6a4064a2-1ef3-4044-9761-50972fe335dd",
+      "is_rogue": false,
+      "role": "Founder",
+      "tasks_done": 1,
+      "x": 51.87037658691406,
+      "y": 51.318138122558594
+    },
+    {
+      "alive": true,
+      "energy": 98.50000762939453,
+      "id": "replicant/agent/150b9a53-346d-44f8-8832-4f33bf6a63bc",
+      "is_rogue": false,
+      "role": "Observer",
+      "tasks_done": 2,
+      "x": 51.37502670288086,
+      "y": 51.25959014892578
+    },
+    {
+      "alive": true,
+      "energy": 99.20001220703125,
+      "id": "replicant/agent/20c9d953-33be-4d2f-842b-bd0268917d78",
+      "is_rogue": false,
+      "role": "Forager",
+      "tasks_done": 0,
+      "x": 49.65402603149414,
+      "y": 49.280330657958984
+    },
+    {
+      "alive": true,
+      "energy": 99.40000915527344,
+      "id": "replicant/agent/01dea2e1-8773-41a4-896a-a25708b9a33d",
+      "is_rogue": false,
+      "role": "Signal",
+      "tasks_done": 0,
+      "x": 65.80101776123047,
+      "y": 36.078643798828125
+    }
+  ],
+  "claims": [
+    {
+      "agent_id": "replicant/agent/653f488a-59cb-495c-bda1-8c227643f157",
+      "id": "claim-0",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.0464995801448822,
+      "tick": 1,
+      "x": 35.0,
+      "y": 65.0
+    },
+    {
+      "agent_id": "replicant/agent/130d2640-dd5f-4368-83cf-7aa8d068b9dc",
+      "id": "claim-1",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.39719241857528687,
+      "tick": 1,
+      "x": 52.23484802246094,
+      "y": 51.82991409301758
+    }
+  ],
+  "health": 0.5,
+  "tick": 8
+}

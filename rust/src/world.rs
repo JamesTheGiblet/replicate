@@ -3,7 +3,7 @@
 use crate::core::*;
 use crate::agent::*;
 use crate::environment::*;
-use rand::rngs::StdRng;
+use rand::{rngs::StdRng, Rng};
 use rand::SeedableRng;
 use std::collections::HashMap;
 
@@ -204,6 +204,7 @@ impl World {
                 y: claim.y,
                 lens: claim.lens,
                 kind: claim.kind.clone(),
+                tick: claim.tick,
                 attestations: claim.attestations.len(),
                 agent_id: claim.agent_id.clone(),
             })
@@ -219,7 +220,11 @@ impl World {
     }
 
     pub fn tick(&mut self) {
-        self.environment.update(self.agents.len() as u32);
+        let total_agents = self.agents.len() as f32;
+        let avg_energy: f32 = self.agents.values().map(|a| a.energy).sum::<f32>() / total_agents.max(1.0);
+        let agents_in_threat = self.agents.values().filter(|a| a.alive && self.environment.detect_threat(a.x, a.y).0).count() as u32;
+
+        self.environment.update(self.agents.len() as u32, avg_energy, agents_in_threat);
 
         // ============================================================
         // PHASE 1: Collect agent data (immutable borrow of self.agents)
@@ -236,10 +241,10 @@ impl World {
         let mut intents = Vec::new();
 
         for agent_id in &agent_ids {
-            // Get agent data
-            let (x, y, energy, can_replicate, is_rogue, traits, birth_tick) = {
+            // Get agent data for creating a temporary decision-making agent
+            let (x, y, energy, can_replicate, is_rogue, traits, birth_tick, role, role_cooldown, archetype, config) = {
                 if let Some(agent) = self.agents.get(agent_id) {
-                    (agent.x, agent.y, agent.energy, agent.can_replicate, agent.is_rogue, agent.traits.clone(), agent.birth_tick)
+                    (agent.x, agent.y, agent.energy, agent.can_replicate, agent.is_rogue, agent.traits.clone(), agent.birth_tick, agent.role, agent.role_cooldown, agent.archetype, agent.config.clone())
                 } else {
                     continue;
                 }
@@ -252,6 +257,50 @@ impl World {
 
             let lambda = self.leighton.compute(agent_id, self.tick);
 
+            // Calculate global task priorities for the "unified organism"
+            let total_agents = self.agents.len() as f32;
+            let alive_agents = self.agents.values().filter(|a| a.alive).count() as f32;
+            let total_claims = self.claims.len() as f32;
+            let opinion_claims = self.claims.values().filter(|c| c.lens == Lens::Opinion).count() as f32;
+            let depleted_patches = self.environment.patches.iter().filter(|p| p.depleted).count() as f32;
+            let total_patches = self.environment.patches.len() as f32;
+
+            // Global Forager Need: High if average energy is low or resources are scarce
+            let avg_energy: f32 = self.agents.values().map(|a| a.energy).sum::<f32>() / total_agents.max(1.0);
+            let global_forager_need = (100.0 - avg_energy) / 100.0; // Inverse of average energy
+
+            // Global Builder Need: High if many patches are depleted and population is stable
+            let global_builder_need = if total_patches > 0.0 {
+                depleted_patches / total_patches
+            } else {
+                0.0
+            };
+
+            // Global Attester Need: High if many opinion claims exist
+            let global_attester_need = if total_claims > 0.0 {
+                opinion_claims / total_claims
+            } else {
+                0.0
+            };
+
+            // Global Explorer Need: High if no new resources have been discovered recently.
+            let recent_discoveries = self.environment.discovery_history.iter().filter(|&&t| self.tick - t < 500).count();
+            let global_explorer_need = (1.0 - (recent_discoveries as f32 / 5.0)).clamp(0.1, 1.0);
+
+
+            // Global Replicator Need: High if population is below carrying capacity
+            let global_replicator_need = (self.environment.carrying_capacity as f32 - alive_agents) / self.environment.carrying_capacity as f32;
+            let global_replicator_need = global_replicator_need.clamp(0.0, 1.0);
+
+
+            let local_resource = self.environment.get_resource_at(x, y, 10.0);
+            let migration_direction = if local_resource < 5.0 {
+                self.environment.richest_patch_direction(x, y)
+            } else {
+                None
+            };
+            let nearest_patch_direction = self.environment.nearest_patch_info(x, y);
+
             let percepts = Percepts {
                 nearby_pheromones,
                 nearby_agents,
@@ -259,30 +308,51 @@ impl World {
                 energy,
                 lambda,
                 can_replicate,
+                local_resource,
+                migration_direction,
+                nearest_patch_direction,
+                global_forager_need,
+                global_builder_need,
+                global_attester_need,
+                global_explorer_need,
+                global_replicator_need,
             };
 
             // Create temp agent for decision
             let mut temp_agent = Agent {
                 scp_id: agent_id.clone(),
-                capsule: Capsule::mint(vec![], serde_json::json!({})),
+            capsule: Capsule::mint(vec![], serde_json::json!({})), // This is a dummy capsule
                 x,
                 y,
                 energy,
                 traits,
                 lambda_state: LambdaState::default(),
-                role: Role::Forager,
+                role,
                 alive: true,
                 is_rogue,
+                archetype,
                 birth_tick,
                 tasks_done: 0,
                 can_replicate,
+                config,
                 replication_cooldown: 0,
+                role_cooldown,
                 last_find_quality: 0.0,
                 last_find_dir: 0.0,
             };
 
             let intent = temp_agent.decide(&percepts, &mut self.rng);
             intents.push((agent_id.clone(), intent));
+        }
+
+        // Tick down role-switch cooldowns on the real agents (decide() only sees a
+        // disposable copy each tick, so the countdown must be persisted here).
+        for agent_id in &agent_ids {
+            if let Some(agent) = self.agents.get_mut(agent_id) {
+                if agent.role_cooldown > 0 {
+                    agent.role_cooldown -= 1;
+                }
+            }
         }
 
         // ============================================================
@@ -293,6 +363,11 @@ impl World {
         let mut moves = Vec::new();
         let mut replications = Vec::new();
         let mut recharges = Vec::new();
+        let mut forages = Vec::new();
+        let mut migrations = Vec::new();
+        let mut discoveries = Vec::new();
+        let mut terraforms = Vec::new();
+        let mut role_changes = Vec::new();
 
         for (agent_id, intent) in intents {
             match intent {
@@ -311,8 +386,23 @@ impl World {
                 Intent::Replicate => {
                     replications.push(agent_id);
                 }
+                Intent::Forage => {
+                    forages.push(agent_id);
+                }
                 Intent::Recharge => {
                     recharges.push(agent_id);
+                }
+                Intent::Migrate { dx, dy } => {
+                    migrations.push((agent_id, dx, dy));
+                }
+                Intent::Discover => {
+                    discoveries.push(agent_id);
+                }
+                Intent::Terraform => {
+                    terraforms.push(agent_id);
+                }
+                Intent::AdoptRole(role) => {
+                    role_changes.push((agent_id, role));
                 }
                 Intent::Idle => {}
             }
@@ -328,41 +418,91 @@ impl World {
 
         // Apply attestations
         for (agent_id, claim_id, outcome) in attestations {
-            self.attest_claim(&claim_id, &agent_id, &outcome, self.tick);
-            if let Some(agent) = self.agents.get_mut(&agent_id) {
-                agent.energy -= 0.50;
-                agent.tasks_done += 1;
+            self.attest_claim(&claim_id, &agent_id, &outcome, self.tick); // This already handles penalties
+        }
+
+        // Apply forages (energy gain)
+        for agent_id in &forages {
+            if let Some(agent) = self.agents.get_mut(agent_id) {
+                let harvested = self.environment.harvest_resource(agent.x, agent.y, 5.0);
+                agent.energy += harvested;
+                agent.energy = agent.energy.min(100.0);
             }
         }
 
-        // Apply moves
-        for (agent_id, dx, dy) in moves {
-            if let Some(agent) = self.agents.get_mut(&agent_id) {
-                agent.x += dx;
-                agent.y += dy;
-                agent.energy -= 0.10;
-                agent.energy = agent.energy.max(0.0);
+        // Apply discoveries - a chance to reveal a brand new resource patch in unexplored territory
+        for agent_id in &discoveries {
+            if let Some(agent) = self.agents.get(agent_id) {
+                let (x, y) = (agent.x, agent.y);
+                self.environment.try_discover_patch(x, y, &mut self.rng);
             }
         }
 
-        // Apply replications
-        for agent_id in replications {
-            if let Some(agent) = self.agents.get_mut(&agent_id) {
-                if agent.can_replicate && agent.energy >= 70.0 {
-                    agent.energy -= 40.0;
-                    agent.can_replicate = false;
-                    agent.replication_cooldown = 25;
+        // Apply terraforming - Builders convert energy into a brand new resource patch
+        for agent_id in &terraforms {
+            if let Some(agent) = self.agents.get(agent_id) {
+                if agent.energy >= 30.0 {
+                    let (x, y) = (agent.x, agent.y);
+                    self.environment.spawn_patch_near(x, y, &mut self.rng);
                 }
             }
         }
 
-        // Apply recharges
-        for agent_id in recharges {
-            if let Some(agent) = self.agents.get_mut(&agent_id) {
-                agent.energy += 0.5;
-                agent.energy = agent.energy.min(100.0);
+        // Apply replications - actually spawn child agents (previously only deducted
+        // energy without creating offspring, which drove the population extinct).
+        let mut children = Vec::new();
+        if (self.agents.len() as u32) < self.environment.carrying_capacity {
+            for agent_id in &replications {
+                if let Some(parent) = self.agents.get(agent_id) {
+                    if parent.can_replicate && parent.energy >= parent.config.replication_threshold {
+                        let child_traits = parent.traits.mutate(0.1);
+                        let capsule = Capsule::mint(
+                            vec![parent.scp_id.clone()],
+                            serde_json::json!({ "parent": parent.scp_id, "birth_tick": self.tick }),
+                        );
+                        let mut child = Agent::new(
+                            capsule.scp_id.clone(),
+                            capsule,
+                            (parent.x + self.rng.gen_range(-1.0..1.0)).clamp(0.0, self.environment.width),
+                            (parent.y + self.rng.gen_range(-1.0..1.0)).clamp(0.0, self.environment.height),
+                            child_traits,
+                            LambdaState::new(1.0),
+                            Role::Child,
+                            // Inherit archetype, with a small chance for a generalist to produce a purist
+                            if parent.archetype == Archetype::Purist {
+                                Archetype::Purist
+                            } else if self.rng.gen_bool(0.9) {
+                                Archetype::Generalist
+                            } else { Archetype::Purist },
+                            self.tick,
+                        );
+                        child.energy = 50.0;
+                        children.push(child);
+                    }
+                }
             }
         }
+        for child in children {
+            self.add_agent(child);
+        }
+
+        // Apply state changes from intents
+        let all_intents: HashMap<_, _> = moves.into_iter().map(|(id, dx, dy)| (id, Intent::Move { dx, dy }))
+            .chain(replications.into_iter().map(|id| (id, Intent::Replicate)))
+            .chain(recharges.into_iter().map(|id| (id, Intent::Recharge)))
+            .chain(forages.into_iter().map(|id| (id, Intent::Forage {})))
+            .chain(migrations.into_iter().map(|(id, dx, dy)| (id, Intent::Migrate { dx, dy })))
+            .chain(discoveries.into_iter().map(|id| (id, Intent::Discover)))
+            .chain(terraforms.into_iter().map(|id| (id, Intent::Terraform)))
+            .chain(role_changes.into_iter().map(|(id, role)| (id, Intent::AdoptRole(role))))
+            .collect();
+
+        for (agent_id, intent) in all_intents {
+             if let Some(agent) = self.agents.get_mut(&agent_id) {
+                agent.apply_intent(&intent);
+            }
+        }
+
 
         // ============================================================
         // PHASE 4: Check quarantine/expulsion

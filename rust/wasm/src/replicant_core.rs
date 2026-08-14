@@ -1,8 +1,9 @@
 //! Replicant core for WASM - simplified version
 
+use serde::Serialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Capsule {
     pub scp_id: String,
     pub inherits: Vec<String>,
@@ -22,7 +23,7 @@ impl Capsule {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub enum Role {
     Founder,
     Scout,
@@ -38,7 +39,7 @@ pub enum Role {
     Adversary,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub enum Lens {
     Opinion,
     Fact,
@@ -48,7 +49,7 @@ pub enum Lens {
     Unknown,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Traits {
     pub forage_bias: f32,
     pub deposit_rate: f32,
@@ -79,7 +80,7 @@ impl Traits {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct LambdaEvent {
     pub tick: u32,
     pub delta: f32,
@@ -87,7 +88,7 @@ pub struct LambdaEvent {
     pub reason: String,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct LambdaState {
     pub base: f32,
     pub events: Vec<LambdaEvent>,
@@ -118,7 +119,7 @@ impl LambdaState {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct LeightonEngine {
     states: HashMap<String, LambdaState>,
 }
@@ -146,7 +147,7 @@ impl LeightonEngine {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Agent {
     pub scp_id: String,
     pub x: f32,
@@ -179,7 +180,7 @@ impl Agent {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ResourcePatch {
     pub x: f32,
     pub y: f32,
@@ -188,7 +189,7 @@ pub struct ResourcePatch {
     pub depleted: bool,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ThreatZone {
     pub x: f32,
     pub y: f32,
@@ -197,7 +198,7 @@ pub struct ThreatZone {
     pub active: bool,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct EnvironmentMetrics {
     pub overall_health: f32,
 }
@@ -208,7 +209,7 @@ impl Default for EnvironmentMetrics {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Environment {
     pub patches: Vec<ResourcePatch>,
     pub threats: Vec<ThreatZone>,
@@ -240,7 +241,7 @@ impl Environment {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Claim {
     pub id: String,
     pub x: f32,
@@ -250,14 +251,14 @@ pub struct Claim {
     pub attestations: Vec<Attestation>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Attestation {
     pub agent_id: String,
     pub outcome: String,
     pub tick: u32,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct WorldConfig {
     pub seed: u64,
     pub ticks: u32,
@@ -276,7 +277,7 @@ impl Default for WorldConfig {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct World {
     pub tick: u32,
     pub agents: HashMap<String, Agent>,

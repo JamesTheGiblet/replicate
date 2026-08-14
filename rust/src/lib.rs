@@ -4,6 +4,7 @@ pub mod world;
 pub mod environment;
 pub mod adversary;
 pub mod viz;
+pub mod founders;
 
 pub use core::*;
 pub use agent::*;

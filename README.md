@@ -14,7 +14,7 @@ Replicant cherry-picks mechanisms from ants, bees, termites, spiders, wasps, mol
 | **Prototype** | Python | 35/35 | ✅ Complete |
 | **Production** | Rust | 20/20 | ✅ Complete |
 | **Self-Awareness** | Rust | - | ✅ Implemented |
-| **WASM Demo** | JavaScript | - | ⚠️ Partial (static agents) |
+| **WASM Demo** | JavaScript | - | ✅ Live & Interactive |
 
 ---
 
@@ -31,7 +31,7 @@ Replicant cherry-picks mechanisms from ants, bees, termites, spiders, wasps, mol
 ✅ Recovery from quarantine
 ✅ Self-awareness (confidence, fitness, safety)
 ✅ Runs on S24 Ultra (Termux)
-⚠️ WASM demo: visualisation only (agents static)
+✅ WASM demo is live and interactive
 
 ```
 

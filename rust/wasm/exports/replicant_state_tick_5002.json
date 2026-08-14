@@ -1,0 +1,1127 @@
+{
+  "agents": [],
+  "claims": [
+    {
+      "agent_id": "replicant/agent/e3884ee5-a87c-450a-9245-868eca6a016a",
+      "id": "claim-84",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.007811784744262695,
+      "tick": 545,
+      "x": 45.59952163696289,
+      "y": 53.00225067138672
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-58",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.08213302493095398,
+      "tick": 361,
+      "x": 35.2149658203125,
+      "y": 70.0899429321289
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-60",
+      "kind": "food",
+      "lens": "Counter",
+      "strength": 0.1314728856086731,
+      "tick": 373,
+      "x": 57.914093017578125,
+      "y": 53.55869674682617
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-3",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.34957319498062134,
+      "tick": 12,
+      "x": 67.04571533203125,
+      "y": 34.06909942626953
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-20",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.03371593356132507,
+      "tick": 122,
+      "x": 44.16265869140625,
+      "y": 55.06789779663086
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-24",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.28987303376197815,
+      "tick": 149,
+      "x": 58.46055221557617,
+      "y": 45.084651947021484
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-36",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.14614450931549072,
+      "tick": 220,
+      "x": 45.840816497802734,
+      "y": 53.86465072631836
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-37",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.46377304196357727,
+      "tick": 221,
+      "x": 64.0531005859375,
+      "y": 32.70829391479492
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-83",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.34560126066207886,
+      "tick": 545,
+      "x": 45.035099029541016,
+      "y": 53.57712173461914
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-111",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.4343944191932678,
+      "tick": 1018,
+      "x": 46.70098876953125,
+      "y": 56.291770935058594
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-51",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.13178616762161255,
+      "tick": 295,
+      "x": 65.99019622802734,
+      "y": 33.87411117553711
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-63",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.29946792125701904,
+      "tick": 392,
+      "x": 45.22753143310547,
+      "y": 38.11164093017578
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-49",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.09394276142120361,
+      "tick": 289,
+      "x": 46.87774658203125,
+      "y": 53.21272659301758
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-68",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.41283920407295227,
+      "tick": 435,
+      "x": 58.874446868896484,
+      "y": 55.00712966918945
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-86",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.08068433403968811,
+      "tick": 570,
+      "x": 43.162681579589844,
+      "y": 37.0091552734375
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-45",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.4140762984752655,
+      "tick": 255,
+      "x": 38.56669998168945,
+      "y": 69.3903579711914
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-106",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.09566253423690796,
+      "tick": 930,
+      "x": 48.73612594604492,
+      "y": 50.7436637878418
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-110",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.012845396995544434,
+      "tick": 1012,
+      "x": 46.70098876953125,
+      "y": 56.291770935058594
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-103",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.464015930891037,
+      "tick": 839,
+      "x": 46.17527389526367,
+      "y": 53.507301330566406
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-14",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.3890533745288849,
+      "tick": 83,
+      "x": 37.48977279663086,
+      "y": 69.19490051269531
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-101",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.21505513787269592,
+      "tick": 775,
+      "x": 46.62718963623047,
+      "y": 54.009544372558594
+    },
+    {
+      "agent_id": "replicant/agent/e3884ee5-a87c-450a-9245-868eca6a016a",
+      "id": "claim-53",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.20307126641273499,
+      "tick": 312,
+      "x": 46.003719329833984,
+      "y": 52.807395935058594
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-0",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.3712458610534668,
+      "tick": 2,
+      "x": 44.46760559082031,
+      "y": 53.881710052490234
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-66",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.43344351649284363,
+      "tick": 416,
+      "x": 34.64401626586914,
+      "y": 70.02952575683594
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-27",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.06047675013542175,
+      "tick": 167,
+      "x": 38.34778594970703,
+      "y": 67.81047821044922
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-15",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.17847755551338196,
+      "tick": 94,
+      "x": 44.304901123046875,
+      "y": 54.948509216308594
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-57",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.31354039907455444,
+      "tick": 355,
+      "x": 45.22753143310547,
+      "y": 38.11164093017578
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-91",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.03681457042694092,
+      "tick": 610,
+      "x": 33.54612731933594,
+      "y": 71.41236114501953
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-105",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.47315338253974915,
+      "tick": 877,
+      "x": 46.17527389526367,
+      "y": 53.507301330566406
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-16",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.1141863763332367,
+      "tick": 98,
+      "x": 37.06070327758789,
+      "y": 41.97842788696289
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-89",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.02446421980857849,
+      "tick": 586,
+      "x": 33.46931457519531,
+      "y": 71.9615478515625
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-31",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.07077956199645996,
+      "tick": 194,
+      "x": 38.06098175048828,
+      "y": 68.32148742675781
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-62",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.26832422614097595,
+      "tick": 381,
+      "x": 35.2149658203125,
+      "y": 70.0899429321289
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-52",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.19367840886116028,
+      "tick": 309,
+      "x": 62.17826843261719,
+      "y": 54.94306945800781
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-6",
+      "kind": "food",
+      "lens": "Counter",
+      "strength": 0.3371635377407074,
+      "tick": 34,
+      "x": 57.134033203125,
+      "y": 44.677093505859375
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-88",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.48658642172813416,
+      "tick": 583,
+      "x": 45.57280349731445,
+      "y": 53.71202850341797
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-35",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.23824292421340942,
+      "tick": 220,
+      "x": 38.56669998168945,
+      "y": 69.3903579711914
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-97",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.45978954434394836,
+      "tick": 665,
+      "x": 45.85380172729492,
+      "y": 53.96018981933594
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-40",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.008854001760482788,
+      "tick": 235,
+      "x": 58.90325927734375,
+      "y": 44.964111328125
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-28",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.0036765336990356445,
+      "tick": 169,
+      "x": 38.579288482666016,
+      "y": 41.0579719543457
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-47",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.05309075117111206,
+      "tick": 261,
+      "x": 64.16737365722656,
+      "y": 32.485496520996094
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-87",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.08923006057739258,
+      "tick": 570,
+      "x": 68.86853790283203,
+      "y": 33.0130500793457
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-25",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.2633851170539856,
+      "tick": 154,
+      "x": 58.967491149902344,
+      "y": 56.464359283447266
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-29",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.09218525886535645,
+      "tick": 173,
+      "x": 38.889854431152344,
+      "y": 42.009124755859375
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-90",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.07213282585144043,
+      "tick": 598,
+      "x": 68.11613464355469,
+      "y": 32.422393798828125
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-55",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.39211705327033997,
+      "tick": 323,
+      "x": 35.44804382324219,
+      "y": 70.53330993652344
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-109",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.07845911383628845,
+      "tick": 990,
+      "x": 46.934898376464844,
+      "y": 56.18035125732422
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-1",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.19879278540611267,
+      "tick": 5,
+      "x": 56.634033203125,
+      "y": 44.677093505859375
+    },
+    {
+      "agent_id": "replicant/agent/a7274785-9a04-4dbd-81de-1c95d509163c",
+      "id": "claim-56",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.3245142102241516,
+      "tick": 341,
+      "x": 45.810585021972656,
+      "y": 52.70713806152344
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-43",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.49246877431869507,
+      "tick": 250,
+      "x": 46.118412017822266,
+      "y": 54.037837982177734
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-107",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.1312541961669922,
+      "tick": 930,
+      "x": 46.619651794433594,
+      "y": 55.76939010620117
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-9",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.2733299434185028,
+      "tick": 48,
+      "x": 37.23689270019531,
+      "y": 68.52391815185547
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-44",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.07149246335029602,
+      "tick": 250,
+      "x": 59.927330017089844,
+      "y": 43.655921936035156
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-50",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.116813063621521,
+      "tick": 291,
+      "x": 38.56669998168945,
+      "y": 69.3903579711914
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-96",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.27123627066612244,
+      "tick": 660,
+      "x": 31.824066162109375,
+      "y": 69.04692840576172
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-72",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.312445729970932,
+      "tick": 463,
+      "x": 44.07194137573242,
+      "y": 34.983951568603516
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-38",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.01889166235923767,
+      "tick": 226,
+      "x": 58.40325927734375,
+      "y": 44.964111328125
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-65",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.23117932677268982,
+      "tick": 405,
+      "x": 58.374446868896484,
+      "y": 55.00712966918945
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-59",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.029075443744659424,
+      "tick": 365,
+      "x": 66.49729919433594,
+      "y": 36.207515716552734
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-22",
+      "kind": "food",
+      "lens": "Counter",
+      "strength": 0.23824334144592285,
+      "tick": 133,
+      "x": 36.752769470214844,
+      "y": 41.07306671142578
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-33",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.3514392375946045,
+      "tick": 198,
+      "x": 39.292999267578125,
+      "y": 41.36681365966797
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-42",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.004250317811965942,
+      "tick": 249,
+      "x": 46.118412017822266,
+      "y": 54.037837982177734
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-34",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.2953319251537323,
+      "tick": 205,
+      "x": 60.559967041015625,
+      "y": 55.0579833984375
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-46",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.1146765947341919,
+      "tick": 260,
+      "x": 43.8717155456543,
+      "y": 41.10039520263672
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-5",
+      "kind": "food",
+      "lens": "Counter",
+      "strength": 0.22755378484725952,
+      "tick": 32,
+      "x": 57.89192581176758,
+      "y": 58.788204193115234
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-39",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.031625717878341675,
+      "tick": 232,
+      "x": 39.792999267578125,
+      "y": 41.36681365966797
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-18",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.22600197792053223,
+      "tick": 106,
+      "x": 64.15584564208984,
+      "y": 32.072628021240234
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-73",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.09282654523849487,
+      "tick": 483,
+      "x": 45.67428970336914,
+      "y": 53.35332107543945
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-19",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.1461763083934784,
+      "tick": 122,
+      "x": 59.08772277832031,
+      "y": 55.73584747314453
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-41",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.16008618474006653,
+      "tick": 249,
+      "x": 59.6939582824707,
+      "y": 54.671966552734375
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-75",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.48411089181900024,
+      "tick": 492,
+      "x": 34.38076400756836,
+      "y": 71.8113021850586
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-8",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.061538517475128174,
+      "tick": 42,
+      "x": 37.66121292114258,
+      "y": 41.67670822143555
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-80",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.48030340671539307,
+      "tick": 533,
+      "x": 68.86853790283203,
+      "y": 33.0130500793457
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-81",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.11771208047866821,
+      "tick": 539,
+      "x": 34.23564529418945,
+      "y": 70.37203216552734
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-26",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.3789507746696472,
+      "tick": 155,
+      "x": 46.49960708618164,
+      "y": 54.29622268676758
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-48",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.19016888737678528,
+      "tick": 281,
+      "x": 61.67826843261719,
+      "y": 54.94306945800781
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-93",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.12853723764419556,
+      "tick": 623,
+      "x": 45.88242721557617,
+      "y": 54.21165466308594
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-102",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.24686241149902344,
+      "tick": 808,
+      "x": 45.67527389526367,
+      "y": 53.507301330566406
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-71",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.28094175457954407,
+      "tick": 457,
+      "x": 68.05720520019531,
+      "y": 33.90995788574219
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-104",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.2649700343608856,
+      "tick": 877,
+      "x": 45.96967315673828,
+      "y": 53.63925552368164
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-12",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.28611263632774353,
+      "tick": 66,
+      "x": 37.06070327758789,
+      "y": 41.97842788696289
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-77",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.4073806405067444,
+      "tick": 504,
+      "x": 43.1575813293457,
+      "y": 35.9117431640625
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-92",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.4142839312553406,
+      "tick": 621,
+      "x": 69.05571746826172,
+      "y": 32.27634811401367
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-2",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.25858354568481445,
+      "tick": 6,
+      "x": 38.347816467285156,
+      "y": 39.903480529785156
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-67",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.032652974128723145,
+      "tick": 418,
+      "x": 67.46360778808594,
+      "y": 35.00460433959961
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-69",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.4535432755947113,
+      "tick": 440,
+      "x": 46.83467483520508,
+      "y": 52.43754577636719
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-74",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.2662978768348694,
+      "tick": 491,
+      "x": 59.506591796875,
+      "y": 54.639652252197266
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-94",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.1412157416343689,
+      "tick": 633,
+      "x": 31.824066162109375,
+      "y": 69.04692840576172
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-85",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.14639535546302795,
+      "tick": 546,
+      "x": 60.71926498413086,
+      "y": 55.3868408203125
+    },
+    {
+      "agent_id": "replicant/agent/e3884ee5-a87c-450a-9245-868eca6a016a",
+      "id": "claim-95",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.052192896604537964,
+      "tick": 649,
+      "x": 45.81076431274414,
+      "y": 54.0411376953125
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-4",
+      "kind": "food",
+      "lens": "Counter",
+      "strength": 0.15108978748321533,
+      "tick": 20,
+      "x": 37.3802490234375,
+      "y": 67.6675033569336
+    },
+    {
+      "agent_id": "replicant/agent/e3884ee5-a87c-450a-9245-868eca6a016a",
+      "id": "claim-7",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.17474877834320068,
+      "tick": 41,
+      "x": 44.475914001464844,
+      "y": 55.556121826171875
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-61",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.13042676448822021,
+      "tick": 375,
+      "x": 45.94743728637695,
+      "y": 52.772239685058594
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-21",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.3168923556804657,
+      "tick": 129,
+      "x": 37.84778594970703,
+      "y": 67.81047821044922
+    },
+    {
+      "agent_id": "replicant/agent/e3884ee5-a87c-450a-9245-868eca6a016a",
+      "id": "claim-32",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.08902034163475037,
+      "tick": 195,
+      "x": 46.542945861816406,
+      "y": 54.28881072998047
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-54",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.11927950382232666,
+      "tick": 323,
+      "x": 44.32224655151367,
+      "y": 39.84550476074219
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-13",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.1574380099773407,
+      "tick": 75,
+      "x": 56.85621643066406,
+      "y": 45.4504508972168
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-17",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.2790144681930542,
+      "tick": 103,
+      "x": 57.35621643066406,
+      "y": 45.4504508972168
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-64",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.49775928258895874,
+      "tick": 401,
+      "x": 46.33467483520508,
+      "y": 52.43754577636719
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-76",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.1756230890750885,
+      "tick": 500,
+      "x": 69.9935531616211,
+      "y": 33.88734436035156
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-78",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.36107367277145386,
+      "tick": 508,
+      "x": 45.206085205078125,
+      "y": 53.44596862792969
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-79",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.08797553181648254,
+      "tick": 523,
+      "x": 60.006591796875,
+      "y": 54.639652252197266
+    },
+    {
+      "agent_id": "replicant/agent/e3884ee5-a87c-450a-9245-868eca6a016a",
+      "id": "claim-23",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.06052607297897339,
+      "tick": 137,
+      "x": 46.087223052978516,
+      "y": 54.55748748779297
+    },
+    {
+      "agent_id": "replicant/agent/12650d6a-c7be-4321-b92f-384fbd2db32f",
+      "id": "claim-82",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.07785683870315552,
+      "tick": 543,
+      "x": 43.551231384277344,
+      "y": 36.82549285888672
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-98",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.48415422439575195,
+      "tick": 672,
+      "x": 69.57035064697266,
+      "y": 33.987430572509766
+    },
+    {
+      "agent_id": "replicant/agent/8c32129c-d5c9-410a-a3a3-4eb70ca0ea2b",
+      "id": "claim-11",
+      "kind": "food",
+      "lens": "Fact",
+      "strength": 0.33264654874801636,
+      "tick": 65,
+      "x": 57.54337692260742,
+      "y": 58.21331024169922
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-108",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.3850175440311432,
+      "tick": 955,
+      "x": 47.119651794433594,
+      "y": 55.76939010620117
+    },
+    {
+      "agent_id": "replicant/agent/542fbe7d-5008-489c-9b21-641e030e2690",
+      "id": "claim-70",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.18794962763786316,
+      "tick": 452,
+      "x": 34.64401626586914,
+      "y": 70.02952575683594
+    },
+    {
+      "agent_id": "replicant/agent/8d845cb7-6b32-4c8a-b285-b9f22814f2ee",
+      "id": "claim-10",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.14337939023971558,
+      "tick": 55,
+      "x": 65.62589263916016,
+      "y": 32.063411712646484
+    },
+    {
+      "agent_id": "replicant/agent/ffd8cf6e-8af9-4d8d-bc76-cd618a0df7a1",
+      "id": "claim-30",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.47657445073127747,
+      "tick": 187,
+      "x": 57.048683166503906,
+      "y": 44.131996154785156
+    },
+    {
+      "agent_id": "replicant/agent/2cb0b4d4-f2e2-4b8a-8bba-91bf5151f9aa",
+      "id": "claim-99",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.2893330454826355,
+      "tick": 714,
+      "x": 47.087181091308594,
+      "y": 53.899051666259766
+    },
+    {
+      "agent_id": "replicant/agent/7a024374-f2b8-4ca8-bae1-6e6ada717821",
+      "id": "claim-100",
+      "kind": "food",
+      "lens": "Opinion",
+      "strength": 0.16627606749534607,
+      "tick": 746,
+      "x": 47.39785385131836,
+      "y": 53.76389694213867
+    }
+  ],
+  "health": 0.5,
+  "tick": 5002
+}

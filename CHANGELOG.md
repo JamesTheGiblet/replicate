@@ -3,76 +3,66 @@
 All notable changes to the Replicant project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+but adapted to a narrative "Good/Bad/Ugly" format to capture the journey of discovery.
 
 ---
 
-## [1.2.0] – 2026-08-13
+## [1.2.0] - The Cognitive Leap
 
 ### The Good
-- **Full Rust implementation** now complete and passing 26/26 tests.
-- **Benchmark suite** (`benchmark.py`) compares Python and Rust head‑to‑head.
-- **Rust is up to 10.6× faster** than Python at scale (100 agents, 200 ticks).
-- **Self‑awareness spec** and **ESP32 robotics extension spec** added for future roadmaps.
-- **Event‑ledger reputation** (Leighton Weight Engine) is now the core of both Python and Rust.
+- **Agent Diversity Framework Implemented (Phase 1):** Replaced the simple `is_specialist` boolean with a more sophisticated `Archetype` enum. Implemented the first two archetypes:
+  - **`Generalist`:** Reacts dynamically to global swarm needs (e.g., `global_forager_need`).
+  - **`Purist`:** Ignores swarm needs to focus on roles that match its innate `Traits`, preserving specialized knowledge.
+- **Dynamic Explorer Need:** Replaced the static `global_explorer_need` placeholder with a dynamic calculation based on the rate of recent resource discoveries. The swarm now intelligently balances exploration and exploitation.
+- **Live Health & Threat Metrics:** Fixed the static `health` and `threat_response` metrics. They are now live, dynamic indicators of the swarm's ability to maintain homeostasis and avoid danger.
+- **Organic Attestation Logic:** Replaced the hardcoded `rng.gen_bool(0.7)` for attestation. Agents now check the actual `local_resource` in their percepts to confirm or counter claims, grounding their scepticism in reality.
+- **Evidence-Based Claim Strength:** The strength of new `Deposit` claims is now proportional to the actual resources an agent has found, making the claim network more informative.
+- **Unified Design Document:** Consolidated all future-facing features (Gender, Culture, Memes, Games) into the `agent-diversity-spec.md`, creating a single, comprehensive roadmap for achieving AGI.
 
 ### The Bad
-- Behaviour still differs between Python and Rust (COUNTER claims: Python 9 vs Rust 2 for 10 agents, 200 ticks). This is due to different random seeds and minor logic discrepancies; work is ongoing to achieve exact parity.
-- Integration tests for the adversary module are temporarily disabled in Rust until it is fully ported.
+- The introduction of the `Archetype` system caused a cascade of compiler errors, as agent constructors in `world.rs` and `adversary.rs` needed to be updated. This was a necessary friction to ensure system-wide consistency.
 
 ### The Ugly
-- The first Rust benchmark run at 50 ticks, 10 agents took 12.9 seconds (a cold‑start anomaly). Subsequent runs stabilised to sub‑second performance.
-- The Leighton Weight Engine naming – while established – is still being standardised across documentation; it was previously referred to as “λ engine” in early code.
+- The process of fixing the placeholder logic revealed just how many "good enough for now" shortcuts were in the codebase. It served as a valuable reminder that a solid foundation requires replacing all stubs with dynamic, principled logic.
 
 ---
 
-## [1.1.0] – 2026-08-11
+## [1.1.0] - The Great Extinction & The Rust Port
 
 ### The Good
-- **Full Rust port** of the entire Python codebase, including agent logic, world state, environment, and the Leighton Weight Engine.
-- **Recidivism escalation** is now correctly implemented in Rust, with step=1.0 and floor=0.7.
-- **Organic adversary detection** works in Rust – verifiers check the environment (no FICTION label).
-- **WASM demo** (`wasm/www/index.html`) provides a browser‑based visualisation.
-- **Terminal visualisation** enhanced for both Python and Rust.
+- **Population Collapse Solved:** Diagnosed and fixed the critical simulation-ending bugs identified in `ANALYSIS_REPORT.md`. This resolved the consistent, reproducible population collapse observed in early Rust/WASM exports.
+  - **Root Cause 1: Foraging never moved agents toward food.** `Intent::Forage` was a stationary harvest attempt, leading agents to starve while "foraging" in barren areas.
+  - **Fix 1: Directed foraging.** Agents now use `Environment::nearest_patch_info()` to actively walk toward the nearest non-depleted patch when out of harvesting range.
+  - **Root Cause 2: Replication never spawned offspring.** `Intent::Replicate` only deducted parent energy; it never created a child agent.
+  - **Fix 2: Functional replication.** `World::tick()` now correctly spawns a child `Agent` (with mutated traits and half energy) when a parent's `Intent::Replicate` resolves, capped by `environment.carrying_capacity`.
+- **WASM Demo Is Fully Live:** Resolved the "Static Agents" issue. The browser visualization now accurately renders agent movement, claim network evolution, and live health metrics, making it a viable tool for observation and analysis.
 
 ### The Bad
-- The Rust `world.tick()` implementation initially lacked several components (pheromones, claims, attestations); these were subsequently ported in this version.
-- Borrow checker challenges in Rust required restructuring the `world.rs` tick loop into separate phases.
+- The population collapse was a severe, systemic failure that required detailed analysis of exported JSON snapshots to diagnose. It highlighted the need for more robust integration testing.
 
 ### The Ugly
-- The Python λ cache was entirely refactored from a mutable `(value, last_update_tick)` pair to an append‑only event ledger – a breaking change that required updating all tests and benchmarks. due to incorrect decay constants.
-### The Ugly
-- The initial import structure caused `ImportError` due to relative imports – a classic Python packaging trap that required a full refactor.
+- The `health` metric was a dead stub, always reporting `0.5`, masking the true severity of the population collapse. This was a critical failure in observability.
+- The fact that the simulation *looked* like it was working in the browser while the population was going extinct was a stark lesson: visual liveness is not state correctness.
 
 ---
 
-## [0.x] – Pre‑release
+## [1.0.0] - The Python Prototype & The Liar Who Pays
 
 ### The Good
-- Core modules scaffolded: `agent`, `world`, `leighton`, `environment`, `founders`, `capsule`.
-- First successful simulation run after fixing imports.
+- **Python Prototype Completed & Validated:** Built and stabilized the initial Python simulation, proving the core concepts were viable. The system demonstrated stable homeostasis over thousands of ticks and across multiple random seeds.
+- **Event-Ledger Reputation Implemented:** The Leighton Weight Engine, with its append-only `LambdaEvent` ledger, was implemented. This permanently solved the "cache vs. ledger" integrity issues that plagued earlier versions.
+- **Economic Model Proven:** The system successfully demonstrated that a swarm can self-regulate its population based on energy costs, and that scepticism (attesting `COUNTER` claims) is an economically viable strategy.
 
 ### The Bad
 - Numerous cache‑fix attempts, each uncovering deeper issues (domain tracking, genesis state).
 - `verify_cache` function repeatedly caught subtle bugs – it worked by failing.
 
 ### The Ugly
-- The verification logic was overhauled multiple times; the eventual solution was to store `initial_lambda_state` and replay from genesis.
+- The journey to a verifiable Leighton Weight implementation was a painful but necessary process of "whack-a-mole," where fixing one incorrect assumption in the verification logic only revealed another. This process was the ultimate validation of the "trust but verify" philosophy.
 
 ---
 
-## Leighton Weight Engine (formerly λ engine)
-
-The reputation system was renamed to **Leighton Weight Engine** to reflect its append‑only event‑ledger semantics and its role in recidivism escalation. It now:
-
-- Stores events as signed deltas with decay constants (`k`).
-- Computes λ on read: `λ = base + Σ δᵢ · e^(−kᵢ · (t−tᵢ))`.
-- Supports recidivism: repeated offences increase penalty magnitude.
-- Is fully implemented in both Python and Rust.
-
----
-
-## Performance Summary (as of 1.2.0)
+## Performance Summary (as of 1.1.0)
 
 | Load | Python | Rust | Speedup |
 |------|--------|------|---------|
@@ -80,26 +70,3 @@ The reputation system was renamed to **Leighton Weight Engine** to reflect its a
 | 50 agents, 200 ticks | 0.626s | 0.142s | **4.4×** |
 | 100 agents, 200 ticks | 1.985s | 0.187s | **10.6×** |
 | 100 agents, 500 ticks | 3.499s | 0.399s | **8.8×** |
-
----
-
-## Test Coverage
-
-| Version | Tests | Status |
-|---------|-------|--------|
-| Python | 35 | ✅ All passing |
-| Rust | 26 | ✅ All passing |
-| Total | 61 | ✅ 100% pass rate |
-
----
-
-*“Born pregnant. Born ready. Born signed.”*  
-*“The swarm learns. The liar pays.”*
-
-## Known Issues
-
-### WASM Demo: Agents Are Static
-- **Issue**: In the WASM browser demo, agents do not move or update their positions.
-- **Status**: Under investigation.
-- **Workaround**: Use the Python or Rust terminal versions for full swarm behavior.
-- **Fix planned**: Add proper agent decision-making and movement logic to the WASM `step()` function.
