@@ -2,176 +2,154 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!--
-        Replicant Web Visualization Dashboard
-        This file provides the user interface for interacting with the Replicant simulation
-        running in WebAssembly (WASM). It displays real-time statistics and a graphical
-        representation of the swarm's activity on a canvas.
-    -->
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧬 Replicant Live</title>
+    <title>🧬 Replicant WASM</title>
     <style>
-        body { background: #0B0E14; color: #CCC; font-family: monospace; padding: 20px; }
-        canvas { border: 1px solid #2A3040; border-radius: 8px; background: #0B0E14; }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
-        .stat { background: #1A2030; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #2A3040; }
-        .stat .value { font-size: 24px; font-weight: bold; }
-        .controls button { background: #2A3040; color: #CCC; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; margin-right: 8px; }
-        .controls button.export { background: #4CAF50; } /* Green for export */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0B0E14; color: #CCCCCC; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; flex-direction: column; }
+        .container { background: #141820; border-radius: 12px; padding: 20px; border: 1px solid #2A3040; box-shadow: 0 8px 32px rgba(0,0,0,0.8); }
+        canvas { display: block; border-radius: 8px; background: #0B0E14; border: 1px solid #2A3040; cursor: pointer; width: 800px; height: 600px; }
+        .controls { display: flex; gap: 12px; margin-top: 16px; align-items: center; flex-wrap: wrap; }
+        .controls button { background: #2A3040; color: #CCCCCC; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-family: 'Courier New', monospace; font-size: 14px; transition: all 0.2s; }
         .controls button:hover { background: #3A4050; }
-        .green { color: #50C850; }
-        .yellow { color: #C8C850; }
-        .red { color: #C85050; }
-        .cyan { color: #50C8C8; }
-        .help {
-            font-size: 11px;
-            color: #666;
-            cursor: help;
-            border-bottom: 1px dashed #666;
-            margin-left: 5px;
-        }
-        #status {
-            margin-left: 20px;
-            color: #666;
-        }
+        .controls button.primary { background: #50C850; color: #0B0E14; }
+        .controls button.primary:hover { background: #60D860; }
+        .controls button.danger { background: #C85050; color: #0B0E14; }
+        .controls button.danger:hover { background: #D86060; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; width: 100%; }
+        .stat { background: #1A2030; padding: 12px 16px; border-radius: 8px; text-align: center; border: 1px solid #2A3040; }
+        .stat .label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat .value { font-size: 24px; font-weight: bold; margin-top: 4px; }
+        .stat .value.green { color: #50C850; }
+        .stat .value.yellow { color: #C8C850; }
+        .stat .value.red { color: #C85050; }
+        .stat .value.cyan { color: #50C8C8; }
+        .telemetry-panel { margin-top: 12px; padding: 8px 16px; background: #1A2030; border-radius: 6px; font-size: 13px; color: #888; border: 1px solid #2A3040; width: 100%; text-align: center; }
+        .telemetry-panel .highlight { color: #CCCCCC; }
+        @media (max-width: 850px) { canvas { width: 100%; height: auto; } .stats { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
-    <!-- Main title of the application -->
-    <h1>🧬 Replicant — Live</h1>
-    
-    <!-- Section for displaying key simulation statistics -->
-    <div class="stats">
-        <!-- Stat: Number of living agents -->
-        <div class="stat"><div>👥 Agents<span class="help" title="Total number of living agents in the swarm.">(?)</span></div><div class="value green" id="agents">0</div></div>
-        <!-- Stat: Total number of claims made -->
-        <div class="stat"><div>📋 Claims<span class="help" title="Total number of claims (OPINION, FACT, COUNTER) made by agents.">(?)</span></div><div class="value yellow" id="claims">0</div></div>
-        <!-- Stat: Number of successfully countered claims -->
-        <div class="stat"><div>🔍 COUNTER<span class="help" title="Number of claims successfully disputed and marked as COUNTER.">(?)</span></div><div class="value red" id="counters">0</div></div>
-        <!-- Stat: Overall swarm health -->
-        <div class="stat"><div>🌿 Health<span class="help" title="Overall swarm homeostasis (0.0-1.0), a measure of stability and resource utilization.">(?)</span></div><div class="value cyan" id="health">0.000</div></div>
+    <div class="container">
+        <canvas id="replicant-canvas" width="800" height="600"></canvas>
+        
+        <div class="controls">
+            <button class="primary" id="start-btn">▶ Start</button>
+            <button id="pause-btn">⏸ Pause</button>
+            <button id="step-btn">⏭ Step</button>
+            <button class="danger" id="reset-btn">⟳ Reset</button>
+            <button id="export-btn">📥 Export</button>
+            <span style="margin-left: auto; font-size: 14px; color: #666;">🧬 Replicant WASM</span>
+        </div>
+        
+        <div class="stats" id="stats">
+            <div class="stat"><div class="label">👥 Agents</div><div class="value green" id="stat-agents">0</div></div>
+            <div class="stat"><div class="label">📋 Claims</div><div class="value yellow" id="stat-claims">0</div></div>
+            <div class="stat"><div class="label">🔍 COUNTER</div><div class="value red" id="stat-counters">0</div></div>
+            <div class="stat"><div class="label">🌿 Health</div><div class="value cyan" id="stat-health">0.000</div></div>
+        </div>
+        
+        <div class="telemetry-panel" id="telemetry">
+            <span class="highlight">📊 Telemetry (last 10 ticks):</span>
+            <span id="telemetry-data">Waiting for data...</span>
+        </div>
     </div>
-    
-    <!-- Section for simulation controls -->
-    <div class="controls">
-        <button id="step" title="Advance the simulation by a single tick.">⏭ Step</button>
-        <button id="auto" title="Automatically advance the simulation every 200ms.">▶ Auto</button>
-        <button id="reset" title="Reload the simulation from tick 0.">⟳ Reset</button>
-        <button id="export" class="export" title="Download a JSON snapshot of the entire simulation state.">⬇ Export Data</button>
-        <span id="status">Ready</span>
-    </div>
-    <!-- Canvas for graphical visualization of the swarm -->
-    <canvas id="canvas" width="800" height="500"></canvas>
+
     <script>
-        let auto = false;
-        let interval = null;
+        import init, { ReplicantWASM } from './replicant.js';
+        
         let replicantWASM = null;
-
-        async function initWasm() {
-            try {
-                // First, import the generated JS module.
-                const wasm = await import('./pkg/replicant_wasm.js');
-                // Then, call the default export, which is an async function that initializes the WASM module.
-                await wasm.default();
-                // Now that the WASM is loaded, we can instantiate our main struct.
-                replicantWASM = new wasm.ReplicantWASM("canvas");
-                console.log("Replicant WASM initialized.");
-                updateDisplay();
-            } catch (e) {
-                console.error("Error initializing WASM:", e);
-                document.getElementById('status').textContent = "Error loading simulation.";
-            }
+        let running = false;
+        let animationId = null;
+        let telemetry = [];
+        
+        async function initialize() {
+            await init();
+            replicantWASM = new ReplicantWASM('replicant-canvas');
+            updateStats();
+            document.getElementById('telemetry-data').textContent = 'Ready';
         }
-
-        // Decision: Centralize display updates to ensure consistency.
-        // Blurb: Updates the dashboard statistics and triggers the WASM rendering.
-        // Title: updateDisplay Function
-        function updateDisplay() {
+        
+        function updateStats() {
             if (!replicantWASM) return;
-
-            const rawStats = replicantWASM.get_stats();
-            const stats = (rawStats && typeof rawStats === 'object') ? rawStats : null;
-
-            const getStat = (key, fallback) => {
-                if (!stats) return fallback;
-                if (stats instanceof Map) return stats.get(key) ?? fallback;
-                return stats[key] ?? fallback;
-            };
-
-            const agents = Number(getStat('agents', 0));
-            const claims = Number(getStat('claims', 0));
-            const counters = Number(getStat('counters', 0));
-            const health = Number(getStat('health', 0));
-            const tick = Number(getStat('tick', 0));
-            const season = String(getStat('season', 'Unknown'));
-
-            document.getElementById('agents').textContent = Number.isFinite(agents) ? String(agents) : '0';
-            document.getElementById('claims').textContent = Number.isFinite(claims) ? String(claims) : '0';
-            document.getElementById('counters').textContent = Number.isFinite(counters) ? String(counters) : '0';
-            document.getElementById('health').textContent = Number.isFinite(health) ? health.toFixed(3) : '0.000';
-            document.getElementById('status').textContent = `Tick ${Number.isFinite(tick) ? tick : 0} | Season: ${season}`;
-
-            if (typeof replicantWASM.render === 'function') {
-                replicantWASM.render();
-            }
+            const stats = replicantWASM.get_stats();
+            document.getElementById('stat-agents').textContent = stats.agents;
+            document.getElementById('stat-claims').textContent = stats.claims;
+            document.getElementById('stat-counters').textContent = stats.counters;
+            document.getElementById('stat-health').textContent = stats.health.toFixed(3);
+            document.getElementById('telemetry-data').textContent = 
+                `Tick ${stats.tick} | Season: ${stats.season} | Agents: ${stats.agents}`;
         }
-
-        // Decision: Event listener for the "Step" button.
-        // Blurb: Advances the simulation by one tick when clicked.
-        document.getElementById('step').addEventListener('click', () => {
+        
+        function startLoop() {
+            if (running) return;
+            running = true;
+            document.getElementById('start-btn').textContent = '⏹ Running';
+            
+            function loop() {
+                if (!running) {
+                    document.getElementById('start-btn').textContent = '▶ Start';
+                    return;
+                }
+                if (replicantWASM) {
+                    replicantWASM.step();
+                    updateStats();
+                }
+                animationId = requestAnimationFrame(loop);
+            }
+            loop();
+        }
+        
+        function stopLoop() {
+            running = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            document.getElementById('start-btn').textContent = '▶ Start';
+        }
+        
+        document.getElementById('start-btn').addEventListener('click', () => {
+            if (running) stopLoop();
+            else startLoop();
+        });
+        
+        document.getElementById('pause-btn').addEventListener('click', () => {
+            if (running) stopLoop();
+            else startLoop();
+        });
+        
+        document.getElementById('step-btn').addEventListener('click', () => {
             if (replicantWASM) {
                 replicantWASM.step();
-                updateDisplay();
+                updateStats();
             }
         });
-
-        // Decision: Event listener for the "Auto/Pause" button.
-        // Blurb: Toggles automatic simulation advancement.
-        document.getElementById('auto').addEventListener('click', () => {
-            auto = !auto;
-            document.getElementById('auto').textContent = auto ? '⏸ Pause' : '▶ Auto';
-            if (auto) {
-                interval = setInterval(() => {
-                    if (replicantWASM) {
-                        replicantWASM.step();
-                        updateDisplay();
-                    }
-                }, 200);
-            } else {
-                clearInterval(interval);
-            }
-        });
-
-        // Decision: Event listener for the "Reset" button.
-        // Blurb: Reloads the page to reset the simulation.
-        document.getElementById('reset').addEventListener('click', () => {
+        
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            stopLoop();
             location.reload();
         });
-
-        // Decision: Event listener for the "Export Data" button.
-        // Blurb: Exports the full simulation state to a JSON file.
-        document.getElementById('export').addEventListener('click', () => {
+        
+        document.getElementById('export-btn').addEventListener('click', () => {
             if (replicantWASM && typeof replicantWASM.export_state === 'function') {
-                const stateJson = replicantWASM.export_state();
-                const blob = new Blob([stateJson], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                const tick = document.getElementById('status').textContent.split(' ')[1] || '0';
-                a.download = `replicant_state_tick_${tick}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                console.log(`Exported state at tick ${tick}.`);
+                try {
+                    const data = replicantWASM.export_state();
+                    const blob = new Blob([data], {type: 'application/json'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `replicant_state_${Date.now()}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    document.getElementById('telemetry-data').textContent = '✅ Exported!';
+                } catch (e) {
+                    document.getElementById('telemetry-data').textContent = `❌ Export failed: ${e}`;
+                }
             }
         });
-
-        // Decision: Initialize WASM on page load.
-        // Blurb: Kicks off the WASM loading process as soon as the page is ready.
-        // Initialize WASM on page load
-        initWasm();
+        
+        initialize();
     </script>
 </body>
 </html>
