@@ -1,0 +1,7 @@
+#!/bin/bash
+# Quick code generation
+
+cd ~/forge
+echo "Generating code for: $*"
+echo ""
+./forge generate "$*"

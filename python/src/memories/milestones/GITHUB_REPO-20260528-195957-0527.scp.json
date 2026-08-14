@@ -1,0 +1,24 @@
+{
+  "id": "GITHUB_REPO-20260528-195957-0527",
+  "title": "Whisper",
+  "class": "MEMORY",
+  "type": "github_repo",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T19:59:57.689303",
+  "content": {
+    "name": "Whisper",
+    "type": "github_repository",
+    "description": "Whisper is an AI-powered secret scanner that helps developers and teams catch **real secrets** before they leak \u2014 without drowning you in false positives.  Unlike regex-only tools, Whisper uses **contextual analysis** with local Ollama models to tell the difference between a dummy API key in test code and a live credential in production. ",
+    "language": "Python",
+    "stats": {
+      "stars": 0,
+      "forks": 0
+    },
+    "url": "https://github.com/JamesTheGiblet/Whisper",
+    "topics": [],
+    "created": "2025-09-30T17:07:56Z",
+    "updated": "2025-10-08T17:20:32Z"
+  },
+  "metadata": {},
+  "signature": "236d5cea073275d0"
+}

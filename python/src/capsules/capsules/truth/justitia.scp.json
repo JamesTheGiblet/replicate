@@ -1,0 +1,14 @@
+{
+  "id": "forge/justitia",
+  "class": "THAUMIEL",
+  "intent": "Legal domain analysis application leveraging the Truth Engine API.",
+  "invoke": "sys.log",
+  "input": "Justitia Legal Analysis API online.",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.6.0",
+    "codename": "Justitia"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "webserver",
+  "type": "function",
+  "params": [{"name": "port", "type": "int"}],
+  "logic": "int server_fd, new_socket;\n    struct sockaddr_in address;\n    int opt = 1;\n    int addrlen = sizeof(address);\n    char buffer[1024] = {0};\n    char *response = \"HTTP/1.1 200 OK\\nContent-Type: text/html\\n\\n<html><body><h1>FORGE-os</h1><p>Running on S24 Ultra</p></body></html>\";\n    \n    server_fd = socket(AF_INET, SOCK_STREAM, 0);\n    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));\n    \n    address.sin_family = AF_INET;\n    address.sin_addr.s_addr = INADDR_ANY;\n    address.sin_port = htons(port);\n    \n    bind(server_fd, (struct sockaddr*)&address, sizeof(address));\n    listen(server_fd, 3);\n    \n    while(1) {\n        new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);\n        read(new_socket, buffer, 1024);\n        send(new_socket, response, strlen(response), 0);\n        close(new_socket);\n    }\n    return 0;"
+}

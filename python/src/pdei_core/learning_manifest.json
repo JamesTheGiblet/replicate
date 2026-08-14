@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "name": "Explorer-d334 Exocortex",
+  "repositories": [
+    {
+      "path": "../src",
+      "pattern": "*.py",
+      "weight": 1.0,
+      "description": "Core forge source code"
+    },
+    {
+      "path": "../capsules",
+      "pattern": "*.scp.json",
+      "weight": 0.8,
+      "description": "Automation capsules"
+    }
+  ],
+  "learning_rate": 0.05,
+  "retention_bias": 0.7,
+  "personality_file": "../personalities/users/james_the_giblet.json"
+}

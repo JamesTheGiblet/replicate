@@ -1,0 +1,38 @@
+{
+  "id": "skills.os.breakthrough",
+  "title": "Skills — OS/Firmware Breakthrough Window",
+  "class": "EUCLID",
+  "profile": "skills",
+  "triggers": {
+    "on_event": "circadian.morning.deepwork"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "os_breakthrough",
+        "context": "forge_theory_morning",
+        "max_tokens": 512,
+        "temperature": 0.7
+      }
+    },
+    {
+      "primitive": "reflex.promote",
+      "input": {
+        "capsule": "skills.os.breakthrough",
+        "threshold": 1.6
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fiction",
+        "payload": {
+          "type": "breakthrough.idea",
+          "idea": "$insight",
+          "ts": "$now"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "circadian.weekend.morning_flow",
+  "title": "Circadian — Weekend Morning Flow",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.weekend.morning_flow"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "opinion",
+        "payload": {
+          "type": "flow.state",
+          "tag": "weekend_morning",
+          "ts": "$now",
+          "notes": "Cartoons, smoke, zero cognitive load."
+        },
+        "source_id": "circadian.weekend.morning_flow",
+        "confidence": 0.9,
+        "decay_rate": 0.01
+      }
+    },
+    {
+      "primitive": "decay.run",
+      "input": {
+        "scope": "stress",
+        "rate": 0.05
+      }
+    }
+  ],
+  "emit_event": "circadian.weekend.tidy"
+}

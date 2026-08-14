@@ -1,0 +1,35 @@
+{
+  "id": "GITHUB_REPO-20260528-195957-6fc2",
+  "title": "trial-forge",
+  "class": "MEMORY",
+  "type": "github_repo",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T19:59:57.767562",
+  "content": {
+    "name": "trial-forge",
+    "type": "github_repository",
+    "description": "Clinical trial patient retention simulator. Predicts dropout risk using behavioral decay modeling. Saves CROs millions in trial delays. Enterprise-ready.",
+    "language": "HTML",
+    "stats": {
+      "stars": 1,
+      "forks": 0
+    },
+    "url": "https://github.com/JamesTheGiblet/trial-forge",
+    "topics": [
+      "b2b-saas",
+      "clinical-trials",
+      "ctms",
+      "drug-development",
+      "exponential-decay",
+      "forge-theory",
+      "healthcare",
+      "patient-retention",
+      "pharma",
+      "predictive-analytics"
+    ],
+    "created": "2025-12-16T17:41:37Z",
+    "updated": "2025-12-16T21:20:10Z"
+  },
+  "metadata": {},
+  "signature": "b6ebce4b748b48d0"
+}

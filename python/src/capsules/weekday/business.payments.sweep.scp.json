@@ -1,0 +1,30 @@
+{
+  "id": "business.payments.sweep",
+  "title": "Business — Direct Payment Sweep",
+  "class": "THAUMIEL",
+  "profile": "business",
+  "triggers": {
+    "cron": "0 * * * *"
+  },
+  "actions": [
+    {
+      "primitive": "payment.sweep",
+      "input": { "source": "lloyds" }
+    },
+    {
+      "primitive": "payment.sweep",
+      "input": { "source": "kraken" }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "payment.sweep.log",
+          "ts": "$now",
+          "notes": "Hourly ledger sync completed."
+        }
+      }
+    }
+  ]
+}

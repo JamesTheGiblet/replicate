@@ -1,0 +1,46 @@
+{
+  "id": "health.dietary.tracker",
+  "title": "Health — Dietary Trigger Tracker",
+  "class": "EUCLID",
+  "profile": "health",
+  "triggers": {
+    "cron": "0 9,13,19 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "health.meal.log",
+      "input": {
+        "prompt": "Log recent meal. Check for: gluten, dairy, sugar",
+        "symptom_check_delay_hours": 4
+      }
+    },
+    {
+      "primitive": "leighton.apply_modifier",
+      "input": {
+        "if_gluten": -0.20,
+        "if_dairy": -0.15,
+        "if_sugar": -0.20,
+        "duration_hours": 24
+      }
+    },
+    {
+      "primitive": "health.symptom.correlate",
+      "input": {
+        "symptoms": ["brain_fog", "fatigue", "inflammation", "mood_swing"],
+        "alert_on_correlation": true
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "meal.log",
+          "foods": "$foods",
+          "potential_triggers": "$triggers",
+          "ts": "$now"
+        }
+      }
+    }
+  ]
+}

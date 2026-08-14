@@ -1,0 +1,98 @@
+{
+  "name": "fibonacci_calculator",
+  "type": "function",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "logic": "if (n <= 1) return n;\n    int a = 0, b = 1, c;\n    for (int i = 2; i <= n; i++) {\n        c = a + b;\n        a = b;\n        b = c;\n    }\n    return b;",
+  "input_schema": {
+    "type": "integer",
+    "min": 0,
+    "max": 46
+  },
+  "output_schema": {
+    "type": "integer",
+    "description": "Fibonacci number at position n"
+  },
+  "test_cases": [
+    {
+      "input": [
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        5
+      ],
+      "expected": 5
+    },
+    {
+      "input": [
+        10
+      ],
+      "expected": 55
+    }
+  ],
+  "fix_history": [
+    {
+      "iteration": 0,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_0'",
+      "timestamp": "2026-05-27T08:23:27.432788"
+    },
+    {
+      "iteration": 1,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_1'",
+      "timestamp": "2026-05-27T08:23:28.208472"
+    },
+    {
+      "iteration": 2,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_2'",
+      "timestamp": "2026-05-27T08:23:28.974937"
+    },
+    {
+      "iteration": 3,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_3'",
+      "timestamp": "2026-05-27T08:23:29.689368"
+    },
+    {
+      "iteration": 4,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_4'",
+      "timestamp": "2026-05-27T08:23:30.436100"
+    },
+    {
+      "iteration": 5,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_5'",
+      "timestamp": "2026-05-27T08:23:31.151521"
+    },
+    {
+      "iteration": 6,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_6'",
+      "timestamp": "2026-05-27T08:23:31.879518"
+    },
+    {
+      "iteration": 7,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_7'",
+      "timestamp": "2026-05-27T08:23:32.620590"
+    },
+    {
+      "iteration": 8,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_8'",
+      "timestamp": "2026-05-27T08:23:33.396582"
+    },
+    {
+      "iteration": 9,
+      "suggestion": "Fix near: Execution error: [Errno 2] No such file or directory: 'forge_workspace/build/gen_9'",
+      "timestamp": "2026-05-27T08:23:34.175453"
+    }
+  ]
+}

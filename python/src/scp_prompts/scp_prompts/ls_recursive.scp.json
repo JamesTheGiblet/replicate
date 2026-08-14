@@ -1,0 +1,6 @@
+{
+  "name": "list_files",
+  "type": "function",
+  "params": [{"name": "path", "type": "char*"}],
+  "logic": "#include <dirent.h>\n    DIR *d = opendir(path);\n    if (!d) return 1;\n    struct dirent *dir;\n    while ((dir = readdir(d)) != NULL) {\n        if (dir->d_name[0] == '.') continue;\n        printf(\"%s/%s\\n\", path, dir->d_name);\n    }\n    closedir(d);\n    return 0;"
+}

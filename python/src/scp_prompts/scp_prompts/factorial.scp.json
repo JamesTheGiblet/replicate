@@ -1,0 +1,11 @@
+{
+  "name": "factorial",
+  "type": "function",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "logic": "int factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "cce/te-grid",
+  "class": "EUCLID",
+  "intent": "Harvest market flow. Extract energy from BTC/USDC volatility regardless of macro direction.",
+  "invoke": "trade.te",
+  "input": "PAIR:BTC/USDC|INTERVAL:5m|GRID_STEP:0.5%|MAX_DRAWDOWN:5%",
+  "parent_id": "forge/daemon",
+  "next": "",
+  
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "ecosystem": "Tactical Engine (T.E)",
+    "philosophy": "The market is always moving. Harvest that motion.",
+    "safety_first": {
+      "mode": "DRY_RUN",
+      "circuit_breaker": "daily_loss_limit_reached",
+      "pre_flight_tests_required": 31
+    },
+    "dreamable": true,
+    "self_optimising": true
+  }
+}

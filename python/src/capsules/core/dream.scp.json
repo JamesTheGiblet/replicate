@@ -1,0 +1,14 @@
+{
+  "id": "forge/dream-recorder",
+  "class": "EUCLID",
+  "intent": "Record nightly dream capsule to capsules/dreams/. Runs at 02:00.",
+  "invoke": "dream.record",
+  "input": "nightly",
+  "parent_id": "forge/init",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "0.1.0",
+    "schedule": "0 2 * * *"
+  }
+}

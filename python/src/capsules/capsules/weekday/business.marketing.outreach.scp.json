@@ -1,0 +1,67 @@
+{
+  "id": "business.marketing.outreach",
+  "title": "Business — Marketing Outreach",
+  "class": "EUCLID",
+  "profile": "business",
+  "triggers": {
+    "cron": "0 9 * * 3",
+    "on_event": "marketing.campaign"
+  },
+  "actions": [
+    {
+      "primitive": "twitter.post",
+      "input": {
+        "content": "$campaign_tweet",
+        "media": "$screenshot",
+        "schedule": "$now"
+      }
+    },
+    {
+      "primitive": "linkedin.post",
+      "input": {
+        "content": "$campaign_post",
+        "schedule": "$now"
+      }
+    },
+    {
+      "primitive": "email.newsletter",
+      "input": {
+        "to": "$subscriber_list",
+        "subject": "$newsletter_subject",
+        "body": "$newsletter_content"
+      }
+    },
+    {
+      "primitive": "reddit.post",
+      "input": {
+        "subreddit": "$target_subreddit",
+        "title": "$post_title",
+        "content": "$post_content"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "marketing.outreach",
+          "campaign": "$campaign_id",
+          "channels": ["twitter", "linkedin", "email", "reddit"],
+          "sent_at": "$now"
+        },
+        "source_id": "business.marketing.outreach",
+        "confidence": 0.85,
+        "decay_rate": 0.05
+      }
+    },
+    {
+      "primitive": "leighton.update",
+      "input": {
+        "capsule": "business.marketing",
+        "rule": "engagement_based",
+        "delta_click": 0.02,
+        "delta_conversion": 0.10
+      }
+    }
+  ]
+}

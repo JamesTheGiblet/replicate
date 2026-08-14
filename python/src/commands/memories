@@ -1,0 +1,54 @@
+#!/bin/bash
+# Display memory history
+
+echo "💾 EXPLORER-d334 - MEMORY SYSTEM"
+echo "================================"
+echo ""
+
+# Check if chat history exists
+if [ -f "chat_history.json" ]; then
+    echo "📋 CHAT HISTORY:"
+    echo ""
+    
+    # Show recent conversations with timestamps
+    python3 -c "
+import json
+from datetime import datetime
+
+try:
+    with open('chat_history.json', 'r') as f:
+        history = json.load(f)
+    
+    # Show last 10 interactions
+    recent = history[-10:] if len(history) > 10 else history
+    for i, entry in enumerate(reversed(recent), 1):
+        time = entry.get('timestamp', 'Unknown')[:16]
+        user_msg = entry.get('user', '')[:50]
+        ai_msg = entry.get('ai', '')[:50]
+        print(f\"   {i}. [{time}] User: {user_msg}...\")
+        print(f\"      AI: {ai_msg}...\")
+        print(\"\")
+except Exception as e:
+    print(f\"   Error reading history: {e}\")
+"
+    
+    # Count total conversations
+    total=$(python3 -c "
+import json
+try:
+    with open('chat_history.json', 'r') as f:
+        history = json.load(f)
+    print(len(history))
+except:
+    print(0)
+")
+    echo "📊 Total conversations stored: $total"
+else
+    echo "📋 No chat history yet."
+    echo "   Start a conversation in the chat window!"
+fi
+
+echo ""
+echo "================================"
+echo "💡 Memories persist across sessions"
+echo "🔍 Use './forge memory-view <id>' to see full conversation"

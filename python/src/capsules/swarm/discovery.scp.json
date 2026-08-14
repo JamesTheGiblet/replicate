@@ -1,0 +1,14 @@
+{
+  "id": "forge/swarm-discovery",
+  "class": "EUCLID",
+  "intent": "Announce master node presence to the local network via UDP broadcast.",
+  "invoke": "swarm.broadcast",
+  "input": "",
+  "parent_id": "forge/swarm-orchestrator",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.0.0",
+    "codename": "Myriad Beacon"
+  }
+}

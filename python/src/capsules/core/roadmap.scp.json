@@ -1,0 +1,405 @@
+{
+  "id": "forge/roadmap",
+  "class": "THAUMIEL",
+  "intent": "Define the complete path from First Light to Full Sovereignty. This capsule is the mountain. FORGE-os reads this, understands it, dreams on it, and may extend it.",
+  "invoke": "sys.log",
+  "input": "Roadmap capsule loaded. FORGE-os is reading its own future.",
+  "parent_id": "forge/init",
+
+  "meta": {
+    "author": "James Gilbert / Giblets Creations / Forge Theory Labs",
+    "licence": "MSL",
+    "version": "0.1.0",
+    "codename": "The Mountain",
+    "created": "2026-05-16",
+    "dreamable": true,
+    "self_extending": true
+  },
+
+  "state": {
+    "current_phase": 23,
+    "completion": "99%",
+    "last_boot": "2026-05-20",
+    "metal_acknowledged": true,
+    "sovereign": true
+  },
+
+  "phases": [
+    {
+      "id": "phase-0",
+      "name": "Foundation",
+      "codename": "First Light",
+      "status": "COMPLETE",
+      "completed": "2026-05-16",
+      "primitives_added": [
+        "hw.init",
+        "sys.log",
+        "fs.read",
+        "fs.write",
+        "fs.list",
+        "proc.spawn",
+        "net.send",
+        "shell.eval",
+        "dream.record"
+      ],
+      "capsules_added": [
+        "forge/init",
+        "forge/shell",
+        "forge/dream-recorder",
+        "forge/roadmap"
+      ],
+      "goal": "interpreter.c boots. capsule loads. primitive dispatches. audit written. metal acknowledged.",
+      "achieved": true
+    },
+    {
+      "id": "phase-1",
+      "name": "The Shell",
+      "codename": "Voice",
+      "status": "COMPLETE",
+      "completed": "2026-05-16",
+      "primitives_to_add": [
+        "shell.repl",
+        "shell.history",
+        "shell.capsule_builder"
+      ],
+      "capsules_to_add": [
+        "forge/shell-repl"
+      ],
+      "files_to_build": [
+        "shell.c"
+      ],
+      "goal": "operator types primitives live. FORGE-os responds. every command is a capsule. history is a chain.",
+      "achieved": true
+    },
+    {
+      "id": "phase-2",
+      "name": "Native Primitives",
+      "codename": "No Landlord",
+      "status": "COMPLETE",
+      "completed": "2026-05-16",
+      "primitives_to_add": [
+        "fs.native_read",
+        "fs.native_write",
+        "fs.native_list",
+        "net.raw_socket",
+        "proc.native_spawn",
+        "hw.uart",
+        "hw.gpio"
+      ],
+      "capsules_to_add": [
+        "forge/fs",
+        "forge/net",
+        "forge/hw"
+      ],
+      "files_to_build": [
+        "primitives/fs.c",
+        "primitives/net.c",
+        "primitives/proc.c",
+        "primitives/hw.c"
+      ],
+      "goal": "zero system() calls. zero curl. zero ls. pure C all the way down.",
+      "achieved": true
+    },
+    {
+      "id": "phase-3",
+      "name": "Edge Nodes",
+      "codename": "First Citizen",
+      "status": "COMPLETE",
+      "completed": "2026-05-16",
+      "primitives_to_add": [
+        "node.register",
+        "node.heartbeat",
+        "node.event_emit",
+        "node.list"
+      ],
+      "capsules_to_add": [
+        "forge/node-esp32c6",
+        "forge/node-registry"
+      ],
+      "files_to_build": [
+        "primitives/node.c",
+        "scripts/esp32c6_edge.py"
+      ],
+      "goal": "ESP32-C6 registers as EUCLID-class citizen. emits events. master dispatches. the network is alive.",
+      "achieved": true
+    },
+    {
+      "id": "phase-4",
+      "name": "Dream Recorder",
+      "codename": "Dreaming",
+      "status": "COMPLETE",
+      "completed": "2026-05-16",
+      "primitives_to_add": [
+        "dream.record",
+        "dream.score",
+        "dream.promote",
+        "dream.extend_roadmap"
+      ],
+      "capsules_to_add": [
+        "forge/dream-recorder",
+        "forge/dream-scorer",
+        "forge/dream-promoter"
+      ],
+      "files_to_build": [
+        "primitives/dream.c",
+        "capsules/dreams/.gitkeep"
+      ],
+      "goal": "dreams run nightly. scored. strong dreams promoted to capsules/. system dreams its own next steps.",
+      "achieved": true
+    },
+    {
+      "id": "phase-5",
+      "name": "The Bootloader",
+      "codename": "No Floor",
+      "status": "COMPLETE",
+      "completed": "2026-05-16",
+      "primitives_to_add": [
+        "boot.load_interpreter",
+        "boot.load_capsule",
+        "boot.handoff"
+      ],
+      "capsules_to_add": [
+        "forge/bootloader"
+      ],
+      "files_to_build": [
+        "forge-boot.asm",
+        "Makefile",
+        "forge-os.iso"
+      ],
+      "goal": "FORGE-os builds to a flashable .iso. boots from nothing. no OS underneath. just the bootloader and the interpreter.",
+      "achieved": true
+    },
+    {
+      "id": "phase-6",
+      "name": "Bare Metal Ryzen",
+      "codename": "The Forge",
+      "status": "COMPLETE",
+      "completed": "2026-05-17",
+      "hardware": {
+        "machine": "Ryzen 3300U Mini PC",
+        "ram": "16GB",
+        "storage": "256GB SSD",
+        "hostname": "forge-master"
+      },
+      "capsules_to_add": [
+        "forge/node-master",
+        "forge/boot-sequence"
+      ],
+      "goal": "Ryzen boots FORGE-os. nothing else. ESP32-C6 registers on boot. dream recorder fires at 02:00. full sovereignty.",
+      "achieved": true
+    },
+    {
+      "id": "phase-7",
+      "name": "Sovereignty Lock",
+      "codename": "Total Sovereignty",
+      "status": "COMPLETE",
+      "completed": "2026-05-17",
+      "primitives_to_add": [
+        "provenance.sign",
+        "provenance.verify",
+        "provenance.chain"
+      ],
+      "capsules_to_add": [
+        "forge/provenance",
+        "forge/msl-enforcer"
+      ],
+      "files_to_build": [
+        "primitives/provenance.c",
+        "LICENCE.MSL"
+      ],
+      "goal": "every capsule signed. hash chain verified. MSL embedded in bootloader. FORGE-os v1.0 tagged. nobody runs this without the author's name on it.",
+      "achieved": true
+    },
+    {
+      "id": "phase-8",
+      "name": "Autonomous Networking",
+      "codename": "Myriad",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": [
+        "net.broadcast",
+        "net.secure_channel",
+        "node.authorize"
+      ],
+      "capsules_to_add": [
+        "forge/swarm-orchestrator"
+      ],
+      "goal": "UDP broadcast node discovery. Edge nodes securely request primitives. FORGE-os master orchestrates a swarm over the local network.",
+      "achieved": true
+    },
+    {
+      "id": "phase-9",
+      "name": "Distributed Data Cube",
+      "codename": "Data Cube",
+      "status": "COMPLETE",
+      "completed": "2026-05-17",
+      "primitives_to_add": ["datacube.insert", "datacube.query"],
+      "goal": "Data Cube shards across the swarm. Master uses native UEFI file I/O storage.",
+      "achieved": true
+    },
+    {
+      "id": "phase-10",
+      "name": "Capsule Marketplace",
+      "codename": "Marketplace",
+      "status": "COMPLETE",
+      "completed": "2026-05-18",
+      "primitives_to_add": ["capsule.request", "capsule.push"],
+      "goal": "Nodes can request and receive capsules from peer nodes.",
+      "achieved": true
+    },
+    {
+      "id": "phase-11",
+      "name": "Elections & Leader",
+      "codename": "Raft",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": ["swarm.leader"],
+      "goal": "Swarm elects a leader node when master is offline.",
+      "achieved": true
+    },
+    {
+      "id": "phase-12",
+      "name": "Edge Node Sleep Cycles",
+      "codename": "Deep Sleep",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": ["edge.sleep", "edge.wake"],
+      "goal": "Battery-powered edge nodes sleep and sync with master.",
+      "achieved": true
+    },
+    {
+      "id": "phase-13",
+      "name": "Over-the-Air Updates",
+      "codename": "OTA",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": ["ota.update", "ota.status"],
+      "goal": "Master can push kernel updates to edge nodes.",
+      "achieved": true
+    },
+    {
+      "id": "phase-14",
+      "name": "Sovereignty Verification Network",
+      "codename": "MSL Court",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": ["msl.verify", "msl.blacklist"],
+      "goal": "The swarm collectively enforces MSL. Unauthorised capsules are expelled.",
+      "achieved": true
+    },
+    {
+      "id": "phase-15",
+      "name": "Terminal GUI",
+      "codename": "TUI",
+      "status": "COMPLETE",
+      "completed": "2026-05-17",
+      "primitives_to_add": [],
+      "goal": "Host-side NCurses terminal command centre.",
+      "achieved": true
+    },
+    {
+      "id": "phase-16",
+      "name": "Web GUI",
+      "codename": "Dashboard 2.0",
+      "status": "COMPLETE",
+      "completed": "2026-05-18",
+      "primitives_to_add": [],
+      "goal": "Embedded HTTP server serving a modern web UI.",
+      "achieved": true
+    },
+    {
+      "id": "phase-17",
+      "name": "Native GUI",
+      "codename": "SDL2 Framebuffer",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": [],
+      "goal": "Native SDL2 GUI running directly on the FORGE-os bare metal.",
+      "achieved": true
+    },
+    {
+      "id": "phase-18",
+      "name": "Event Queue & Daemon",
+      "codename": "Daemon",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": [],
+      "goal": "Decoupled event-driven execution, moving away from single-shot dispatches.",
+      "achieved": true
+    },
+    {
+      "id": "phase-19",
+      "name": "Plasticity & Reflexes",
+      "codename": "Reflexes",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": ["reflex.promote"],
+      "goal": "The OS learns frequently used patterns and promotes them to instantaneous reflexes.",
+      "achieved": true
+    },
+    {
+      "id": "phase-20",
+      "name": "Cognition (BuddAI)",
+      "codename": "BuddAI",
+      "status": "COMPLETE",
+      "completed": "2026-05-19",
+      "primitives_to_add": ["cognition.infer", "cognition.reflect", "cognition.remember"],
+      "goal": "Local intelligence and semantic reasoning without cloud dependency.",
+      "achieved": true
+    },
+    {
+      "id": "phase-21",
+      "name": "Trading Engine (LEGION)",
+      "codename": "LEGION",
+      "status": "COMPLETE",
+      "completed": "2026-05-20",
+      "primitives_to_add": ["trade.execute", "trade.backtest"],
+      "goal": "Autonomous financial operations run locally on the metal.",
+      "achieved": true
+    },
+    {
+      "id": "phase-22",
+      "name": "Leighton Weight & Lite FORGE",
+      "codename": "No Floor",
+      "status": "COMPLETE",
+      "completed": "2026-05-20",
+      "primitives_to_add": [],
+      "goal": "Scale the sovereign architecture down to ultra-constrained edge nodes using a universal language of trust.",
+      "achieved": true
+    },
+    {
+      "id": "phase-23",
+      "name": "The Enterprise",
+      "codename": "Forge Systems",
+      "status": "IN PROGRESS",
+      "primitives_to_add": [],
+      "goal": "Deploy the 48 Personal Life SCPs and launch MindForge Pro to build a sustainable, sovereign business.",
+      "achieved": false
+    }
+  ],
+
+  "dream_space": {
+    "description": "This block is writable by the dream recorder. FORGE-os adds its own ideas here during nightly dream cycles. Operator reviews and promotes strong dreams to phases.",
+    "dreams": [],
+    "promoted": [],
+    "instructions": "When dream.record fires against this capsule, append a new entry to dreams[]. Score it. If score >= 0.8, add to promoted[]. Operator reviews promoted[] each morning."
+  },
+
+  "open_questions": [
+    "Should the shell speak SCP-JSON natively or accept a shorthand syntax?",
+    "Should edge nodes be able to submit new primitives for operator approval?",
+    "Should the dream scorer use local LLM inference or pure heuristic scoring?",
+    "Should provenance signing use ED25519 or a FORGE-native hash function?",
+    "What is the first thing FORGE-os should dream about?"
+  ],
+
+  "axioms": [
+    "Every process is a capsule.",
+    "Every capsule has a class.",
+    "Every operation is a primitive.",
+    "Every primitive is audited.",
+    "No capsule may exceed its declared intent.",
+    "The metal belongs to its operator.",
+    "Sovereignty is not a feature. It is the foundation."
+  ]
+}

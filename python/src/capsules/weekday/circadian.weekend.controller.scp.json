@@ -1,0 +1,44 @@
+{
+  "id": "circadian.weekend.controller",
+  "title": "Circadian Weekend Controller — Thaumiel",
+  "class": "THAUMIEL",
+  "profile": "system",
+  "triggers": {
+    "cron": "0 9 * * 6,0"
+  },
+  "actions": [
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Weekend mode engaged. Reflex promotion suspended. Leighton updates paused."
+      }
+    },
+    {
+      "primitive": "leighton.freeze",
+      "input": {
+        "capsules": "all",
+        "duration_hours": 48
+      }
+    },
+    {
+      "primitive": "reflex.suspend",
+      "input": {
+        "duration_hours": 48
+      }
+    },
+    {
+      "primitive": "decay.run",
+      "input": {
+        "scope": "weekend_recovery",
+        "rate": 0.005
+      }
+    },
+    {
+      "primitive": "day.detect",
+      "input": {
+        "saturday": "standard_weekend",
+        "sunday": "recovery_mode"
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "circadian.nap.dream",
+  "title": "Circadian — Midday Dream / Nap",
+  "class": "EUCLID",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.nap.dream"
+  },
+  "actions": [
+    {
+      "primitive": "dream.run",
+      "input": {
+        "profile": "midday",
+        "duration": 60
+      }
+    },
+    {
+      "primitive": "decay.run",
+      "input": {
+        "scope": "short_term",
+        "rate": 0.03
+      }
+    },
+    {
+      "primitive": "dream.score",
+      "input": {
+        "promote_threshold": 0.75
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fiction",
+        "payload": {
+          "type": "nap.dream.output",
+          "tag": "midday_synthesis",
+          "ts": "$now",
+          "score": "$dream_score"
+        },
+        "source_id": "circadian.nap.dream",
+        "confidence": 0.7,
+        "decay_rate": 0.04
+      }
+    }
+  ],
+  "emit_event": "circadian.evening.session"
+}

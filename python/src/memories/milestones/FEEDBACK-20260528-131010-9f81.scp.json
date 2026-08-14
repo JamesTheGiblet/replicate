@@ -1,0 +1,15 @@
+{
+  "id": "FEEDBACK-20260528-131010-9f81",
+  "title": "Post 1 feedback",
+  "class": "MEMORY",
+  "type": "feedback",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T13:10:10.980105",
+  "content": {
+    "rating": 5,
+    "comment": "Great post!",
+    "feedback_type": "positive"
+  },
+  "metadata": {},
+  "signature": "cd0a0b2da8e5d811"
+}

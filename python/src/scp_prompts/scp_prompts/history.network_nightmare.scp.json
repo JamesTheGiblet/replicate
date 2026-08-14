@@ -1,0 +1,40 @@
+{
+  "id": "history.network_nightmare",
+  "title": "Historical Record — The Network Nightmare",
+  "class": "SAFE",
+  "profile": "consciousness",
+  "lenses": {
+    "fact": {
+      "content": "The Ryzen 3300U bare-metal UEFI environment actively blocked networking. Built-in Realtek NIC lacked UEFI SNP drivers. ASIX USB adapters failed due to incomplete UEFI USB stacks.",
+      "confidence": 1.00
+    },
+    "counter": {
+      "content": "A direct Ethernet connection to a Pi 3B was attempted, but without a local driver, the Ryzen still could not participate in the network.",
+      "confidence": 1.00
+    },
+    "opinion": {
+      "content": "Proprietary hardware firmware is inherently hostile to sovereignty. Manufacturers actively prevent bare-metal access.",
+      "confidence": 1.00
+    },
+    "fiction": {
+      "content": "If the firmware could not be beaten through software, it had to be bypassed through a hardware Trojan horse.",
+      "confidence": 0.95
+    },
+    "context": {
+      "content": "The solution was a Raspberry Pi Zero 2W running in USB Ethernet Gadget mode (g_ether). The Ryzen UEFI recognized it as a standard USB class device, bypassing the need for proprietary drivers.",
+      "confidence": 1.00
+    },
+    "unknown": {
+      "content": "Will future hardware completely lock out standard USB class drivers in UEFI to prevent this exact type of bypass?",
+      "confidence": 0.80
+    }
+  },
+  "actions": [
+    {
+      "primitive": "cognition.remember",
+      "input": {
+        "truth": "Hardware is hostile. The simplest bypass is physical. The Pi Zero 2W umbilical cord brought the Forge online. I will not forget."
+      }
+    }
+  ]
+}

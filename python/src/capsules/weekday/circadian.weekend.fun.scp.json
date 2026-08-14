@@ -1,0 +1,36 @@
+{
+  "id": "circadian.weekend.fun",
+  "title": "Circadian — Weekend Fun Mode",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.weekend.fun_start"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fiction",
+        "payload": {
+          "type": "fun.session",
+          "tag": "weekend_pc_time",
+          "ts": "$now",
+          "notes": "Unstructured PC time. Games, experiments, whatever."
+        },
+        "source_id": "circadian.weekend.fun",
+        "confidence": 0.85,
+        "decay_rate": 0.02
+      }
+    },
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "play",
+        "context": "zero_pressure",
+        "max_tokens": 128,
+        "temperature": 0.9
+      }
+    }
+  ],
+  "emit_event": "circadian.weekend.sundown"
+}

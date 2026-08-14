@@ -1,0 +1,34 @@
+{
+  "id": "circadian.transit.drive",
+  "title": "Circadian — Transit Drive",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.transit.drive"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "idea_generation",
+        "context": "low_load_transit",
+        "max_tokens": 256
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fiction",
+        "payload": {
+          "type": "idea.seed",
+          "tag": "transit_thought",
+          "ts": "$now"
+        },
+        "source_id": "circadian.transit.drive",
+        "confidence": 0.6,
+        "decay_rate": 0.05
+      }
+    }
+  ],
+  "emit_event": "circadian.arrival.work"
+}

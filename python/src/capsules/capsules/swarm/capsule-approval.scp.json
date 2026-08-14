@@ -1,0 +1,14 @@
+{
+  "id": "forge/capsule-approval",
+  "class": "THAUMIEL",
+  "intent": "Authorizes a specific edge node to receive remote capsule execution pushes.",
+  "invoke": "capsule.authorize",
+  "input": "esp32-robot-01",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.1.0",
+    "codename": "Marketplace"
+  }
+}

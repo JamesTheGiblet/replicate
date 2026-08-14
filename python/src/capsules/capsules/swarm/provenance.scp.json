@@ -1,0 +1,15 @@
+{
+  "id": "forge/provenance",
+  "class": "THAUMIEL",
+  "intent": "Verify the hash chain of FORGE-os capsules and ensure MSL compliance.",
+  "invoke": "provenance.chain",
+  "input": "audit",
+  "parent_id": "forge/init",
+  "next": "swarm-orchestrator.scp.json",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.0.0",
+    "codename": "Total Sovereignty"
+  }
+}

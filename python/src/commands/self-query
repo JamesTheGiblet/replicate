@@ -1,0 +1,15 @@
+#!/bin/bash
+# Ask the forge about itself
+
+cd ~/forge
+QUESTION="$*"
+
+if [ -z "$QUESTION" ]; then
+    echo "Ask me about myself. Examples:"
+    echo "  ./forge self-query what is my name"
+    echo "  ./forge self-query what is my purpose"
+    echo "  ./forge self-query how many dreams do I have"
+    echo "  ./forge self-query what can you do"
+else
+    python3 src/self_awareness.py query "$QUESTION"
+fi

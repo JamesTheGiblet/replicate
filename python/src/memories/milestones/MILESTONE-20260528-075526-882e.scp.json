@@ -1,0 +1,13 @@
+{
+  "id": "MILESTONE-20260528-075526-882e",
+  "title": "Created capsule: dream_logic_explorer",
+  "class": "MEMORY",
+  "type": "milestone",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T07:55:26.762168",
+  "content": "Explorer-d334 generated a new SCP capsule based on memories",
+  "metadata": {
+    "importance": "high"
+  },
+  "signature": "7bb6497358fb8a45"
+}

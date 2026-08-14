@@ -1,0 +1,15 @@
+{
+  "id": "DOCUMENT-20260528-121059-6f8f",
+  "title": "test_doc.txt",
+  "class": "MEMORY",
+  "type": "document",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T12:10:59.106784",
+  "content": {
+    "content": "This is a test document for Explorer-d334 to ingest.\nIt contains important information about the forge.\n",
+    "tags": "test,forge,document",
+    "summary": "This is a test document for Explorer-d334 to ingest.\nIt contains important information about the forge.\n"
+  },
+  "metadata": {},
+  "signature": "00a6ea18437de939"
+}

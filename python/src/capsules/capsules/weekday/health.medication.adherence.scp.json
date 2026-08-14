@@ -1,0 +1,46 @@
+{
+  "id": "health.medication.adherence",
+  "title": "Health — Medication Adherence",
+  "class": "EUCLID",
+  "profile": "health",
+  "triggers": {
+    "cron": "0 8,20 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "health.medication.check",
+      "input": {
+        "schedule": "prescribed",
+        "medications": ["gout_medication", "pain_relief", "anti_inflammatory"]
+      }
+    },
+    {
+      "primitive": "leighton.update",
+      "input": {
+        "capsule": "health.medication.adherence",
+        "rule": "adherence_based",
+        "delta_taken": 0.03,
+        "delta_missed": -0.15
+      }
+    },
+    {
+      "primitive": "health.medication.remind",
+      "input": {
+        "if_missed": true,
+        "escalate_after": 60
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "medication.log",
+          "medication": "$name",
+          "taken": "$taken",
+          "ts": "$now"
+        }
+      }
+    }
+  ]
+}

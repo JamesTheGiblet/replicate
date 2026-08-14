@@ -1,0 +1,40 @@
+{
+  "id": "health.fatigue.detection",
+  "title": "Health — Fatigue & Burnout Detection",
+  "class": "EUCLID",
+  "profile": "health",
+  "triggers": {
+    "cron": "0 */2 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "health.metrics.query",
+      "input": {
+        "metrics": ["sleep_hours", "deepwork_hours", "pain_levels", "mood_score"]
+      }
+    },
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "detect_burnout_risk",
+        "prompt": "Based on last 7 days: sleep, work hours, pain, mood. Estimate burnout risk (0-100).",
+        "max_tokens": 32
+      }
+    },
+    {
+      "primitive": "health.burnout.respond",
+      "input": {
+        "risk_threshold": 70,
+        "action_burnout": "trigger_recovery_day",
+        "action_warning": "suggest_rest"
+      }
+    },
+    {
+      "primitive": "notification.send",
+      "input": {
+        "if_risk_high": true,
+        "message": "⚠️ Burnout risk detected. Consider rest."
+      }
+    }
+  ]
+}

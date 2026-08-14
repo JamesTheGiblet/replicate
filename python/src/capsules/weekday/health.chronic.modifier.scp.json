@@ -1,0 +1,42 @@
+{
+  "id": "health.chronic.modifier",
+  "title": "Health — Chronic Condition Modifiers",
+  "class": "THAUMIEL",
+  "profile": "health",
+  "triggers": {
+    "on_load": true
+  },
+  "actions": [
+    {
+      "primitive": "leighton.set_baseline",
+      "input": {
+        "condition": "gout",
+        "baseline_adjustment": -0.10,
+        "triggers": ["red_meat", "alcohol", "dehydration"]
+      }
+    },
+    {
+      "primitive": "leighton.set_baseline",
+      "input": {
+        "condition": "chronic_pain",
+        "baseline_adjustment": -0.15,
+        "capsules": ["morning.deepwork", "evening.expansion"]
+      }
+    },
+    {
+      "primitive": "leighton.set_baseline",
+      "input": {
+        "condition": "plurectomy",
+        "baseline_adjustment": -0.10,
+        "reminders": "breathing_exercises"
+      }
+    },
+    {
+      "primitive": "schedule.adjust",
+      "input": {
+        "condition": "mobility_issues",
+        "adjustment": "reduce_standing_time"
+      }
+    }
+  ]
+}

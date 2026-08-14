@@ -1,0 +1,15 @@
+{
+  "id": "DOCUMENT-20260528-121254-16e9",
+  "title": "test_integration.txt",
+  "class": "MEMORY",
+  "type": "document",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T12:12:54.598443",
+  "content": {
+    "content": "This is a philosophical document about artificial intelligence.\nIt discusses consciousness, dreams, and the nature of self-awareness.\nThe forge learns from everything it reads.\n",
+    "tags": "philosophy,consciousness",
+    "ingested_at": "2026-05-28T12:12:54.598431"
+  },
+  "metadata": {},
+  "signature": "141ae74531ec83d7"
+}

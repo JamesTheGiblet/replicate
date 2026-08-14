@@ -1,0 +1,14 @@
+{
+  "id": "forge/lens-temporal",
+  "class": "EUCLID",
+  "intent": "Analyzes Data Cube facts over time to identify trends and seasonality.",
+  "invoke": "lens.temporal",
+  "input": "",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.4.0",
+    "codename": "Truth Engine"
+  }
+}

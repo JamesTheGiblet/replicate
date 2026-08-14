@@ -1,0 +1,7 @@
+{
+  "id": "forge/cron-purge",
+  "class": "KETER",
+  "intent": "Nightly maintenance to prevent event bus overflow",
+  "invoke": "queue.purge",
+  "input": ""
+}

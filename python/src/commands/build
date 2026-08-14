@@ -1,0 +1,18 @@
+#!/bin/bash
+# Direct code generation with better prompting
+
+cd ~/forge
+REQUEST="$*"
+
+echo "🔧 Building: $REQUEST"
+echo ""
+
+# Use the generate command with better prompting
+./forge generate "$REQUEST"
+
+# Also save to a file for reference
+mkdir -p generated
+echo "// Generated: $REQUEST" > generated/latest.c
+./forge generate "$REQUEST" >> generated/latest.c 2>/dev/null
+echo ""
+echo "💾 Saved to generated/latest.c"

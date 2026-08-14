@@ -1,0 +1,33 @@
+{
+  "id": "circadian.morning.transition",
+  "title": "Circadian — Morning Transition",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.morning.transition"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Close the morning work loop. What is the single most important carry-over for later?",
+        "mode": "summary"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "transition.marker",
+          "tag": "morning_to_day",
+          "ts": "$now"
+        },
+        "source_id": "circadian.morning.transition",
+        "confidence": 0.8,
+        "decay_rate": 0.02
+      }
+    }
+  ],
+  "emit_event": "circadian.transit.drive"
+}

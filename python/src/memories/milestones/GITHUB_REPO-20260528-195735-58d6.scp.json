@@ -1,0 +1,24 @@
+{
+  "id": "GITHUB_REPO-20260528-195735-58d6",
+  "title": "Project-Aegis-CLI-MVP-Ready",
+  "class": "MEMORY",
+  "type": "github_repo",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T19:57:35.631086",
+  "content": {
+    "name": "Project-Aegis-CLI-MVP-Ready",
+    "type": "github_repository",
+    "description": "A simple command-line tool to automate the generation of essential security documentation for your projects.",
+    "language": "Python",
+    "stats": {
+      "stars": 4,
+      "forks": 0
+    },
+    "url": "https://github.com/JamesTheGiblet/Project-Aegis-CLI-MVP-Ready",
+    "topics": [],
+    "created": "2025-08-04T07:05:45Z",
+    "updated": "2025-09-24T13:31:19Z"
+  },
+  "metadata": {},
+  "signature": "e600e688415fcd3d"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "is_even",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "return (n % 2 == 0) ? 1 : 0;"
+}

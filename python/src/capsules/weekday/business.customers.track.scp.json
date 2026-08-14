@@ -1,0 +1,54 @@
+{
+  "id": "business.customers.track",
+  "title": "Business — Customer Tracking",
+  "class": "EUCLID",
+  "profile": "business",
+  "triggers": {
+    "cron": "0 */6 * * *",
+    "on_event": "customer.new"
+  },
+  "actions": [
+    {
+      "primitive": "customer.add",
+      "input": {
+        "name": "$name",
+        "email": "$email",
+        "product": "$product_id",
+        "tier": "$tier",
+        "signup_date": "$now"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "customer.record",
+          "customer_id": "$id",
+          "email": "$email",
+          "product": "$product",
+          "status": "active",
+          "lifetime_value": 0,
+          "ts": "$now"
+        },
+        "source_id": "business.customers.track",
+        "confidence": 0.99,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "leighton.update",
+      "input": {
+        "capsule": "business.health",
+        "rule": "customer_growth",
+        "delta_per_customer": 0.01
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "New customer: $name ($email) for $product"
+      }
+    }
+  ]
+}

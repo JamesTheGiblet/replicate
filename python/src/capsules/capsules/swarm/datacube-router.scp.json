@@ -1,0 +1,14 @@
+{
+  "id": "forge/datacube-router",
+  "class": "KETER",
+  "intent": "Routes Data Cube queries to the correct shard on the Swarm.",
+  "invoke": "sys.log",
+  "input": "Data Cube Router online. Consistent hash ring active.",
+  "parent_id": "forge/swarm-orchestrator",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.0.0",
+    "codename": "Data Cube"
+  }
+}

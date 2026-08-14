@@ -1,0 +1,14 @@
+{
+  "id": "forge/lens-causal",
+  "class": "KETER",
+  "intent": "Calculates correlation and Granger causality between two datasets.",
+  "invoke": "lens.causal",
+  "input": "",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.4.0",
+    "codename": "Truth Engine"
+  }
+}

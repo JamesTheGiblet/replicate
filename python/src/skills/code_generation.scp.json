@@ -1,0 +1,8 @@
+{
+  "name": "code_generation",
+  "type": "skill",
+  "description": "Generate C code from natural language descriptions",
+  "learning_rate": 0.02,
+  "command": "./forge generate",
+  "trust": 0.65
+}

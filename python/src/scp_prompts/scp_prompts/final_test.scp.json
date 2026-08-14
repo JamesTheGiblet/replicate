@@ -1,0 +1,6 @@
+{
+  "name": "final_test",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "return n * n;"
+}

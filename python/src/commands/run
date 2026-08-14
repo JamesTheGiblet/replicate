@@ -1,0 +1,8 @@
+#!/bin/bash
+SCP_NAME="$1"
+shift
+if [ ! -f "scp_prompts/${SCP_NAME}.json" ]; then
+    echo "not found"
+    exit 1
+fi
+python src/scp_runner.py "$SCP_NAME" "$@"

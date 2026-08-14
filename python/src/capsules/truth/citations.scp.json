@@ -1,0 +1,14 @@
+{
+  "id": "forge/citations",
+  "class": "EUCLID",
+  "intent": "Manages the citation index for the Data Cube.",
+  "invoke": "sys.log",
+  "input": "Citation index active. All new facts require a source.",
+  "parent_id": "forge/swarm-orchestrator",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.2.0",
+    "codename": "Truth Layer 1"
+  }
+}

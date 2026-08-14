@@ -1,0 +1,15 @@
+{
+  "id": "forge/node-esp32c6",
+  "class": "EUCLID",
+  "intent": "Defines the standard ESP32-C6 edge node citizen for the FORGE network.",
+  "invoke": "node.register",
+  "input": "esp32-c6|sensors,wifi,ble",
+  "parent_id": "forge/node-registry",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "0.1.0",
+    "hardware": "ESP32-C6",
+    "capabilities": ["telemetry", "heartbeat"]
+  }
+}

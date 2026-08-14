@@ -1,0 +1,67 @@
+{
+  "id": "circadian.monday.reset",
+  "title": "Circadian — Monday Morning Reset",
+  "class": "THAUMIEL",
+  "profile": "system",
+  "triggers": {
+    "on_event": "circadian.monday.reset",
+    "cron": "0 5 * * 1"
+  },
+  "actions": [
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Monday reset: restoring full cognitive capacity."
+      }
+    },
+    {
+      "primitive": "leighton.unfreeze",
+      "input": {
+        "capsules": "all"
+      }
+    },
+    {
+      "primitive": "reflex.resume",
+      "input": {}
+    },
+    {
+      "primitive": "decay.reset",
+      "input": {
+        "scope": "global",
+        "multiplier": 1.0
+      }
+    },
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fiction",
+        "filter": { "tag": "sunday_recovery", "range": "last12h" }
+      }
+    },
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "monday_launch",
+        "context": "post_recovery",
+        "prompt": "Extract 3 priorities for Monday from Sunday's recovery.",
+        "max_tokens": 256
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "morning.priorities",
+          "tag": "monday_launch",
+          "ts": "$now",
+          "notes": "Monday priorities extracted from Sunday recovery."
+        },
+        "source_id": "circadian.monday.reset",
+        "confidence": 0.95,
+        "decay_rate": 0.01
+      }
+    }
+  ],
+  "emit_event": "circadian.morning.warmup"
+}

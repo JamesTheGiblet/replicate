@@ -1,0 +1,6 @@
+{
+  "name": "hello",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "printf(\"Number: %d\\n\", n); return 0;"
+}

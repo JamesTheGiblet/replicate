@@ -1,0 +1,11 @@
+{
+  "id": "INSIGHT-20260528-075730-9607",
+  "title": "Performance matters",
+  "class": "MEMORY",
+  "type": "insight",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T07:57:30.434028",
+  "content": "Capsules should compile quickly on S24 Ultra",
+  "metadata": {},
+  "signature": "b84f3b6e1cfd2841"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "circadian.sunday.evening",
+  "title": "Circadian — Sunday Recovery Evening",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "cron": "0 20 * * 0"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "sunday.recovery",
+          "tag": "no_alcohol",
+          "ts": "$now",
+          "notes": "Sunday evening. No alcohol. Preparing for Monday."
+        },
+        "source_id": "circadian.sunday.evening",
+        "confidence": 0.98,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Weekend almost over. What restored you? What are you ready to build tomorrow?",
+        "mode": "gentle_closure",
+        "max_tokens": 128
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Sunday recovery: winddown started."
+      }
+    }
+  ],
+  "emit_event": "circadian.sunday.bedtime"
+}

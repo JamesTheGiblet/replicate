@@ -1,0 +1,14 @@
+{
+  "id": "forge/lens-relational",
+  "class": "EUCLID",
+  "intent": "Constructs citation graphs from Data Cube sources.",
+  "invoke": "lens.relational",
+  "input": "",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.4.0",
+    "codename": "Truth Engine"
+  }
+}

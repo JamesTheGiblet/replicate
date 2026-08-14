@@ -1,0 +1,7 @@
+#!/bin/bash
+# Generate self-documentation
+
+cd ~/forge
+python3 src/self_awareness.py document
+echo ""
+echo "📄 Documentation saved to documentation/self_doc_*.json"

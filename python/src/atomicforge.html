@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPLORER-d334 - The Forge</title>
+    <link href="/website/css/fonts.css" rel="stylesheet">
+    <style>
+        :root {
+            --ember: #ff6b1a;
+            --ember-dim: #c94d00;
+            --teal: #4ecdc4;
+            --teal-dim: #2a8a83;
+            --plasma: #ffe066;
+            --void: #050508;
+            --deep: #0c0c14;
+            --mid: #12121f;
+            --surface: #1a1a2e;
+            --surface2: #1f1f35;
+            --text: #dde0e8;
+            --text-dim: #888;
+            --danger: #ff4457;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--void);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: -30%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(255,107,26,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            padding: 0 20px 40px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 30px;
+            margin-bottom: 36px;
+            background: linear-gradient(90deg, rgba(255,107,26,0.07), rgba(78,205,196,0.04));
+            border-bottom: 1px solid rgba(255,107,26,0.25);
+            border-top: 1px solid rgba(255,107,26,0.08);
+            flex-wrap: wrap;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.3em;
+            letter-spacing: 0.08em;
+            color: var(--ember);
+            text-shadow: 0 0 20px rgba(255,107,26,0.5), 0 0 60px rgba(255,107,26,0.2);
+            animation: glitch 8s infinite;
+            cursor: default;
+        }
+        .logo-flame { display: inline-block; animation: flicker 1.8s ease-in-out infinite; }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            45% { opacity: 0.8; transform: scale(0.95) rotate(-3deg); }
+            50% { opacity: 1; transform: scale(1.05) rotate(2deg); }
+            55% { opacity: 0.9; }
+        }
+        @keyframes glitch {
+            0%, 90%, 100% { text-shadow: 0 0 20px rgba(255,107,26,0.5), 0 0 60px rgba(255,107,26,0.2); }
+            92% { text-shadow: -2px 0 var(--teal), 2px 0 var(--danger), 0 0 20px rgba(255,107,26,0.5); }
+            94% { text-shadow: 2px 0 var(--teal), -2px 0 var(--danger), 0 0 20px rgba(255,107,26,0.5); }
+            96% { text-shadow: 0 0 20px rgba(255,107,26,0.5), 0 0 60px rgba(255,107,26,0.2); }
+        }
+        .nav-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav-btn {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+            background: transparent;
+            border: 1px solid rgba(255,107,26,0.2);
+            color: var(--text-dim);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,107,26,0.12);
+            border-color: var(--ember);
+            color: var(--ember);
+            box-shadow: 0 0 12px rgba(255,107,26,0.2), inset 0 0 8px rgba(255,107,26,0.05);
+        }
+        .command-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 12px 18px;
+            margin-bottom: 28px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,107,26,0.1);
+            border-radius: 6px;
+            align-items: center;
+        }
+        .command-bar::before {
+            content: 'forge://';
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            color: var(--ember-dim);
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+        .cmd-btn {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.78em;
+            background: rgba(255,107,26,0.06);
+            border: 1px solid rgba(255,107,26,0.2);
+            color: #cc7a44;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.03em;
+        }
+        .cmd-btn:hover {
+            background: rgba(255,107,26,0.15);
+            border-color: var(--ember);
+            color: var(--ember);
+            box-shadow: 0 0 8px rgba(255,107,26,0.2);
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,107,26,0.15);
+            border-left: 3px solid var(--ember);
+            border-radius: 4px;
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 1px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--ember), transparent);
+            transition: width 0.4s;
+        }
+        .stat-card:hover { background: rgba(255,107,26,0.06); border-color: var(--ember); }
+        .stat-card:hover::after { width: 100%; }
+        .stat-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--ember);
+            text-shadow: 0 0 20px rgba(255,107,26,0.4);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.72em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 6px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            padding: 28px 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ember-dim), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(255,107,26,0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(255,107,26,0.12), 0 4px 12px rgba(0,0,0,0.5);
+        }
+        .card:hover::before { opacity: 1; }
+        .card-icon { font-size: 2.4em; margin-bottom: 14px; display: block; transition: transform 0.3s; }
+        .card:hover .card-icon { transform: scale(1.15) rotate(-5deg); }
+        .card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--teal);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .card p { color: var(--text-dim); font-size: 0.85em; line-height: 1.4; }
+        .card-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            font-size: 0.75em;
+            color: var(--teal-dim);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 6px var(--teal);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--teal); }
+            50% { opacity: 0.5; box-shadow: 0 0 2px var(--teal); }
+        }
+        .logs-wrap {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,107,26,0.12);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .logs-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: rgba(255,107,26,0.06);
+            border-bottom: 1px solid rgba(255,107,26,0.12);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.78em;
+            color: var(--ember);
+            letter-spacing: 0.1em;
+        }
+        .logs {
+            padding: 12px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: #777;
+        }
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 22px 0 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            color: var(--ember-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .section-divider::before, .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,107,26,0.25), transparent);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+        .modal.active { display: flex; align-items: center; justify-content: center; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content {
+            width: 92%;
+            height: 88%;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid rgba(255,107,26,0.3);
+            box-shadow: 0 0 80px rgba(255,107,26,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .modal-header {
+            padding: 14px 20px;
+            background: rgba(255,107,26,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,107,26,0.2);
+        }
+        .modal-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--ember);
+        }
+        .close-btn {
+            font-family: 'Share Tech Mono', monospace;
+            background: rgba(255,68,87,0.1);
+            border: 1px solid rgba(255,68,87,0.3);
+            color: var(--danger);
+            font-size: 16px;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-btn:hover { background: rgba(255,68,87,0.25); }
+        iframe { width: 100%; flex: 1; border: none; }
+        .content-frame { display: none; }
+        .content-frame.active { display: block; }
+        #cyberforgeView iframe, #spatialpodView iframe, #websiteView iframe {
+            width: 100%; height: calc(100vh - 120px); border: none;
+        }
+        .footer {
+            text-align: center;
+            padding: 24px 20px 12px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            color: rgba(255,107,26,0.35);
+            letter-spacing: 0.12em;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,107,26,0.07);
+        }
+    </style>
+</head>
+<body>
+<div class="nav-bar">
+    <div class="logo"><span class="logo-flame">🔥</span> EXPLORER-d334</div>
+    <div class="nav-buttons">
+        <button class="nav-btn active" onclick="showPage('dashboard', this)">⬡ DASHBOARD</button>
+        <button class="nav-btn" onclick="showPage('cyberforge', this)">🛡 CYBERFORGE</button>
+        <button class="nav-btn" onclick="showPage('spatialpod', this)">◈ SPATIALPOD</button>
+        <button class="nav-btn" onclick="showPage('website', this)">⬡ WEBSITE</button>
+    </div>
+</div>
+
+<!-- MODALS -->
+<div id="chatModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>💬 CHAT INTERFACE</h2><button class="close-btn" onclick="closeModal('chatModal')">✕</button></div><iframe src="/chat.html"></iframe></div></div>
+<div id="capsulesModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>📦 AUTOMATION CAPSULES</h2><button class="close-btn" onclick="closeModal('capsulesModal')">✕</button></div><iframe src="/capsules-ui.html"></iframe></div></div>
+<div id="trustModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>🟢 TRUST SYSTEM</h2><button class="close-btn" onclick="closeModal('trustModal')">✕</button></div><iframe src="/trust-view.html"></iframe></div></div>
+<div id="sensorsModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>📡 SENSORS & ENVIRONMENT</h2><button class="close-btn" onclick="closeModal('sensorsModal')">✕</button></div><iframe src="/sensors-view.html"></iframe></div></div>
+<div id="memoriesModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>💾 CONVERSATION MEMORIES</h2><button class="close-btn" onclick="closeModal('memoriesModal')">✕</button></div><iframe src="/memories-view.html"></iframe></div></div>
+
+<div class="page-wrap">
+    <div id="dashboardView" class="content-frame active">
+        <div class="command-bar">
+            <button class="cmd-btn" onclick="runCommand('think')">🧠 think</button>
+            <button class="cmd-btn" onclick="runCommand('dream')">💭 dream</button>
+            <button class="cmd-btn" onclick="runCommand('health')">🏥 health</button>
+            <button class="cmd-btn" onclick="runCommand('cubes')">📦 cubes</button>
+            <button class="cmd-btn" onclick="runCommand('status')">📊 status</button>
+            <button class="cmd-btn" onclick="runCommand('backup')">💾 backup</button>
+        </div>
+        <div class="stats">
+            <div class="stat-card" onclick="runCommand('cubes')"><div class="stat-value" id="cubeCount">39</div><div class="stat-label">Knowledge Cubes</div></div>
+            <div class="stat-card" onclick="openModal('capsulesModal')"><div class="stat-value" id="scpCount">96</div><div class="stat-label">SCP Functions</div></div>
+            <div class="stat-card" onclick="openModal('trustModal')"><div class="stat-value" id="trustScore">96</div><div class="stat-label">Trust Score %</div></div>
+            <div class="stat-card"><div class="stat-value" id="uptime" style="font-size:1.3em;">0h 0m 0s</div><div class="stat-label">Uptime</div></div>
+        </div>
+        <div class="section-divider">core modules</div>
+        <div class="dashboard">
+            <div class="card" onclick="openModal('chatModal')"><span class="card-icon">💬</span><h3>Chat</h3><p>AI conversation interface</p><div class="card-status"><span class="dot"></span> READY</div></div>
+            <div class="card" onclick="openModal('capsulesModal')"><span class="card-icon">📦</span><h3>Capsules</h3><p>85 automation capsules loaded</p><div class="card-status"><span class="dot"></span> ACTIVE</div></div>
+            <div class="card" onclick="openModal('trustModal')"><span class="card-icon">🟢</span><h3>Trust</h3><p>Leighton Weight system — 96%</p><div class="card-status"><span class="dot"></span> NOMINAL</div></div>
+            <div class="card" onclick="openModal('memoriesModal')"><span class="card-icon">💾</span><h3>Memories</h3><p>Conversation history archive</p><div class="card-status"><span class="dot"></span> INDEXED</div></div>
+            <div class="card" onclick="openModal('sensorsModal')"><span class="card-icon">📡</span><h3>Sensors</h3><p>Device & environment monitoring</p><div class="card-status"><span class="dot"></span> LIVE</div></div>
+        </div>
+        <div class="section-divider">system log</div>
+        <div class="logs-wrap"><div class="logs-header"><span class="dot"></span> SYS_LOG — EXPLORER-d334</div><div class="logs" id="logs"><div class="log-entry"><span class="log-time SUCCESS">[SUCCESS]</span> Dashboard ready — all modals operational</div><div class="log-entry"><span class="log-time INFO">[INFO]</span> EXPLORER-d334 initialised</div><div class="log-entry"><span class="log-time SUCCESS">[SUCCESS]</span> All 310 tests passing</div></div></div>
+        <div class="footer">🔥 THE FORGE SPREADS. THE FORGE DREAMS. &nbsp;|&nbsp; YOUR INTELLIGENCE. YOUR INFRASTRUCTURE. &nbsp;|&nbsp; SOVEREIGN BY DESIGN.</div>
+    </div>
+    <div id="cyberforgeView" class="content-frame"><iframe src="/cyberforge.html"></iframe></div>
+    <div id="spatialpodView" class="content-frame"><iframe src="/spatialpod.html"></iframe></div>
+    <div id="websiteView" class="content-frame"><iframe src="/website/index.html"></iframe></div>
+</div>
+
+<script>
+    function showPage(page, btn) {
+        document.querySelectorAll('.content-frame').forEach(f => f.classList.remove('active'));
+        document.getElementById(page + 'View').classList.add('active');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        addLog('Switched to ' + page.toUpperCase(), 'INFO');
+    }
+    function openModal(id) { document.getElementById(id).classList.add('active'); addLog('Opened ' + id.replace('Modal','').toUpperCase(), 'INFO'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    async function runCommand(cmd) {
+        addLog('forge ' + cmd, 'INFO');
+        try {
+            const response = await fetch('/api/forge?cmd=' + cmd);
+            const result = await response.text();
+            addLog(cmd.toUpperCase() + ' completed', 'SUCCESS');
+            if (cmd === 'cubes') fetchStats();
+            return result;
+        } catch(e) { addLog(cmd + ' failed: ' + e.message, 'ERROR'); }
+    }
+    async function fetchStats() {
+        try {
+            const resp = await fetch('/datacube.jsonl');
+            const text = await resp.text();
+            const count = text.split('\n').filter(l => l.trim()).length;
+            document.getElementById('cubeCount').innerText = count;
+        } catch(e) {}
+    }
+    function addLog(message, level = 'INFO') {
+        const logsDiv = document.getElementById('logs');
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        const ts = new Date().toLocaleTimeString('en-GB', { hour12: false });
+        entry.innerHTML = `<span class="log-time ${level}">[${level}]</span> <span style="color:#555;font-size:0.85em">${ts}</span>&nbsp; ${message}`;
+        logsDiv.insertBefore(entry, logsDiv.firstChild);
+        if (logsDiv.children.length > 30) logsDiv.removeChild(logsDiv.lastChild);
+    }
+    const startTime = Date.now();
+    setInterval(() => {
+        const s = Math.floor((Date.now() - startTime) / 1000);
+        const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+        document.getElementById('uptime').innerHTML = `${h}h ${m}m ${sec}s`;
+    }, 1000);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { ['chatModal','capsulesModal','trustModal','sensorsModal','memoriesModal'].forEach(closeModal); } });
+    fetchStats(); setInterval(fetchStats, 30000);
+    addLog('Forge-punk skin loaded', 'SUCCESS');
+</script>
+</body>
+</html>

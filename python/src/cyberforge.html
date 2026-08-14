@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberForge — EXPLORER-d334</title>
+    <link href="/website/css/fonts.css" rel="stylesheet">
+    <style>
+        :root {
+            --ember: #ff6b1a;
+            --ember-dim: #c94d00;
+            --ember-glow: rgba(255,107,26,0.15);
+            --teal: #4ecdc4;
+            --plasma: #ffe066;
+            --void: #050508;
+            --deep: #0a0a14;
+            --surface: #0d1022;
+            --surface2: #111428;
+            --text: #ccd8e0;
+            --text-dim: #557;
+            --green: #00ff9d;
+            --danger: #ff4457;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--void);
+            color: var(--text);
+            padding: 24px 20px 40px;
+            min-height: 100vh;
+        }
+
+        /* Scanline */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 2px,
+                rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Ambient glow */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -20%; left: -10%;
+            width: 50%; height: 50%;
+            background: radial-gradient(ellipse, rgba(0,255,157,0.04) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* ── HEADER ── */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid rgba(0,255,157,0.12);
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2em;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            color: var(--green);
+            text-shadow: 0 0 30px rgba(0,255,157,0.4), 0 0 80px rgba(0,255,157,0.15);
+            animation: glitch 10s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 88%, 100% { text-shadow: 0 0 30px rgba(0,255,157,0.4), 0 0 80px rgba(0,255,157,0.15); }
+            90% { text-shadow: -2px 0 var(--ember), 2px 0 var(--teal), 0 0 30px rgba(0,255,157,0.4); }
+            92% { text-shadow: 2px 0 var(--ember), -2px 0 var(--teal), 0 0 30px rgba(0,255,157,0.4); }
+            94% { text-shadow: 0 0 30px rgba(0,255,157,0.4), 0 0 80px rgba(0,255,157,0.15); }
+        }
+
+        .header p {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            color: rgba(0,255,157,0.4);
+            letter-spacing: 0.15em;
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+
+        /* ── KPI STRIP ── */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,157,0.1);
+            border-top: 2px solid var(--green);
+            border-radius: 4px;
+            padding: 18px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s;
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0,255,157,0.06) 0%, transparent 70%);
+        }
+
+        .kpi-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            color: rgba(0,255,157,0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .kpi-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--green);
+            text-shadow: 0 0 20px rgba(0,255,157,0.4);
+            margin-top: 8px;
+            line-height: 1;
+        }
+
+        .kpi-unit {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.38em;
+            color: rgba(0,255,157,0.4);
+            margin-left: 3px;
+        }
+
+        /* ── MAIN GRID ── */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,157,0.1);
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--green);
+            margin-bottom: 16px;
+            padding-left: 10px;
+            border-left: 3px solid var(--green);
+            text-transform: uppercase;
+        }
+
+        /* ── DEFENSE GRID ── */
+        .defense-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .defense-card {
+            background: var(--deep);
+            border: 1px solid rgba(0,255,157,0.08);
+            border-radius: 3px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .defense-card:hover {
+            border-color: rgba(0,255,157,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,255,157,0.06);
+        }
+
+        .defense-card.active {
+            background: rgba(0,255,157,0.06);
+            border-color: rgba(0,255,157,0.35);
+            box-shadow: 0 0 14px rgba(0,255,157,0.1), inset 0 0 8px rgba(0,255,157,0.03);
+        }
+
+        .defense-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 0.85em;
+            color: var(--text);
+        }
+
+        .defense-efficacy {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            color: rgba(0,255,157,0.4);
+            margin-top: 4px;
+        }
+
+        .defense-status {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.62em;
+            margin-top: 4px;
+            color: var(--text-dim);
+        }
+
+        .defense-status.active { color: var(--green); }
+
+        /* ── THREAT CONTROLS ── */
+        .slider-container { margin-bottom: 20px; }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.68em;
+            color: rgba(0,255,157,0.45);
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 3px;
+            background: rgba(0,255,157,0.1);
+            border-radius: 2px;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px rgba(0,255,157,0.5);
+            cursor: pointer;
+        }
+
+        .threat-level {
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: var(--deep);
+            border: 1px solid rgba(0,255,157,0.1);
+            border-radius: 3px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            color: var(--text);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── CHART ── */
+        .chart-panel {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,157,0.1);
+            border-radius: 4px;
+            padding: 20px;
+            grid-column: span 2;
+        }
+
+        canvas { width: 100%; height: 260px; }
+
+        /* ── FOOTER ── */
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            color: rgba(0,255,157,0.2);
+            border-top: 1px solid rgba(0,255,157,0.07);
+            padding-top: 18px;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .main-grid { grid-template-columns: 1fr; }
+            .chart-panel { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>⬡ CYBERFORGE</h1>
+        <p>Breach Probability Simulator &nbsp;|&nbsp; Defense in Depth Quantification</p>
+    </div>
+
+    <div class="dashboard">
+        <div class="kpi-card">
+            <div class="kpi-label">Breach Probability (24h)</div>
+            <div class="kpi-value" id="breachProb">0.00<span class="kpi-unit">%</span></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Time to Compromise (MTTC)</div>
+            <div class="kpi-value" id="mttc">0.00<span class="kpi-unit">hrs</span></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Est. Impact Cost</div>
+            <div class="kpi-value" id="impact">$0.0<span class="kpi-unit">M</span></div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+
+        <div class="panel">
+            <div class="section-title">⬡ Defense Stack</div>
+            <div class="defense-grid" id="defenseGrid"></div>
+        </div>
+
+        <div class="panel">
+            <div class="section-title">◎ Threat Actor</div>
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span>Script Kiddie</span>
+                    <span id="threatLabel">APT Group</span>
+                </div>
+                <input type="range" id="threatSlider" min="0" max="100" value="50">
+            </div>
+            <div class="threat-level" id="threatDesc">
+                <span>🟡</span> Moderately Sophisticated
+            </div>
+        </div>
+
+        <div class="chart-panel">
+            <div class="section-title">▸ Risk Curve — 24h Window</div>
+            <canvas id="riskChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        ⚡ POISSON BREACH MODELING &nbsp;|&nbsp; P = 1 - e^(-λt) &nbsp;|&nbsp; DEFENSE IN DEPTH QUANTIFICATION
+    </div>
+
+</div>
+<script>
+    const DEFENSES = [
+        { name: "🔐 MFA",        efficacy: 0.45, active: true,  description: "Multi-factor authentication" },
+        { name: "🛡️ EDR",        efficacy: 0.35, active: true,  description: "Endpoint Detection & Response" },
+        { name: "📦 Patching",   efficacy: 0.25, active: true,  description: "Vulnerability management" },
+        { name: "🌐 Firewall",   efficacy: 0.20, active: true,  description: "Network segmentation" },
+        { name: "👁️ SIEM",       efficacy: 0.15, active: true,  description: "Security monitoring" },
+        { name: "🔑 Zero Trust", efficacy: 0.40, active: false, description: "Never trust, always verify" },
+        { name: "🎓 Training",   efficacy: 0.10, active: false, description: "Security awareness" },
+        { name: "💾 Backup",     efficacy: 0.30, active: false, description: "Disaster recovery" }
+    ];
+
+    let chart;
+
+    function calculateRisk(threatLevel, activeDefenses) {
+        let lambda = 0.05 + (threatLevel / 100) * 0.2;
+        let mitigation = 1.0;
+        for (let d of activeDefenses) mitigation *= (1 - d.efficacy);
+        let adjustedLambda = lambda * (1 - mitigation);
+        let probability = 1 - Math.exp(-adjustedLambda * 24);
+        let mttc = adjustedLambda > 0 ? 1 / adjustedLambda : Infinity;
+        let impact = 5.0 * probability;
+        return {
+            probability: Math.min(probability * 100, 99.99),
+            mttc: mttc > 1000 ? 999 : mttc,
+            impact,
+            lambda: adjustedLambda
+        };
+    }
+
+    function getThreatDescription(level) {
+        if (level < 20) return { icon: "🟢", text: "Script Kiddie — Low sophistication" };
+        if (level < 40) return { icon: "🟡", text: "Hacktivist — Moderate sophistication" };
+        if (level < 60) return { icon: "🟠", text: "Organised Crime — High sophistication" };
+        if (level < 80) return { icon: "🔴", text: "State-Sponsored — Advanced" };
+        return { icon: "💀", text: "APT Group — Nation-state capability" };
+    }
+
+    function updateUI() {
+        const threatLevel = parseInt(document.getElementById('threatSlider').value);
+        const desc = getThreatDescription(threatLevel);
+        document.getElementById('threatLabel').innerText = desc.text.split(' — ')[0];
+        document.getElementById('threatDesc').innerHTML = `${desc.icon} &nbsp;${desc.text}`;
+
+        const activeDefenses = DEFENSES.filter(d => d.active);
+        const risk = calculateRisk(threatLevel, activeDefenses);
+
+        document.getElementById('breachProb').innerHTML = risk.probability.toFixed(2) + '<span class="kpi-unit">%</span>';
+        document.getElementById('mttc').innerHTML = risk.mttc.toFixed(1) + '<span class="kpi-unit">hrs</span>';
+        document.getElementById('impact').innerHTML = '$' + risk.impact.toFixed(1) + '<span class="kpi-unit">M</span>';
+
+        updateChart(threatLevel, activeDefenses);
+        logToDataCube({ threatLevel, probability: risk.probability, mitigation: 1 - risk.lambda });
+    }
+
+    function updateChart(threatLevel, activeDefenses) {
+        let lambda = 0.05 + (threatLevel / 100) * 0.2;
+        let mitigation = 1.0;
+        for (let d of activeDefenses) mitigation *= (1 - d.efficacy);
+        let adjustedLambda = lambda * (1 - mitigation);
+
+        const points = [];
+        for (let t = 0; t <= 24; t++) {
+            points.push({ x: t, y: (1 - Math.exp(-adjustedLambda * t)) * 100 });
+        }
+
+        if (chart) chart.destroy();
+
+        const ctx = document.getElementById('riskChart').getContext('2d');
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: points.map(p => p.x + 'h'),
+                datasets: [{
+                    label: 'Breach Probability %',
+                    data: points.map(p => p.y),
+                    borderColor: '#00ff9d',
+                    backgroundColor: 'rgba(0,255,157,0.07)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { labels: { color: '#00ff9d', font: { family: 'Share Tech Mono', size: 11 } } },
+                    tooltip: { callbacks: { label: ctx => `Risk: ${ctx.raw.toFixed(1)}%` } }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Time (hours)', color: 'rgba(0,255,157,0.4)', font: { family: 'Share Tech Mono', size: 10 } },
+                        grid: { color: 'rgba(0,255,157,0.05)' },
+                        ticks: { color: 'rgba(0,255,157,0.45)', font: { family: 'Share Tech Mono', size: 10 } }
+                    },
+                    y: {
+                        title: { display: true, text: 'Breach Probability (%)', color: 'rgba(0,255,157,0.4)', font: { family: 'Share Tech Mono', size: 10 } },
+                        grid: { color: 'rgba(0,255,157,0.05)' },
+                        ticks: { color: 'rgba(0,255,157,0.45)', font: { family: 'Share Tech Mono', size: 10 } }
+                    }
+                }
+            }
+        });
+    }
+
+    function buildDefenseGrid() {
+        const grid = document.getElementById('defenseGrid');
+        grid.innerHTML = '';
+        DEFENSES.forEach(defense => {
+            const card = document.createElement('div');
+            card.className = 'defense-card' + (defense.active ? ' active' : '');
+            card.onclick = () => { defense.active = !defense.active; buildDefenseGrid(); updateUI(); };
+            card.innerHTML = `
+                <div class="defense-name">${defense.name}</div>
+                <div class="defense-efficacy">-${(defense.efficacy * 100).toFixed(0)}% risk</div>
+                <div class="defense-status ${defense.active ? 'active' : ''}">${defense.active ? '◉ ACTIVE' : '○ INACTIVE'}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function logToDataCube(riskData) {
+        fetch('/api/log_risk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                type: 'cyber_risk_assessment',
+                threat_level: riskData.threatLevel,
+                probability: riskData.probability,
+                mitigation: riskData.mitigation,
+                timestamp: new Date().toISOString()
+            })
+        }).catch(() => {});
+    }
+
+    function init() {
+        buildDefenseGrid();
+        document.getElementById('threatSlider').addEventListener('input', updateUI);
+        updateUI();
+    }
+
+    const s = document.createElement('script');
+    s.src = '/website/js/chart.umd.min.js';
+    s.onload = init;
+    document.head.appendChild(s);
+</script>
+</body>
+</html>

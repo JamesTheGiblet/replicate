@@ -1,0 +1,73 @@
+{
+  "id": "business.metrics.dashboard",
+  "title": "Business — Metrics Dashboard",
+  "class": "THAUMIEL",
+  "profile": "business",
+  "triggers": {
+    "cron": "0 8 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fact",
+        "filter": { "type": "payment.transaction", "range": "last_30d" }
+      }
+    },
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fact",
+        "filter": { "type": "customer.record" }
+      }
+    },
+    {
+      "primitive": "business.calculate_mrr",
+      "input": {
+        "subscriptions": "$subscriptions",
+        "recurring_amounts": "$amounts"
+      }
+    },
+    {
+      "primitive": "business.calculate_churn",
+      "input": {
+        "customers_start": "$start_count",
+        "customers_end": "$end_count",
+        "period": "month"
+      }
+    },
+    {
+      "primitive": "business.calculate_ltv",
+      "input": {
+        "customer_payments": "$payment_history",
+        "average_months": 12
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "business.metrics",
+          "date": "$today",
+          "mrr": "$mrr",
+          "churn_rate": "$churn",
+          "ltv": "$ltv",
+          "customers": "$customer_count",
+          "tickets_open": "$open_tickets"
+        },
+        "source_id": "business.metrics.dashboard",
+        "confidence": 0.95,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "notification.send",
+      "input": {
+        "title": "📊 Daily Business Metrics",
+        "body": "MRR: $$mrr | Customers: $customer_count | Churn: $churn%",
+        "action_url": "/dashboard"
+      }
+    }
+  ]
+}

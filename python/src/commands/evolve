@@ -1,0 +1,43 @@
+#!/bin/bash
+# Self-evolution command for Explorer-d334
+
+cd ~/forge
+echo "🧬 EXPLORER-d334 - SELF-EVOLUTION"
+echo "================================"
+echo ""
+
+# Check current version/generation
+if [ -f ".evolution_generation" ]; then
+    GENERATION=$(cat .evolution_generation)
+    echo "📊 Current Generation: $GENERATION"
+else
+    echo "📊 Current Generation: 1"
+    echo "1" > .evolution_generation
+fi
+
+echo ""
+
+# Run self-evolution
+echo "🔄 Running self-evolution..."
+python3 src/self_evolution.py "$@"
+
+# Run evolutionary code optimization
+echo ""
+echo "🧬 Running evolutionary code optimization..."
+python3 src/evolutionary_code.py --mutate
+
+# Run code improver
+echo ""
+echo "🔧 Running code improvement analysis..."
+python3 src/code_improver.py --analyze
+
+# Increment generation
+NEW_GEN=$(($(cat .evolution_generation) + 1))
+echo "$NEW_GEN" > .evolution_generation
+
+echo ""
+echo "✅ Evolution complete!"
+echo "   Generation: $NEW_GEN"
+echo "   Changes logged in .modification_log.txt"
+echo ""
+echo "💡 Run './forge self-status' to see evolution metrics"

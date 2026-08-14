@@ -1,0 +1,15 @@
+{
+  "id": "SOCIAL_POST-20260528-131010-eafd",
+  "title": "twitter post",
+  "class": "MEMORY",
+  "type": "social_post",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T13:10:10.661579",
+  "content": {
+    "content": "\ud83e\uddd8 Meditated on AI consciousness. Found clarity.",
+    "type": "daily",
+    "timestamp": "2026-05-28T13:10:10.661569"
+  },
+  "metadata": {},
+  "signature": "4d85b4b9bb47e249"
+}

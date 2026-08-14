@@ -1,0 +1,435 @@
+#!/bin/bash
+# Generate interactive HTML for capsules
+
+cat << 'HTML'
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Capsules Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%);
+            color: #eee;
+            padding: 20px;
+        }
+        
+        .capsules-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(78,205,196,0.3);
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .total-count {
+            background: rgba(78,205,196,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .search-box {
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(78,205,196,0.3);
+            border-radius: 8px;
+            color: #eee;
+        }
+        
+        .category {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .category-header {
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .category-header:hover {
+            background: rgba(78,205,196,0.1);
+        }
+        
+        .category-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        .category-count {
+            background: rgba(78,205,196,0.2);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+        
+        .capsule-list {
+            display: none;
+            padding: 10px 20px;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .category.expanded .capsule-list {
+            display: flex;
+        }
+        
+        .capsule-item {
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .capsule-item:hover {
+            background: rgba(78,205,196,0.1);
+            transform: translateX(5px);
+        }
+        
+        .capsule-name {
+            font-family: monospace;
+            font-size: 13px;
+        }
+        
+        .run-btn {
+            background: rgba(78,205,196,0.2);
+            border: 1px solid #4ecdc4;
+            color: #4ecdc4;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .run-btn:hover {
+            background: #4ecdc4;
+            color: #1a1a2e;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 20px;
+            border: 1px solid rgba(78,205,196,0.3);
+            max-width: 500px;
+            width: 90%;
+            padding: 25px;
+        }
+        
+        .modal-header {
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .modal-btn.cancel {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #eee;
+        }
+        
+        .modal-btn.confirm {
+            background: #4ecdc4;
+            border: none;
+            color: #1a1a2e;
+        }
+        
+        .output-area {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .output-area.show {
+            display: block;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="capsules-container">
+        <div class="header">
+            <h1>📦 Automation Capsules</h1>
+            <p>Manage and execute your automation capsules</p>
+        </div>
+        
+        <div class="stats-bar">
+            <div class="total-count" id="totalCount">Total: 0 capsules</div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search capsules..." onkeyup="filterCapsules()">
+            </div>
+        </div>
+        
+        <div id="categoriesContainer" class="categories-container">
+            <div class="loading">Loading capsules...</div>
+        </div>
+    </div>
+    
+    <!-- Run Confirmation Modal -->
+    <div id="runModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🚀 Execute Capsule</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to run:</p>
+                <p><strong id="runCapsuleName"></strong></p>
+                <div id="runOutput" class="output-area"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn confirm" onclick="confirmRun()">Run</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let capsulesData = {};
+        let pendingCapsule = null;
+        
+        async function loadCapsules() {
+            try {
+                const response = await fetch('/api/forge?cmd=capsules');
+                const text = await response.text();
+                parseCapsules(text);
+            } catch(e) {
+                document.getElementById('categoriesContainer').innerHTML = `<div style="color:#ff6b6b;text-align:center;">Error loading capsules: ${e.message}</div>`;
+            }
+        }
+        
+        function parseCapsules(text) {
+            const categories = {};
+            let currentCategory = null;
+            let total = 0;
+            
+            const lines = text.split('\n');
+            for (const line of lines) {
+                // Match category headers like "core/ (5 capsules)"
+                const categoryMatch = line.match(/^📁 ([^/]+)\/ \((\d+) capsules\)/);
+                if (categoryMatch) {
+                    currentCategory = categoryMatch[1];
+                    categories[currentCategory] = {
+                        count: parseInt(categoryMatch[2]),
+                        capsules: []
+                    };
+                    continue;
+                }
+                
+                // Match capsule items like "   📄 capsule-name"
+                if (currentCategory && line.match(/^\s+📄\s+(\S+)/)) {
+                    const capsuleMatch = line.match(/^\s+📄\s+(\S+)/);
+                    if (capsuleMatch) {
+                        const capsuleName = capsuleMatch[1];
+                        categories[currentCategory].capsules.push(capsuleName);
+                        total++;
+                    }
+                }
+            }
+            
+            capsulesData = categories;
+            renderCategories(categories);
+            document.getElementById('totalCount').innerHTML = `Total: ${total} capsules`;
+        }
+        
+        function renderCategories(categories) {
+            const container = document.getElementById('categoriesContainer');
+            let html = '';
+            
+            for (const [catName, catData] of Object.entries(categories)) {
+                html += `
+                    <div class="category" data-category="${catName}">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="category-name">📁 ${catName}</span>
+                            <span style="display: flex; gap: 10px; align-items: center;">
+                                <span class="category-count">${catData.capsules.length} capsules</span>
+                                <span class="expand-icon">▶</span>
+                            </span>
+                        </div>
+                        <div class="capsule-list">
+                            ${catData.capsules.map(cap => `
+                                <div class="capsule-item" data-capsule="${cap}" data-category="${catName}">
+                                    <span class="capsule-name">📄 ${cap}</span>
+                                    <button class="run-btn" onclick="event.stopPropagation(); showRunModal('${catName}/${cap}')">▶ Run</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        function toggleCategory(header) {
+            const category = header.closest('.category');
+            category.classList.toggle('expanded');
+        }
+        
+        function filterCapsules() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categories = document.querySelectorAll('.category');
+            
+            categories.forEach(category => {
+                const items = category.querySelectorAll('.capsule-item');
+                let visibleCount = 0;
+                
+                items.forEach(item => {
+                    const name = item.querySelector('.capsule-name').textContent.toLowerCase();
+                    if (name.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                if (visibleCount === 0 && searchTerm !== '') {
+                    category.style.display = 'none';
+                } else {
+                    category.style.display = 'block';
+                    if (searchTerm !== '') {
+                        category.classList.add('expanded');
+                    }
+                }
+            });
+        }
+        
+        function showRunModal(capsulePath) {
+            pendingCapsule = capsulePath;
+            document.getElementById('runCapsuleName').innerText = capsulePath;
+            document.getElementById('runOutput').innerHTML = '';
+            document.getElementById('runOutput').classList.remove('show');
+            document.getElementById('runModal').classList.add('active');
+        }
+        
+        async function confirmRun() {
+            const outputDiv = document.getElementById('runOutput');
+            outputDiv.innerHTML = '<div class="loading">🚀 Executing capsule...</div>';
+            outputDiv.classList.add('show');
+            
+            try {
+                const response = await fetch(`/api/forge?cmd=run ${encodeURIComponent(pendingCapsule)}`);
+                const result = await response.text();
+                outputDiv.innerHTML = `<pre style="margin:0;">${result}</pre>`;
+            } catch(e) {
+                outputDiv.innerHTML = `<pre style="color:#ff6b6b;">Error: ${e.message}</pre>`;
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('runModal').classList.remove('active');
+            pendingCapsule = null;
+        }
+        
+        // Close modal on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('runModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        loadCapsules();
+    </script>
+</body>
+</html>
+HTML

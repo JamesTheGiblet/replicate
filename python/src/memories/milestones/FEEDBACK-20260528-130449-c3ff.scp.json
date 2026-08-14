@@ -1,0 +1,15 @@
+{
+  "id": "FEEDBACK-20260528-130449-c3ff",
+  "title": "Post 1 feedback",
+  "class": "MEMORY",
+  "type": "feedback",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T13:04:49.405244",
+  "content": {
+    "rating": 5,
+    "comment": "Great post about AI dreams!",
+    "feedback_type": "positive"
+  },
+  "metadata": {},
+  "signature": "452765168e2c09b0"
+}

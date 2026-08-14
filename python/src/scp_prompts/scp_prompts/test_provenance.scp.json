@@ -1,0 +1,19 @@
+{
+  "id": "test_provenance_002",
+  "what_this_is": "Full governance and audit test",
+  "trust_score": 0.85,
+  "provenance": {
+    "id": "prov_002",
+    "created_by": "James Gilbert",
+    "created_at": "2026-05-26T13:00:00Z",
+    "source": "Termux SCP Generator",
+    "version": "1.0.0",
+    "previous": null
+  },
+  "actions": [
+    {
+      "primitive": "sys.log",
+      "input": {"message": "Governance and audit test"}
+    }
+  ]
+}

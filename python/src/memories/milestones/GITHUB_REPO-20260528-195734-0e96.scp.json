@@ -1,0 +1,34 @@
+{
+  "id": "GITHUB_REPO-20260528-195734-0e96",
+  "title": "tooth-forge",
+  "class": "MEMORY",
+  "type": "github_repo",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T19:57:34.658624",
+  "content": {
+    "name": "tooth-forge",
+    "type": "github_repository",
+    "description": "30-year dental decay predictor using exponential modeling. Shows patients exactly when teeth need attention. Built in 4h 16m. Live demo available.",
+    "language": "HTML",
+    "stats": {
+      "stars": 1,
+      "forks": 0
+    },
+    "url": "https://github.com/JamesTheGiblet/tooth-forge",
+    "topics": [
+      "clinical-tools",
+      "dental",
+      "exponential-decay",
+      "forge-theory",
+      "healthcare",
+      "html",
+      "javascript",
+      "patient-education",
+      "preventive-care"
+    ],
+    "created": "2025-12-15T21:12:00Z",
+    "updated": "2025-12-16T21:20:35Z"
+  },
+  "metadata": {},
+  "signature": "f1b1207868596174"
+}

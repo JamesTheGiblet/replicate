@@ -1,0 +1,16 @@
+{
+  "name": "dream_imagination_explorer",
+  "title": "Trusted capsule: dream_imagination_explorer",
+  "class": "SUGGESTED",
+  "type": "function",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "logic": "printf(\"Running trusted capsule: dream_imagination_explorer\\n\");\nreturn 0;",
+  "generated_by": "Explorer-d334",
+  "generated_at": "2026-05-28T08:12:13.925039",
+  "trust_score": 0.65
+}

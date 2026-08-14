@@ -1,0 +1,42 @@
+{
+  "id": "business.payments.process",
+  "title": "Business — Direct Bank Transfer",
+  "class": "SAFE",
+  "profile": "business",
+  "triggers": {
+    "on_event": "payment.received.manual"
+  },
+  "actions": [
+    {
+      "primitive": "payment.record",
+      "input": {
+        "customer_id": "$customer_id",
+        "amount": "$amount",
+        "currency": "GBP",
+        "method": "direct_bank_transfer",
+        "account": "Lloyds",
+        "reference": "$bank_reference",
+        "status": "confirmed"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "payment.transaction",
+          "customer_id": "$customer_id",
+          "amount": "$amount",
+          "method": "bank_transfer",
+          "ts": "$now"
+      }
+    },
+    {
+      "primitive": "notification.send",
+      "input": {
+        "title": "💰 Payment Received",
+        "body": "$customer_name paid $$amount via bank transfer"
+      }
+    }
+  ]
+}

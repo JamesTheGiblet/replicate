@@ -1,0 +1,65 @@
+{
+  "id": "business.support.tickets",
+  "title": "Business — Customer Support Tracking",
+  "class": "SAFE",
+  "profile": "business",
+  "triggers": {
+    "on_event": "support.email.received",
+    "cron": "0 */2 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "support.parse",
+      "input": {
+        "from": "$customer_email",
+        "subject": "$subject",
+        "body": "$body",
+        "priority": "$detected_priority"
+      }
+    },
+    {
+      "primitive": "support.create_ticket",
+      "input": {
+        "customer_id": "$customer_id",
+        "issue": "$summary",
+        "priority": "$priority",
+        "status": "open"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "counter",
+        "payload": {
+          "type": "support.ticket",
+          "ticket_id": "$ticket_id",
+          "customer_id": "$customer_id",
+          "issue": "$summary",
+          "priority": "$priority",
+          "status": "open",
+          "ts": "$now"
+        },
+        "source_id": "business.support.tickets",
+        "confidence": 0.9,
+        "decay_rate": 0.02
+      }
+    },
+    {
+      "primitive": "notification.send",
+      "input": {
+        "title": "📧 New Support Ticket",
+        "body": "$summary (Priority: $priority)",
+        "action_url": "/support/ticket/$ticket_id"
+      }
+    },
+    {
+      "primitive": "leighton.update",
+      "input": {
+        "capsule": "business.health",
+        "rule": "support_response",
+        "delta_fast_response": 0.05,
+        "delta_slow_response": -0.03
+      }
+    }
+  ]
+}

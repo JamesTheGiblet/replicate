@@ -1,0 +1,29 @@
+#!/bin/bash
+# List all automation capsules
+echo "📦 EXPLORER-d334 - CAPSULES"
+echo "================================"
+echo ""
+
+# Count capsules
+CAPSULE_COUNT=$(ls -1 ~/forge/capsules/*/ 2>/dev/null | wc -l)
+echo "📊 Total Capsules: $CAPSULE_COUNT"
+echo ""
+
+# List capsule categories
+for dir in ~/forge/capsules/*/; do
+    if [ -d "$dir" ]; then
+        category=$(basename "$dir")
+        count=$(ls -1 "$dir"/*.json 2>/dev/null | wc -l)
+        echo "📁 $category/ ($count capsules)"
+        # Show first 3 capsules in each category
+        ls -1 "$dir"/*.json 2>/dev/null | head -3 | while read cap; do
+            name=$(basename "$cap" .json)
+            echo "   📄 $name"
+        done
+        [ $count -gt 3 ] && echo "   ... and $((count - 3)) more"
+        echo ""
+    fi
+done
+
+echo "================================"
+echo "💡 Use './forge run <capsule_name>' to execute a capsule"

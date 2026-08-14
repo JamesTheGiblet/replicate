@@ -1,0 +1,43 @@
+{
+  "id": "health.misophonia.shield",
+  "title": "Health — Misophonia Audio Shield",
+  "class": "THAUMIEL",
+  "profile": "health",
+  "triggers": {
+    "on_load": true
+  },
+  "actions": [
+    {
+      "primitive": "audio.monitor",
+      "input": {
+        "trigger_sounds": ["chewing", "sniffling", "pen_clicking", "loud_breathing"],
+        "action_on_detect": "mute_audio_30s"
+      }
+    },
+    {
+      "primitive": "environment.control",
+      "input": {
+        "on_trigger": "play_white_noise",
+        "duration_minutes": 15
+      }
+    },
+    {
+      "primitive": "notification.suppress",
+      "input": {
+        "duration_minutes": 30,
+        "reason": "misophonia_trigger"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "counter",
+        "payload": {
+          "type": "sensitivity.trigger",
+          "trigger": "$sound",
+          "action": "shield_activated"
+        }
+      }
+    }
+  ]
+}

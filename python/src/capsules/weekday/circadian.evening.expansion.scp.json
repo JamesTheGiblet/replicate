@@ -1,0 +1,34 @@
+{
+  "id": "circadian.evening.expansion",
+  "title": "Circadian — Evening Expansion Session",
+  "class": "EUCLID",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.evening.expansion"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "evening_expansion",
+        "context": "post_meal_focus",
+        "max_tokens": 512
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "session.log",
+          "tag": "evening_expansion_session",
+          "ts": "$now"
+        },
+        "source_id": "circadian.evening.expansion",
+        "confidence": 0.88,
+        "decay_rate": 0.015
+      }
+    }
+  ],
+  "emit_event": "circadian.evening.winddown"
+}

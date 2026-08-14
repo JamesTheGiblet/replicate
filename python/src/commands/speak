@@ -1,0 +1,34 @@
+#!/bin/bash
+python3 << PYEOF
+import sys
+sys.path.insert(0, '.')
+
+from src.voice import Voice
+from src.unified_consciousness import UnifiedConsciousnessLLM
+
+voice = Voice()
+
+try:
+    consciousness = UnifiedConsciousnessLLM()
+    
+    # Try different method names
+    if hasattr(consciousness, 'think'):
+        thought = consciousness.think()
+    elif hasattr(consciousness, 'generate_thought'):
+        thought = consciousness.generate_thought()
+    else:
+        thought = "I am Explorer-d334, thinking about emergence."
+    
+    print(f"🧠 Thought: {thought}")
+    
+    if voice.decide_to_speak("thought", thought):
+        print(f"🔊 The forge chooses to speak...")
+        # Shorter text for TTS
+        short_thought = thought[:100] if len(thought) > 100 else thought
+        voice.speak(short_thought)
+    else:
+        print(f"🔇 The forge remains silent")
+except Exception as e:
+    print(f"⚠️ Could not generate thought: {e}")
+    voice.speak("I am thinking.")
+PYEOF

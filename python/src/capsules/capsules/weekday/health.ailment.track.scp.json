@@ -1,0 +1,45 @@
+{
+  "id": "health.ailment.track",
+  "title": "Health — Active Ailment Tracker",
+  "class": "THAUMIEL",
+  "profile": "health",
+  "triggers": {
+    "cron": "0 */4 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "health.query",
+      "input": {
+        "scope": "active_ailments",
+        "include": ["gout", "arthritis", "migraine", "fatigue", "back_pain", "shoulder_pain"]
+      }
+    },
+    {
+      "primitive": "leighton.apply_modifier",
+      "input": {
+        "ailment": "$ailment",
+        "modifier": {
+          "gout": -0.30,
+          "migraine": -0.50,
+          "fatigue": -0.25,
+          "back_pain": -0.25,
+          "shoulder_pain": -0.20,
+          "arthritis": -0.15
+        }
+      }
+    },
+    {
+      "primitive": "cognition.suppress",
+      "input": {
+        "threshold": -0.40,
+        "action": "degrade_deepwork_to_rest"
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Active ailments detected. Cognitive modifiers applied."
+      }
+    }
+  ]
+}

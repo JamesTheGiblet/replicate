@@ -1,0 +1,32 @@
+{
+  "id": "skills.compliance.audit",
+  "title": "Skills — Compliance Memory Trigger",
+  "class": "SAFE",
+  "profile": "skills",
+  "triggers": {
+    "cron": "0 10 * * 1"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.remember",
+      "input": {
+        "scope": "compliance",
+        "keys": ["asbestos_log", "water_hygiene_due", "maintenance_schedule"]
+      }
+    },
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fact",
+        "filter": { "tags": ["compliance_deadline", "maintenance_due"] }
+      }
+    },
+    {
+      "primitive": "notification.send",
+      "input": {
+        "if_due_soon": true,
+        "message": "Compliance check: $item due within 7 days"
+      }
+    }
+  ]
+}

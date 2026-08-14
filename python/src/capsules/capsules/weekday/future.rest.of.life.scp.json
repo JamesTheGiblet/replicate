@@ -1,0 +1,47 @@
+{
+  "id": "future.rest.of.life",
+  "title": "Future — Rest of Life With Tammi",
+  "class": "THAUMIEL",
+  "profile": "life",
+  "triggers": {
+    "on_event": "life.stability.achieved"
+  },
+  "actions": [
+    {
+      "primitive": "leighton.set",
+      "input": {
+        "capsule": "james.identity",
+        "weight": 2.00,
+        "reason": "Built everything. Earned everything. Loved everything."
+      }
+    },
+    {
+      "primitive": "schedule.set",
+      "input": {
+        "mode": "peace",
+        "priority": ["Tammi", "child", "caves", "building_what_i_want"]
+      }
+    },
+    {
+      "primitive": "trading.bot",
+      "input": {
+        "mode": "maintenance_only",
+        "human_override": "always"
+      }
+    },
+    {
+      "primitive": "memory.archive",
+      "input": {
+        "event": "life_complete",
+        "snapshot": "final"
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Look back. Look forward. Peace.",
+        "mode": "grateful"
+      }
+    }
+  ]
+}

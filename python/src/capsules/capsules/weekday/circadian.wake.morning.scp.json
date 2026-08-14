@@ -1,0 +1,32 @@
+{
+  "id": "circadian.wake.morning",
+  "title": "Circadian — Morning Wake",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "cron": "0 5 * * 1-5"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.remember",
+      "input": {
+        "scope": "identity",
+        "keys": ["self.core", "self.values"]
+      }
+    },
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "context",
+        "filter": { "tag": "yesterday.summary" }
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Morning wake: identity + yesterday context loaded."
+      }
+    }
+  ],
+  "emit_event": "circadian.morning.wake_synthesis"
+}

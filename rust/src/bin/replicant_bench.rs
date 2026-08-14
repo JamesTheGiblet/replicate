@@ -38,7 +38,7 @@ fn main() {
         let role = if i == 0 { Role::Founder } else { Role::Forager };
         let capsule = Capsule::mint(vec!["replicant/protocol/run-v1".to_string()], serde_json::json!({}));
         let lambda_state = LambdaState::default();
-        let agent = Agent::new(scp_id, capsule, x, y, traits, lambda_state, role, 0);
+        let agent = Agent::new(scp_id, capsule, x, y, traits, lambda_state, role, Archetype::Generalist, 0);        
         world.add_agent(agent);
     }
     

@@ -1,0 +1,49 @@
+{
+  "id": "future.annual.caves",
+  "title": "Future — Annual Caves Hotel Pilgrimage",
+  "class": "THAUMIEL",
+  "profile": "life",
+  "triggers": {
+    "cron": "0 0 1 4 *"
+  },
+  "actions": [
+    {
+      "primitive": "forge.package",
+      "input": {
+        "module": "holiday_mode",
+        "duration_days": 14,
+        "location": "Caves Hotel, Egypt"
+      }
+    },
+    {
+      "primitive": "leighton.freeze",
+      "input": {
+        "capsules": "all_work",
+        "duration_days": 14,
+        "reason": "Tammi_time_caves_hotel"
+      }
+    },
+    {
+      "primitive": "trading.bot",
+      "input": {
+        "mode": "reduced_risk",
+        "override": "manual_only"
+      }
+    },
+    {
+      "primitive": "schedule.suspend",
+      "input": {
+        "duration_days": 14,
+        "exceptions": ["health.medication.adherence"]
+      }
+    },
+    {
+      "primitive": "memory.capture",
+      "input": {
+        "event": "caves_hotel",
+        "type": "life_milestone",
+        "with": "Tammi"
+      }
+    }
+  ]
+}

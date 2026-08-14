@@ -1,0 +1,9 @@
+#!/bin/bash
+# Check if web port is free
+if ! ss -tuln | grep -q ":8085"; then
+    echo "✅ Port 8085 is free"
+    exit 0
+else
+    echo "❌ Port 8085 is in use"
+    exit 1
+fi

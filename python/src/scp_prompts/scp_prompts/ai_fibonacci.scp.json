@@ -1,0 +1,6 @@
+{
+  "name": "ai_fibonacci",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "if (n <= 1) return n;\n    return ai_fibonacci(n - 1) + ai_fibonacci(n - 2);"
+}

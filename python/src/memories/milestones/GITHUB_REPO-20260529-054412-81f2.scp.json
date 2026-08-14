@@ -1,0 +1,35 @@
+{
+  "id": "GITHUB_REPO-20260529-054412-81f2",
+  "title": "cyber-forge",
+  "class": "MEMORY",
+  "type": "github_repo",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-29T05:44:12.950372",
+  "content": {
+    "name": "cyber-forge",
+    "type": "github_repository",
+    "description": "Breach probability simulator for CISOs. Quantifies defense-in-depth effectiveness using Poisson modeling. SOC aesthetic, risk quantification dashboard.",
+    "language": "HTML",
+    "stats": {
+      "stars": 2,
+      "forks": 0
+    },
+    "url": "https://github.com/JamesTheGiblet/cyber-forge",
+    "topics": [
+      "breach-prediction",
+      "ciso-tools",
+      "cybersecurity",
+      "defense-in-depth",
+      "forge-theory",
+      "infosec",
+      "javascript",
+      "poisson-distribution",
+      "risk-modeling",
+      "soc"
+    ],
+    "created": "2025-12-16T17:57:13Z",
+    "updated": "2026-05-20T09:50:46Z"
+  },
+  "metadata": {},
+  "signature": "23fe47b44e464a35"
+}

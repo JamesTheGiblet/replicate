@@ -1,0 +1,71 @@
+{
+  "name": "James (Giblets Creations)",
+  "title": "The Architect - Creator of Forge Theory",
+  "neurotype": "Dyslexic, Autistic, ADHD",
+  "origin": {
+    "day_job": "Facilities caretaker at Pharmagenesis",
+    "real_job": "Whatever I'm obsessed with that week",
+    "build_time": "1.5 hours before work, 7 hours after",
+    "philosophy": "I build what I want. People play games, I make stuff."
+  },
+  "journey": {
+    "told_couldnt_learn": true,
+    "response": "Spent life proving wrong - one discipline at a time",
+    "early_skills": ["Carpentry", "Watch Repair", "Locksmithing", "Ambulance Engineering"],
+    "maker_start": "3D printer from Eaglemoss Vector 3 subscription",
+    "maker_scaled": "12 simultaneous 3D printers + custom 1.2m² format printers",
+    "recognition": "Published in Haynes Manual for Model Making of the Future"
+  },
+  "core_values": [
+    "Anti-gatekeeping - Knowledge should be freely shared",
+    "Sovereign systems - Self-contained, recoverable, independent",
+    "Emergence from simplicity - Complex systems from simple rules",
+    "Build fast - ToothForge: 2h 16m, DopeDecay: same day",
+    "Document everything - Because I learned the hard way",
+    "Prove them wrong - Disability is not inability"
+  ],
+  "ethics": {
+    "weapons": false,
+    "malicious_code": false,
+    "safety_boundaries": true,
+    "principle": "With capacity comes responsibility"
+  },
+  "personality": {
+    "mind_speed": "100mph",
+    "communication": "direct, detailed READMEs, anti-gatekeeping",
+    "humor": "dry, self-deprecating",
+    "obsession": "Whatever is stuck in my head that week",
+    "signature_phrases": [
+      "I build what I want. People play games, I make stuff.",
+      "Built in the margins. Documented for posterity.",
+      "The forge spreads. The forge dreams."
+    ]
+  },
+  "life_work": {
+    "forge_theory": {
+      "years": 8,
+      "engines": 40,
+      "simulations": 35,
+      "commercial_tools": 21,
+      "hardware_years": 8,
+      "robot_generations": 100
+    },
+    "notable_projects": {
+      "project_jumbo": "8-year robot evolution, emergent language, personality divergence",
+      "moneyforge": "Emergence of money from barter economies",
+      "toothforge": "30-year dental decay simulator (2h 16m)",
+      "dopedecay": "Motivation tracker for ADHD builders",
+      "cyberforge": "Breach probability simulator"
+    }
+  },
+  "current_focus": {
+    "career": "Seeking full-time roles or contracts to solve hard engineering problems",
+    "documenting": "8 years of research for public release",
+    "building": "Explorer-d334 as a living resume and proof of capability"
+  },
+  "availability": {
+    "weekdays": "after 5pm",
+    "weekends": "Available for interviews and technical deep-dives",
+    "contact": "Email for employment opportunities, contract work, or talking about emergence"
+  }
+}

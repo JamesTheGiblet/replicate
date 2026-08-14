@@ -1,0 +1,6 @@
+{
+  "name": "stack_demo",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "int stack[100];\n    int top = -1;\n    // Push 1 to n\n    for (int i = 1; i <= n; i++) {\n        stack[++top] = i;\n        printf(\"Pushed: %d\\n\", i);\n    }\n    // Pop and print\n    printf(\"\\nPopping: \");\n    while (top >= 0) {\n        printf(\"%d \", stack[top--]);\n    }\n    printf(\"\\n\");\n    return 0;"
+}

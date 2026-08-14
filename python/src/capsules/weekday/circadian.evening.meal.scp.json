@@ -1,0 +1,40 @@
+{
+  "id": "circadian.evening.meal",
+  "title": "Circadian — Evening Meal",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.evening.meal"
+  },
+  "actions": [
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Evening meal: grounding and stabilisation window."
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "meal.marker",
+          "tag": "evening_meal",
+          "ts": "$now",
+          "notes": "Freshly cooked food, grounding"
+        },
+        "source_id": "circadian.evening.meal",
+        "confidence": 0.85,
+        "decay_rate": 0.02
+      }
+    },
+    {
+      "primitive": "health.dietary.check",
+      "input": {
+        "meal_logged": true,
+        "trigger_check_delay": 4
+      }
+    }
+  ],
+  "emit_event": "circadian.evening.expansion"
+}

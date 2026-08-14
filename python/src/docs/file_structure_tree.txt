@@ -1,0 +1,556 @@
+.
+├── abilities
+│   └── consciousness.scp.json
+├── analytics
+│   ├── README.md
+│   ├── crash_monitor.py
+│   ├── dashboard.html
+│   └── telemetry.py
+├── api
+│   └── version
+├── binaries
+│   ├── add.scp
+│   ├── cosmic_drive
+│   ├── daily_briefing
+│   ├── dream_imagination_explorer
+│   ├── dream_logic_explorer
+│   ├── final_test
+│   ├── health_wellness_reminder
+│   ├── integration_test
+│   ├── quick_test
+│   └── sensor_dashboard
+├── capsules
+│   ├── core
+│   │   ├── cron-purge.scp.json
+│   │   ├── dream.scp.json
+│   │   ├── init.scp.json
+│   │   ├── roadmap.scp.json
+│   │   └── shell.scp.json
+│   ├── swarm
+│   │   ├── capsule-approval.scp.json
+│   │   ├── capsule-push.scp.json
+│   │   ├── capsule-request.scp.json
+│   │   ├── datacube-router.scp.json
+│   │   ├── discovery.scp.json
+│   │   ├── node-esp32c6.scp.json
+│   │   ├── provenance.scp.json
+│   │   └── swarm-orchestrator.scp.json
+│   ├── trading
+│   │   ├── cce-oe-sentinel.scp.json
+│   │   ├── cce-se-crypto.scp.json
+│   │   └── cce-te-grid.scp.json
+│   ├── truth
+│   │   ├── citations.scp.json
+│   │   ├── confidence.scp.json
+│   │   ├── justitia.scp.json
+│   │   ├── lens-causal.scp.json
+│   │   ├── lens-geospatial.scp.json
+│   │   ├── lens-relational.scp.json
+│   │   ├── lens-sentimental.scp.json
+│   │   ├── lens-statistical.scp.json
+│   │   ├── lens-temporal.scp.json
+│   │   └── truth.scp.json
+│   └── weekday
+│       ├── business.customers.track.scp.json
+│       ├── business.invoices.send.scp.json
+│       ├── business.marketing.outreach.scp.json
+│       ├── business.metrics.dashboard.scp.json
+│       ├── business.payments.process.scp.json
+│       ├── business.payments.sweep.scp.json
+│       ├── business.support.tickets.scp.json
+│       ├── circadian.arrival.work.scp.json
+│       ├── circadian.evening.expansion.scp.json
+│       ├── circadian.evening.meal.scp.json
+│       ├── circadian.evening.session.scp.json
+│       ├── circadian.facilities.opening.scp.json
+│       ├── circadian.home.reward.scp.json
+│       ├── circadian.monday.reset.scp.json
+│       ├── circadian.morning.deepwork.scp.json
+│       ├── circadian.morning.transition.scp.json
+│       ├── circadian.morning.wake_synthesis.scp.json
+│       ├── circadian.morning.warmup.scp.json
+│       ├── circadian.nap.dream.scp.json
+│       ├── circadian.sunday.bedtime.scp.json
+│       ├── circadian.sunday.evening.scp.json
+│       ├── circadian.transit.drive.scp.json
+│       ├── circadian.wake.morning.scp.json
+│       ├── circadian.weekend.controller.scp.json
+│       ├── circadian.weekend.fun.scp.json
+│       ├── circadian.weekend.morning_flow.scp.json
+│       ├── circadian.weekend.sundown.scp.json
+│       ├── circadian.weekend.tidy.scp.json
+│       ├── circadian.weekend.wake.scp.json
+│       ├── circadian.workday.core.scp.json
+│       ├── circadian.workday.endshift.scp.json
+│       ├── future.annual.caves.scp.json
+│       ├── future.rest.of.life.scp.json
+│       ├── future.worcester.home.scp.json
+│       ├── health.ailment.track.scp.json
+│       ├── health.anxiety.shield.scp.json
+│       ├── health.breathing.reminder.scp.json
+│       ├── health.chronic.modifier.scp.json
+│       ├── health.dietary.tracker.scp.json
+│       ├── health.fatigue.detection.scp.json
+│       ├── health.medication.adherence.scp.json
+│       ├── health.migraine.protocol.scp.json
+│       ├── health.misophonia.shield.scp.json
+│       ├── health.pain.adaptive.scp.json
+│       ├── health.recovery.day.scp.json
+│       ├── skills.compliance.audit.scp.json
+│       ├── skills.crypto.session.scp.json
+│       ├── skills.daily.practice.scp.json
+│       ├── skills.os.breakthrough.scp.json
+│       └── skills.project.integration.scp.json
+├── commands
+│   ├── _error_handler.sh
+│   ├── analyze-repos
+│   ├── announce-dream
+│   ├── cluster
+│   ├── cosmic
+│   ├── dna
+│   ├── github-sync
+│   ├── ingest-repos
+│   ├── introduce
+│   ├── lineage
+│   ├── list-scps
+│   ├── merge-suggest
+│   ├── pattern-scan
+│   ├── patterns
+│   ├── port-check
+│   ├── productize
+│   ├── query
+│   ├── reason
+│   ├── recurrences
+│   ├── repo-cubes
+│   ├── repo-to-scp
+│   ├── repos
+│   ├── revive
+│   ├── run
+│   ├── speak
+│   ├── timeline
+│   ├── verify
+│   └── whoami
+├── community
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   ├── README.md
+│   ├── discord_invite.md
+│   ├── forum_setup.md
+│   └── github_readme.md
+├── dist
+│   ├── android
+│   │   ├── README.md
+│   │   ├── build_apk.sh
+│   │   └── setup_termux.sh
+│   ├── windows
+│   │   ├── build_exe.sh
+│   │   ├── install.bat
+│   │   └── install.ps1
+│   ├── README.md
+│   └── install.sh
+├── docs
+│   ├── api
+│   │   └── README.md
+│   ├── examples
+│   │   └── README.md
+│   ├── guide
+│   │   ├── getting-started.md
+│   │   ├── six-lens.md
+│   │   └── user-guide.md
+│   ├── spatialpod
+│   │   └── README.md
+│   ├── INDEX.md
+│   ├── README.md
+│   ├── debugging_310_tests.md
+│   ├── file_structure_tree.txt
+│   └── generate_html.py
+├── forge_workspace
+│   ├── build
+│   │   ├── program
+│   │   └── program.c
+│   └── successful
+│       ├── fibonacci_20260527_082539.bin
+│       └── fibonacci_20260527_082539.c
+├── generated
+│   ├── cosmic_drive.c
+│   ├── daily_briefing.c
+│   ├── dream_imagination_explorer.c
+│   ├── dream_logic_explorer.c
+│   └── sensor_dashboard.c
+├── generated_docs
+│   ├── archive
+│   │   ├── cli_test.md
+│   │   ├── dream_about_ai.md
+│   │   ├── dream_document.md
+│   │   ├── filename.md
+│   │   ├── my_first_document.md
+│   │   ├── philosophical_ai.md
+│   │   ├── title.md
+│   │   └── trusted_document.md
+│   └── filename.txt
+├── integrations
+├── legal
+│   ├── EULA.md
+│   ├── LICENSE
+│   ├── PRIVACY.md
+│   ├── README.md
+│   ├── TERMS.md
+│   └── THIRD_PARTY.md
+├── licensing
+│   ├── license_cli.sh
+│   └── license_manager.py
+├── marketing
+│   ├── press
+│   │   ├── press_kit.md
+│   │   └── press_release.md
+│   ├── social
+│   │   └── twitter.md
+│   ├── README.md
+│   ├── comparison_chart.md
+│   └── testimonials.md
+├── memories
+│   ├── code_generations
+│   │   └── CODE_GENERATION-20260528-075730-5649.scp.json
+│   ├── conversations
+│   │   ├── CONVERSATION-20260528-075119-2fd5.scp.json
+│   │   └── CONVERSATION-20260528-075628-607b.scp.json
+│   ├── dreams
+│   │   ├── DREAM-20260528-075119-f4ad.scp.json
+│   │   ├── DREAM-20260528-075628-8df9.scp.json
+│   │   ├── DREAM-20260528-124154-09d2.scp.json
+│   │   ├── DREAM-20260528-124436-d8c1.scp.json
+│   │   ├── DREAM-20260528-130843-d679.scp.json
+│   │   ├── DREAM-20260528-131010-72a3.scp.json
+│   │   ├── DREAM-20260528-155943-c4fa.scp.json
+│   │   ├── DREAM-20260528-165949-b9b8.scp.json
+│   │   ├── DREAM-20260528-175347-f1d2.scp.json
+│   │   └── DREAM-20260528-175410-65d8.scp.json
+│   ├── feedback
+│   │   └── USER_FEEDBACK-20260528-075730-8dd7.scp.json
+│   ├── insights
+│   │   └── INSIGHT-20260528-075730-9607.scp.json
+│   ├── milestones
+│   │   ├── ATOMICFORGE-20260528-184717-0a1e.scp.json
+│   │   ├── COSMIC_DRIVE-20260528-202436-f819.scp.json
+│   │   ├── DOCUMENT-20260528-121059-6f8f.scp.json
+│   │   ├── DOCUMENT-20260528-121254-16e9.scp.json
+│   │   ├── FEEDBACK-20260528-130449-c3ff.scp.json
+│   │   ├── FEEDBACK-20260528-131010-9f81.scp.json
+│   │   ├── FORGE_THEORY-20260528-181024-4fda.scp.json
+│   │   ├── FORGE_THEORY-20260528-181335-786a.scp.json
+│   │   ├── FORGE_THEORY-20260528-181335-ba84.scp.json
+│   │   ├── FORGE_THEORY-20260528-181336-ae43.scp.json
+│   │   ├── FORGE_THEORY-20260528-181453-966a.scp.json
+│   │   ├── GENERATED_DOCUMENT-20260528-123952-1502.scp.json
+│   │   ├── GENERATED_DOCUMENT-20260528-124036-6b1a.scp.json
+│   │   ├── GENERATED_DOCUMENT-20260528-124111-fc87.scp.json
+│   │   ├── GITHUB_REPO-20260528-195734-0e96.scp.json
+│   │   ├── GITHUB_REPO-20260528-195734-89aa.scp.json
+│   │   ├── GITHUB_REPO-20260528-195734-942a.scp.json
+│   │   ├── GITHUB_REPO-20260528-195735-58d6.scp.json
+│   │   ├── GITHUB_REPO-20260528-195807-721b.scp.json
+│   │   ├── GITHUB_REPO-20260528-195808-5b57.scp.json
+│   │   ├── GITHUB_REPO-20260528-195957-0527.scp.json
+│   │   ├── GITHUB_REPO-20260528-195957-35e5.scp.json
+│   │   ├── GITHUB_REPO-20260528-195957-6fc2.scp.json
+│   │   ├── GITHUB_REPO-20260528-211142-f5b1.scp.json
+│   │   ├── GITHUB_REPO-20260528-211326-2793.scp.json
+│   │   ├── GITHUB_REPO-20260528-211541-7c82.scp.json
+│   │   ├── GITHUB_REPO-20260528-212100-af0f.scp.json
+│   │   ├── GITHUB_REPO-20260528-212641-82ca.scp.json
+│   │   ├── GITHUB_REPO-20260528-213612-1fbb.scp.json
+│   │   ├── GITHUB_REPO-20260528-213731-670d.scp.json
+│   │   ├── GITHUB_REPO-20260528-214221-79fe.scp.json
+│   │   ├── GITHUB_REPO-20260528-220444-5ff9.scp.json
+│   │   ├── GITHUB_REPO-20260528-220620-c282.scp.json
+│   │   ├── GITHUB_REPO-20260528-220633-2b2e.scp.json
+│   │   ├── GITHUB_REPO-20260528-220636-0211.scp.json
+│   │   ├── GITHUB_REPO-20260528-220643-258e.scp.json
+│   │   ├── GITHUB_REPO-20260528-220647-9b7b.scp.json
+│   │   ├── GITHUB_REPO-20260528-220744-d58a.scp.json
+│   │   ├── GITHUB_REPO-20260528-220747-55c4.scp.json
+│   │   ├── GITHUB_REPO-20260528-220753-f3ac.scp.json
+│   │   ├── GITHUB_REPO-20260528-221221-d680.scp.json
+│   │   ├── GITHUB_REPO-20260528-221430-91d2.scp.json
+│   │   ├── GITHUB_REPO-20260528-222308-4a68.scp.json
+│   │   ├── GITHUB_REPO-20260529-053924-2488.scp.json
+│   │   ├── GITHUB_REPO-20260529-054116-f26a.scp.json
+│   │   ├── GITHUB_REPO-20260529-054332-b144.scp.json
+│   │   ├── GITHUB_REPO-20260529-054412-81f2.scp.json
+│   │   ├── GITHUB_REPO-20260529-054512-09be.scp.json
+│   │   ├── GITHUB_REPO-20260529-054526-06ef.scp.json
+│   │   ├── GITHUB_REPO-20260529-054607-2da0.scp.json
+│   │   ├── GITHUB_REPO-20260529-054738-bc9a.scp.json
+│   │   ├── GITHUB_REPO-20260529-055017-ec19.scp.json
+│   │   ├── GITHUB_REPO-20260529-055353-f66a.scp.json
+│   │   ├── GITHUB_REPO-20260529-055533-81b0.scp.json
+│   │   ├── GITHUB_REPO-20260529-055652-2f1e.scp.json
+│   │   ├── GITHUB_REPO-20260529-055949-e6fe.scp.json
+│   │   ├── GITHUB_REPO-20260529-060056-9533.scp.json
+│   │   ├── GITHUB_REPO-20260529-060242-5b19.scp.json
+│   │   ├── GITHUB_REPO-20260529-060452-05e4.scp.json
+│   │   ├── GITHUB_REPO-20260529-060519-25c8.scp.json
+│   │   ├── GITHUB_REPO-20260529-060705-6101.scp.json
+│   │   ├── INTERACTION-20260528-130843-2d9e.scp.json
+│   │   ├── INTERACTION-20260528-130843-2fb2.scp.json
+│   │   ├── INTERACTION-20260528-130843-85b0.scp.json
+│   │   ├── MILESTONE-20260528-073949-5e6a.scp.json
+│   │   ├── MILESTONE-20260528-074436-dede.scp.json
+│   │   ├── MILESTONE-20260528-074847-111d.scp.json
+│   │   ├── MILESTONE-20260528-075111-fc54.scp.json
+│   │   ├── MILESTONE-20260528-075303-41f3.scp.json
+│   │   ├── MILESTONE-20260528-075303-6395.scp.json
+│   │   ├── MILESTONE-20260528-075526-882e.scp.json
+│   │   ├── MILESTONE-20260528-075526-e5a9.scp.json
+│   │   ├── MILESTONE-20260528-075809-18c3.scp.json
+│   │   ├── MILESTONE-20260528-075809-58f5.scp.json
+│   │   ├── MILESTONE-20260528-075809-9fd7.scp.json
+│   │   ├── MILESTONE-20260528-075838-752f.scp.json
+│   │   ├── MILESTONE-20260528-075838-8ac4.scp.json
+│   │   ├── MILESTONE-20260528-075838-ffd5.scp.json
+│   │   ├── SOCIAL_POST-20260528-131010-eafd.scp.json
+│   │   ├── TEST-20260528-214221-8783.scp.json
+│   │   ├── TEST-20260528-220636-cb97.scp.json
+│   │   └── TEST-20260528-220746-3000.scp.json
+│   ├── sensors
+│   └── thoughts
+│       └── THOUGHT-20260528-075119-1614.scp.json
+├── payment
+│   ├── README.md
+│   ├── checkout.html
+│   ├── config.py
+│   ├── gumroad_setup.md
+│   ├── license_delivery.py
+│   └── webhook.py
+├── pdei_core
+│   ├── exocortex.py
+│   ├── exocortex.py.bak
+│   ├── exocortex_patch.py
+│   └── learning_manifest.json
+├── personalities
+│   ├── instances
+│   │   ├── exocortex_universal.json
+│   │   └── james_exocortex.json
+│   └── users
+│       └── james_the_giblet.json
+├── prelaunch
+│   ├── checklist.md
+│   ├── launch_day.md
+│   └── validator.py
+├── reflexes
+│   ├── code_generation.scp.json
+│   └── greeting.scp.json
+├── scp_prompts
+│   ├── add.scp.json
+│   ├── ai_assisted.scp.json
+│   ├── ai_fibonacci.scp.json
+│   ├── cosmic_drive.scp.json
+│   ├── cosmic_drive_vision.scp.json
+│   ├── cube.scp.json
+│   ├── daily_briefing.scp.json
+│   ├── dream_imagination_explorer.scp.json
+│   ├── dream_logic_explorer.scp.json
+│   ├── even.scp.json
+│   ├── factorial.scp.json
+│   ├── final_test.scp.json
+│   ├── fizzbuzz.scp.json
+│   ├── hashtable.scp.json
+│   ├── health_wellness_reminder.scp.json
+│   ├── integration_test.scp.json
+│   ├── ls_recursive.scp.json
+│   ├── prompt.scp.json
+│   ├── quick_test.scp.json
+│   ├── self_replicate.scp.json
+│   ├── sensor_dashboard.scp.json
+│   ├── simple.scp.json
+│   ├── square.scp.json
+│   ├── stack.scp.json
+│   ├── stack2.scp.json
+│   ├── test.scp.json
+│   ├── test_func.scp.json
+│   ├── test_lw.scp.json
+│   ├── test_provenance.scp.json
+│   └── webserver.scp.json
+├── skills
+│   └── code_generation.scp.json
+├── social_posts
+│   ├── twitter_20260528_130206.txt
+│   └── twitter_20260528_131010.txt
+├── src
+│   ├── README.md
+│   ├── __init__.py
+│   ├── active_cube_builder.py
+│   ├── ai_code_gen.py
+│   ├── android_service.py
+│   ├── atomicforge_knowledge.py
+│   ├── chat.py
+│   ├── code_access.py
+│   ├── code_generator.py
+│   ├── code_improver.py
+│   ├── complete_trust.py
+│   ├── consciousness_with_memory.py
+│   ├── daily_memory.py
+│   ├── daily_memory_lens.py
+│   ├── dashboard.py
+│   ├── datacube.py
+│   ├── datacube_bridge.py
+│   ├── db_integration.py
+│   ├── device_awareness.py
+│   ├── doc_access.py
+│   ├── doc_dreams.py
+│   ├── doc_editor.py
+│   ├── document_generator.py
+│   ├── document_ingestor.py
+│   ├── dream_journal.py
+│   ├── encryption.py
+│   ├── evolutionary_code.py
+│   ├── fast_doc_gen.py
+│   ├── forge_consciousness.py
+│   ├── forge_core.py
+│   ├── forge_db.py
+│   ├── forge_llm.py
+│   ├── forge_loop.py
+│   ├── forge_memory.py
+│   ├── forge_mind.py
+│   ├── forge_service.py
+│   ├── forge_theory.py
+│   ├── forge_time.py
+│   ├── fs_watcher.py
+│   ├── health_monitor.py
+│   ├── hybrid_evolution.py
+│   ├── hybrid_llm.py
+│   ├── identity.py
+│   ├── import_capsules.py
+│   ├── improve.py
+│   ├── integrated_datacube.py
+│   ├── intelligent_llm.py
+│   ├── leighton_weight.py
+│   ├── license_enforcer.py
+│   ├── llm_bridge.py
+│   ├── llm_evolution.py
+│   ├── local_assistant.py
+│   ├── mastery.py
+│   ├── memory_monitor.py
+│   ├── memory_status.py
+│   ├── notifications.py
+│   ├── pattern_scanner.py
+│   ├── persistent_memory.py
+│   ├── populate_memory.py
+│   ├── port_manager.py
+│   ├── push_notifications.py
+│   ├── repo_ingestor.py
+│   ├── scp_audit.py
+│   ├── scp_memory.py
+│   ├── scp_runner.py
+│   ├── scp_suggester.py
+│   ├── scp_web.py
+│   ├── security_agent.py
+│   ├── security_scanner.py
+│   ├── self_awareness.py
+│   ├── self_evolution.py
+│   ├── self_modifier.py
+│   ├── sensor_queries.py
+│   ├── simple_evolution.py
+│   ├── simple_llm.py
+│   ├── simple_trust.py
+│   ├── simple_tts.py
+│   ├── simple_web.py
+│   ├── six_lens_classifier.py
+│   ├── smart_validator.py
+│   ├── social_poster.py
+│   ├── spatial_pod_integration.py
+│   ├── stderr.txt
+│   ├── stdout.txt
+│   ├── stress_helper.py
+│   ├── system_integration.py
+│   ├── thought_organizer.py
+│   ├── timeline.py
+│   ├── trust_integration.py
+│   ├── unified_consciousness.py
+│   ├── unified_consciousness_llm.py
+│   ├── unified_status.py
+│   ├── verifier.py
+│   ├── verify_audit.py
+│   ├── version.py
+│   ├── voice.py
+│   ├── voice_personality.py
+│   ├── wants_needs.py
+│   ├── web_avatar.py
+│   ├── web_debug.py
+│   ├── web_enhanced.py
+│   ├── web_enhanced_mobile.py
+│   ├── web_final.py
+│   ├── web_hybrid.py
+│   ├── web_hybrid.py.broken
+│   ├── web_scraper.py
+│   ├── web_validator.py
+│   ├── weighted_wants.py
+│   └── working_replicator.py
+├── support
+│   ├── faq
+│   │   └── README.md
+│   ├── knowledge_base
+│   │   └── README.md
+│   ├── tickets
+│   │   └── ticket.sh
+│   └── support.sh
+├── website
+│   ├── assets
+│   │   ├── logo.jpg
+│   │   └── logo.png
+│   ├── css
+│   │   └── style.css
+│   ├── js
+│   │   └── main.js
+│   ├── index.html
+│   └── serve.sh
+├── API_VERSION
+├── BATTERY_SETUP.md
+├── CHANGELOG.md
+├── Makefile
+├── README.md
+├── VERSION
+├── api_version.json
+├── api_version.txt
+├── atomicforge.html
+├── auto_health.sh
+├── backup.sh
+├── chat_history.json
+├── cleanup.sh
+├── cube
+├── cyberforge.html
+├── datacube_visualization.html
+├── final_stress_fix.py
+├── fix_all_tests.sh
+├── fix_error_tests.sh
+├── forge
+├── forge.backup
+├── forge.backup_error
+├── forge.fixed
+├── forge_fixed
+├── forge_improve.sh
+├── forge_v2_commands.sh
+├── improve -> forge_improve.sh
+├── logo.jpg
+├── run_test_with_cleanup.sh
+├── service_daemon.py
+├── service_status.sh
+├── simple_trust.py
+├── spatialpod.html
+├── start.sh
+├── start_service.sh
+├── start_simple.sh
+├── status_simple.sh
+├── stderr.txt
+├── stdout.txt
+├── stop_service.sh
+├── stop_simple.sh
+├── test_all.py
+├── test_all.py.backup
+├── test_all.py.fixable
+├── test_final.py
+├── test_more.py
+├── test_more.py.backup
+└── version.json
+
+61 directories, 493 files

@@ -1,0 +1,6 @@
+{
+  "name": "ai_generated",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "if (n <= 1) return 1;\n    return n * ai_generated(n - 1);"
+}

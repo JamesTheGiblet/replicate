@@ -1,0 +1,13 @@
+{
+  "id": "test_lw_scp",
+  "trust_score": 0.85,
+  "provenance": {
+    "created_by": "james",
+    "created_at": "2026-05-26T13:00:00Z",
+    "version": "1.0",
+    "id": "prov_lw_001"
+  },
+  "actions": [
+    {"primitive": "sys.log", "input": {"message": "Testing Leighton Weight"}}
+  ]
+}

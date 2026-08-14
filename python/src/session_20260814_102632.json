@@ -1,0 +1,87 @@
+{
+  "session_id": "20260814_102632",
+  "readings": [
+    {
+      "id": 65,
+      "session_id": "20260814_102632",
+      "tick": 1,
+      "timestamp": 1786699602.6726968,
+      "x": -1.36609304,
+      "y": 51.6911336,
+      "altitude": 125.968505859375,
+      "accuracy": 10.997163772583008,
+      "heading": 0.005740050692111254,
+      "energy": 88.91,
+      "light": 137.02500915527344,
+      "pressure": 1005.3060302734375,
+      "steps": 22218,
+      "accel_x": 0.10827522724866867,
+      "accel_y": 0.10827522724866867,
+      "accel_z": 9.829715728759766
+    },
+    {
+      "id": 66,
+      "session_id": "20260814_102632",
+      "tick": 2,
+      "timestamp": 1786699615.7553124,
+      "x": -1.36601328,
+      "y": 51.6911288,
+      "altitude": 127.65032958984375,
+      "accuracy": 8.457866668701172,
+      "heading": 0.005978408735245466,
+      "energy": 88.91,
+      "light": 139.99501037597656,
+      "pressure": 1005.0804443359375,
+      "steps": 22218,
+      "accel_x": 0.10707881301641464,
+      "accel_y": 0.1052841991186142,
+      "accel_z": 9.835697174072266
+    }
+  ],
+  "events": [
+    {
+      "id": 171,
+      "session_id": "20260814_102632",
+      "tick": 1,
+      "event_type": "phone.agent.created",
+      "claim_id": "",
+      "agent_id": "phone-001",
+      "lens": "",
+      "data": "{\"type\": \"phone.agent.created\", \"agent_id\": \"phone-001\", \"x\": -1.36609304, \"y\": 51.6911336}",
+      "timestamp": 1786699602.747692
+    },
+    {
+      "id": 172,
+      "session_id": "20260814_102632",
+      "tick": 1,
+      "event_type": "claim",
+      "claim_id": "claim-0",
+      "agent_id": "replicant/agent/ecf64f27-e24c-4073-86ff-6203fc5e3934",
+      "lens": "OPINION",
+      "data": "{\"type\": \"claim\", \"claim_id\": \"claim-0\", \"agent_id\": \"replicant/agent/ecf64f27-e24c-4073-86ff-6203fc5e3934\", \"lens\": \"OPINION\", \"x\": 52.0, \"y\": 48.0}",
+      "timestamp": 1786699602.7919548
+    },
+    {
+      "id": 173,
+      "session_id": "20260814_102632",
+      "tick": 2,
+      "event_type": "claim",
+      "claim_id": "claim-0",
+      "agent_id": "replicant/agent/ecf64f27-e24c-4073-86ff-6203fc5e3934",
+      "lens": "OPINION",
+      "data": "{\"type\": \"claim\", \"claim_id\": \"claim-0\", \"agent_id\": \"replicant/agent/ecf64f27-e24c-4073-86ff-6203fc5e3934\", \"lens\": \"OPINION\", \"x\": 52.0, \"y\": 48.0}",
+      "timestamp": 1786699615.811455
+    },
+    {
+      "id": 174,
+      "session_id": "20260814_102632",
+      "tick": 2,
+      "event_type": "claim",
+      "claim_id": "claim-1",
+      "agent_id": "phone-001",
+      "lens": "OPINION",
+      "data": "{\"type\": \"claim\", \"claim_id\": \"claim-1\", \"agent_id\": \"phone-001\", \"lens\": \"OPINION\", \"x\": -1.36601328, \"y\": 51.6911288}",
+      "timestamp": 1786699615.8502238
+    }
+  ]
+}

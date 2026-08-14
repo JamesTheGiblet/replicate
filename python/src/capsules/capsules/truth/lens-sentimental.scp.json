@@ -1,0 +1,14 @@
+{
+  "id": "forge/lens-sentimental",
+  "class": "EUCLID",
+  "intent": "Analyzes textual Data Cube nodes for positive, neutral, and negative sentiment.",
+  "invoke": "lens.sentimental",
+  "input": "",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.4.0",
+    "codename": "Truth Engine"
+  }
+}

@@ -1,0 +1,34 @@
+#!/bin/bash
+python3 << PYEOF
+import sqlite3
+import json
+
+conn = sqlite3.connect("forge_data.db")
+cursor = conn.cursor()
+
+cursor.execute('''
+    SELECT name, description, language, stargazers_count, 
+           created_at, topics
+    FROM github_repos 
+    ORDER BY stargazers_count DESC
+''')
+
+print("\n📦 REPOSITORY KNOWLEDGE CUBES")
+print("=" * 50)
+
+for repo in cursor.fetchall():
+    name, desc, lang, stars, created, topics = repo
+    topics_list = json.loads(topics) if topics else []
+    
+    print(f"\n🔹 {name}")
+    print(f"   Language: {lang or 'unknown'}")
+    print(f"   Stars: ⭐ {stars}")
+    print(f"   Created: {created[:10]}")
+    if desc:
+        print(f"   📝 {desc[:80]}...")
+    if topics_list:
+        print(f"   🏷️ {', '.join(topics_list[:3])}")
+    print("-" * 40)
+
+conn.close()
+PYEOF

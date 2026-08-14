@@ -1,0 +1,67 @@
+#!/bin/bash
+REPO_NAME="$1"
+if [ -z "$REPO_NAME" ]; then
+    echo "Usage: ./forge repo-to-scp <repo-name>"
+    echo "Example: ./forge repo-to-scp cyber-forge"
+    exit 1
+fi
+
+python3 << PYEOF
+import sqlite3
+import json
+import sys
+
+REPO_NAME = "$REPO_NAME"
+
+conn = sqlite3.connect("forge_data.db")
+cursor = conn.cursor()
+
+cursor.execute('''
+    SELECT name, description, language, stargazers_count, forks_count, 
+           html_url, topics, created_at, updated_at
+    FROM github_repos 
+    WHERE name = ? OR full_name LIKE ?
+''', (REPO_NAME, f'%{REPO_NAME}%'))
+
+repo = cursor.fetchone()
+if not repo:
+    print(f"❌ Repo not found: {REPO_NAME}")
+    print("Available repos: cyber-forge, dope-forge, tooth-forge, etc.")
+    sys.exit(1)
+
+name, desc, lang, stars, forks, url, topics, created, updated = repo
+
+# Try to import scp_memory, but handle gracefully
+try:
+    from src.scp_memory import get_scp_memory
+    memory = get_scp_memory()
+    
+    scp_content = {
+        "name": name,
+        "type": "github_repository",
+        "description": desc,
+        "language": lang,
+        "stats": {
+            "stars": stars,
+            "forks": forks
+        },
+        "url": url,
+        "topics": json.loads(topics) if topics else [],
+        "created": created,
+        "updated": updated
+    }
+    
+    memory.create_scp("github_repo", name, scp_content)
+    print(f"✅ Created SCP memory for: {name}")
+    print(f"   📝 {desc[:100] if desc else 'No description'}...")
+    print(f"   ⭐ {stars} stars | 🍴 {forks} forks | 📅 {created[:10]}")
+    # No close method needed
+except ImportError as e:
+    print(f"⚠️ SCP memory module not available: {e}")
+    print(f"✅ Repository in memory: {name}")
+    print(f"   📝 {desc[:100] if desc else 'No description'}...")
+    print(f"   ⭐ {stars} stars | 🍴 {forks} forks | 📅 {created[:10]}")
+    print(f"   🔗 {url}")
+
+conn.close()
+PYEOF

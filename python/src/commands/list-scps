@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "📦 AVAILABLE SCP CAPSULES"
+echo "========================"
+echo ""
+ls scp_prompts/*.scp.json 2>/dev/null | sed 's/.*\///' | sed 's/.scp.json//' | while read scp; do
+    # Get description from file
+    DESC=$(grep -o '"title":"[^"]*"' "scp_prompts/${scp}.scp.json" 2>/dev/null | head -1 | sed 's/"title":"//' | sed 's/"//')
+    if [ -n "$DESC" ]; then
+        echo "  📄 ${scp} - ${DESC}"
+    else
+        echo "  📄 ${scp}"
+    fi
+done

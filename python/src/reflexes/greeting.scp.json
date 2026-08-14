@@ -1,0 +1,8 @@
+{
+  "name": "greeting",
+  "type": "reflex",
+  "description": "Instant response to greetings",
+  "triggers": ["hi", "hello", "hey", "greetings"],
+  "response": "👋 Hello! I'm Explorer-d334. How can I help?",
+  "trust": 0.98
+}

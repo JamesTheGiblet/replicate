@@ -1,0 +1,11 @@
+{
+  "id": "MILESTONE-20260528-075809-9fd7",
+  "title": "Created capsule: sensor_dashboard",
+  "class": "MEMORY",
+  "type": "milestone",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T07:58:09.838715",
+  "content": "Explorer-d334 generated a new SCP capsule based on memories",
+  "metadata": {},
+  "signature": "fd6b07513ff23edc"
+}

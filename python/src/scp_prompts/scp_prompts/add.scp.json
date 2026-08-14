@@ -1,0 +1,11 @@
+{
+  "name": "add",
+  "type": "function",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "logic": "return n + 10;"
+}

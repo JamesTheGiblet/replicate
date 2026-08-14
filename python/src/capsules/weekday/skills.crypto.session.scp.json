@@ -1,0 +1,40 @@
+{
+  "id": "skills.crypto.session",
+  "title": "Skills — Crypto Trading Analysis",
+  "class": "EUCLID",
+  "profile": "skills",
+  "triggers": {
+    "cron": "0 8,16 * * 1-5"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "market_analysis",
+        "context": "crypto_market",
+        "max_tokens": 512,
+        "temperature": 0.3
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "opinion",
+        "payload": {
+          "type": "trade.analysis",
+          "confidence": "analysis_based",
+          "risk": "$risk_assessment",
+          "ts": "$now"
+        }
+      }
+    },
+    {
+      "primitive": "leighton.update",
+      "input": {
+        "capsule": "skills.crypto",
+        "delta_profit": 0.05,
+        "delta_loss": -0.03
+      }
+    }
+  ]
+}

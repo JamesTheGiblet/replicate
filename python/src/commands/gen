@@ -1,0 +1,10 @@
+#!/bin/bash
+cd ~/forge
+if [ -z "$1" ]; then
+    echo "Usage: ./forge gen <description>"
+    echo "Examples:"
+    echo "  ./forge gen reverse a string"
+    echo "  ./forge gen fibonacci"
+    exit 0
+fi
+python3 src/code_gen.py "$*"

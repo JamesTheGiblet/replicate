@@ -1,0 +1,13 @@
+{
+  "id": "TEST-20260528-214221-8783",
+  "title": "Test Memory",
+  "class": "MEMORY",
+  "type": "test",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T21:42:21.113451",
+  "content": {
+    "data": "test"
+  },
+  "metadata": {},
+  "signature": "90bfd0b087ee9e11"
+}

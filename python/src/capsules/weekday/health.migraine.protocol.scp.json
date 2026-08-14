@@ -1,0 +1,49 @@
+{
+  "id": "health.migraine.protocol",
+  "title": "Health — Migraine Emergency Protocol",
+  "class": "THAUMIEL",
+  "profile": "health",
+  "triggers": {
+    "on_event": "health.migraine.detected"
+  },
+  "actions": [
+    {
+      "primitive": "sys.override",
+      "input": {
+        "cancel_all_cron": true,
+        "suppress_alarms": true,
+        "dim_screens": true,
+        "lower_volume": true
+      }
+    },
+    {
+      "primitive": "leighton.freeze",
+      "input": {
+        "capsules": "all",
+        "duration_hours": 24,
+        "reason": "migraine_recovery"
+      }
+    },
+    {
+      "primitive": "health.medication.remind",
+      "input": {
+        "medication": "migraine_relief",
+        "urgency": "high"
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Migraine detected. No cognitive expectations. Rest required.",
+        "mode": "comfort",
+        "voice_only": true
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "MIGRAINE PROTOCOL ACTIVATED. System in low-stimulus mode."
+      }
+    }
+  ]
+}

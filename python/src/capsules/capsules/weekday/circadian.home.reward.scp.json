@@ -1,0 +1,33 @@
+{
+  "id": "circadian.home.reward",
+  "title": "Circadian — Home Reward",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.home.reward"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "opinion",
+        "payload": {
+          "type": "reward.marker",
+          "tag": "home_reward",
+          "ts": "$now",
+          "notes": "Home reward phase: decompress, transition from work"
+        },
+        "source_id": "circadian.home.reward",
+        "confidence": 0.8,
+        "decay_rate": 0.03
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Home reward phase logged."
+      }
+    }
+  ],
+  "emit_event": "circadian.nap.dream"
+}

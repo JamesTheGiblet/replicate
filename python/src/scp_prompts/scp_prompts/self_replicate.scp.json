@@ -1,0 +1,21 @@
+{
+  "name": "code_generator_self",
+  "type": "function",
+  "description": "Generates C code from JSON SCP prompts - the forge replicator",
+  "params": [
+    {"name": "input_file", "type": "char*"},
+    {"name": "output_file", "type": "char*"}
+  ],
+  "logic": "FILE *in = fopen(input_file, \"r\");\n    if (!in) return 1;\n    fseek(in, 0, SEEK_END);\n    long size = ftell(in);\n    fseek(in, 0, SEEK_SET);\n    char *json = malloc(size + 1);\n    fread(json, 1, size, in);\n    json[size] = '\\0';\n    fclose(in);\n    // Parse name from JSON\n    char *name_start = strstr(json, \"\\\"name\\\"\");\n    if (!name_start) return 1;\n    name_start = strchr(name_start, ':');\n    if (!name_start) return 1;\n    name_start = strchr(name_start, '\\\"');\n    if (!name_start) return 1;\n    name_start++;\n    char *name_end = strchr(name_start, '\\\"');\n    if (!name_end) return 1;\n    int name_len = name_end - name_start;\n    char func_name[256];\n    strncpy(func_name, name_start, name_len);\n    func_name[name_len] = '\\0';\n    // Parse logic\n    char *logic_start = strstr(json, \"\\\"logic\\\"\");\n    if (!logic_start) return 1;\n    logic_start = strchr(logic_start, ':');\n    if (!logic_start) return 1;\n    logic_start = strchr(logic_start, '\\\"');\n    if (!logic_start) return 1;\n    logic_start++;\n    char *logic_end = strstr(logic_start, \"\\\"\");\n    if (!logic_end) return 1;\n    int logic_len = logic_end - logic_start;\n    char *logic = malloc(logic_len + 1);\n    strncpy(logic, logic_start, logic_len);\n    logic[logic_len] = '\\0';\n    // Replace escaped newlines\n    for (int i = 0; i < logic_len; i++) {\n        if (logic[i] == 'n' && i > 0 && logic[i-1] == '\\\\') {\n            logic[i-1] = '\\n';\n            for (int j = i; j < logic_len; j++) {\n                logic[j-1] = logic[j];\n            }\n            logic_len--;\n        }\n    }\n    // Generate output C file\n    FILE *out = fopen(output_file, \"w\");\n    if (!out) return 1;\n    fprintf(out, \"#include <stdio.h>\\n#include <stdlib.h>\\n#include <string.h>\\n\\n\");\n    fprintf(out, \"int %s(int n) {\\n    %s\\n}\\n\\n\", func_name, logic);\n    fprintf(out, \"int main(int argc, char *argv[]) {\\n\");\n    fprintf(out, \"    int n = argc > 1 ? atoi(argv[1]) : 0;\\n\");\n    fprintf(out, \"    printf(\\\"%%d\\\\n\\\", %s(n));\\n\", func_name);\n    fprintf(out, \"    return 0;\\n}\\n\");\n    fclose(out);\n    free(json);\n    free(logic);\n    return 0;",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "input_file": {"type": "string"},
+      "output_file": {"type": "string"}
+    }
+  },
+  "output_schema": {
+    "type": "integer",
+    "description": "0 on success, 1 on error"
+  }
+}

@@ -1,0 +1,54 @@
+#!/bin/bash
+python3 << PYEOF
+import sqlite3
+import json
+
+conn = sqlite3.connect("forge_data.db")
+cursor = conn.cursor()
+
+print("\n📊 GITHUB REPOSITORY ANALYSIS")
+print("=" * 40)
+
+# Count by language
+cursor.execute('''
+    SELECT language, COUNT(*) FROM github_repos 
+    WHERE language IS NOT NULL 
+    GROUP BY language 
+    ORDER BY COUNT(*) DESC
+''')
+print("\n📈 Languages:")
+for lang, count in cursor.fetchall():
+    print(f"  {lang}: {count} repos")
+
+# Top starred
+cursor.execute('''
+    SELECT name, stargazers_count, language 
+    FROM github_repos 
+    ORDER BY stargazers_count DESC 
+    LIMIT 10
+''')
+print("\n⭐ Top Starred Repos:")
+for name, stars, lang in cursor.fetchall():
+    print(f"  {name} ({lang}) - ⭐ {stars}")
+
+# Most active (recently updated)
+cursor.execute('''
+    SELECT name, updated_at, stargazers_count 
+    FROM github_repos 
+    ORDER BY datetime(updated_at) DESC 
+    LIMIT 10
+''')
+print("\n🔄 Recently Updated:")
+for name, updated, stars in cursor.fetchall():
+    print(f"  {name} - {updated[:10]} - ⭐ {stars}")
+
+# Topic clusters
+cursor.execute('SELECT name, topics FROM github_repos WHERE topics IS NOT NULL AND topics != "[]"')
+print("\n🏷️ Topic Clusters:")
+for name, topics in cursor.fetchall():
+    topics_list = json.loads(topics)
+    if topics_list:
+        print(f"  {name}: {', '.join(topics_list[:3])}")
+
+conn.close()
+PYEOF

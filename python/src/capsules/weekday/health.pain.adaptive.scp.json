@@ -1,0 +1,49 @@
+{
+  "id": "health.pain.adaptive",
+  "title": "Health — Adaptive Pain Response",
+  "class": "EUCLID",
+  "profile": "health",
+  "triggers": {
+    "cron": "0 */2 * * *"
+  },
+  "actions": [
+    {
+      "primitive": "health.pain.query",
+      "input": {
+        "locations": ["right_foot", "right_knee", "right_hip", "lower_back", "both_shoulders", "right_elbow", "right_thumb"]
+      }
+    },
+    {
+      "primitive": "leighton.apply_modifier",
+      "input": {
+        "pain_scale": {
+          "1": -0.05,
+          "2": -0.10,
+          "3": -0.15,
+          "4": -0.25,
+          "5": -0.35,
+          "6": -0.50,
+          "7": -0.65,
+          "8": -0.80,
+          "9": -0.95,
+          "10": -1.00
+        }
+      }
+    },
+    {
+      "primitive": "schedule.adjust",
+      "input": {
+        "pain_threshold": 5,
+        "action": "cancel_physical_tasks"
+      }
+    },
+    {
+      "primitive": "health.pain.log",
+      "input": {
+        "locations": "$pain_locations",
+        "severity": "$pain_levels",
+        "timestamp": "$now"
+      }
+    }
+  ]
+}

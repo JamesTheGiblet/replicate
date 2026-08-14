@@ -1,0 +1,34 @@
+{
+  "id": "GITHUB_REPO-20260528-195808-5b57",
+  "title": "dope-forge",
+  "class": "MEMORY",
+  "type": "github_repo",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T19:58:08.558379",
+  "content": {
+    "name": "dope-forge",
+    "type": "github_repository",
+    "description": "Motivation tracker for ADHD builders. Uses pharmacokinetic decay curves to predict project abandonment. Because motivation isn't infinite - it's exponential.",
+    "language": "HTML",
+    "stats": {
+      "stars": 1,
+      "forks": 0
+    },
+    "url": "https://github.com/JamesTheGiblet/dope-forge",
+    "topics": [
+      "adhd",
+      "behavioral-modeling",
+      "exponential-decay",
+      "forge-theory",
+      "javascript",
+      "mental-health",
+      "motivation",
+      "productivity",
+      "webapp"
+    ],
+    "created": "2025-12-16T06:30:05Z",
+    "updated": "2025-12-17T06:30:42Z"
+  },
+  "metadata": {},
+  "signature": "51a5d8454de4d48b"
+}

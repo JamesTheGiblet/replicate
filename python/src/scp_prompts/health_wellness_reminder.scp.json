@@ -1,0 +1,16 @@
+{
+  "name": "health_wellness_reminder",
+  "title": "Reminds user to take breaks, stretch, and stay hydrated",
+  "class": "SUGGESTED",
+  "type": "function",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "logic": "printf(\"\ud83d\udcaa Time for a wellness break!\\n\");\nprintf(\"   \u2022 Stretch your neck and shoulders\\n\");\nprintf(\"   \u2022 Drink some water\\n\");\nprintf(\"   \u2022 Rest your eyes for 20 seconds\\n\");\nprintf(\"   \u2022 Take 5 deep breaths\\n\");\nreturn 0;",
+  "generated_by": "Explorer-d334",
+  "generated_at": "2026-05-28T08:12:13.924534",
+  "trust_score": 0.65
+}

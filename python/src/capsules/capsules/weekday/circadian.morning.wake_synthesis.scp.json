@@ -1,0 +1,43 @@
+{
+  "id": "circadian.morning.wake_synthesis",
+  "title": "Circadian — Morning Dream Harvest",
+  "class": "EUCLID",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.morning.wake_synthesis"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fiction",
+        "filter": { "tag": "night_synthesis", "range": "last12h" }
+      }
+    },
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "extract_actions_from_dreams",
+        "context": "dream_to_action",
+        "prompt": "Convert last night's dream synthesis into 3 concrete, buildable actions.",
+        "max_tokens": 256
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "morning.inspired.actions",
+          "tag": "dream_harvest",
+          "ts": "$now",
+          "notes": "Actionable ideas derived from dream synthesis."
+        },
+        "source_id": "circadian.morning.wake_synthesis",
+        "confidence": 0.92,
+        "decay_rate": 0.01
+      }
+    }
+  ],
+  "emit_event": "circadian.morning.warmup"
+}

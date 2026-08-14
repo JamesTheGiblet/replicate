@@ -1,0 +1,35 @@
+{
+  "id": "circadian.morning.deepwork",
+  "title": "Circadian — Morning Deep Work",
+  "class": "EUCLID",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.morning.deepwork"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "morning_focus",
+        "context": "high_clarity_window",
+        "max_tokens": 512
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "session.log",
+          "tag": "morning.deepwork",
+          "ts": "$now",
+          "notes": "Summary of morning deep work session."
+        },
+        "source_id": "circadian.morning.deepwork",
+        "confidence": 0.9,
+        "decay_rate": 0.01
+      }
+    }
+  ],
+  "emit_event": "circadian.morning.transition"
+}

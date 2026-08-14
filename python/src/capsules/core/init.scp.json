@@ -1,0 +1,16 @@
+{
+  "id": "forge/init",
+  "class": "THAUMIEL",
+  "intent": "Bootstrap the FORGE sovereign runtime. First capsule. First light.",
+  "invoke": "hw.init",
+  "input": "",
+  "parent_id": "",
+  "next": "provenance.scp.json",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "0.1.0",
+    "codename": "First Light",
+    "created": "2026-05-16"
+  }
+}

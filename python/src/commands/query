@@ -1,0 +1,32 @@
+#!/bin/bash
+shift
+QUESTION="$*"
+
+echo "💭 $QUESTION"
+echo ""
+
+if echo "$QUESTION" | grep -qi "project-aegis"; then
+    echo "Project-Aegis is a CLI tool that automates security documentation generation."
+    echo "It has 4 stars on GitHub - your most starred repo!"
+    echo "Purpose: MIT compliance and security documentation made simple."
+
+elif echo "$QUESTION" | grep -qi "cyber-forge"; then
+    echo "CyberForge is a breach probability simulator for CISOs."
+    echo "It uses Poisson modeling to quantify defense-in-depth effectiveness."
+    echo "Commercial potential: Enterprise security ($10k-50k/year)"
+
+elif echo "$QUESTION" | grep -qi "whisper"; then
+    echo "Whisper is an AI-powered secret scanner for codebases."
+    echo "It uses contextual analysis to reduce false positives."
+    echo "Commercial potential: DevSecOps ($49-499/month)"
+
+else
+    echo "I know about your 100+ GitHub repositories."
+    echo ""
+    echo "Try asking about:"
+    echo "  • Project-Aegis"
+    echo "  • cyber-forge"
+    echo "  • whisper"
+    echo "  • trial-forge"
+    echo "  • patterns"
+fi

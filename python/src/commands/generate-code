@@ -1,0 +1,18 @@
+#!/bin/bash
+# Enhanced code generation
+
+cd ~/forge
+REQUEST="$*"
+
+if [ -z "$REQUEST" ]; then
+    echo "Usage: ./forge generate-code 'description'"
+    echo ""
+    echo "Examples:"
+    echo "  ./forge generate-code 'reverse a string'"
+    echo "  ./forge generate-code 'fibonacci sequence'"
+    exit 0
+fi
+
+echo "📝 Generating code for: $REQUEST"
+echo ""
+python3 src/code_gen.py "$REQUEST"

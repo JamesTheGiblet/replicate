@@ -1,0 +1,21 @@
+#!/bin/bash
+# Development helper - talk to the forge like a pair programmer
+
+cd ~/forge
+
+if [ -z "$1" ]; then
+    echo "Explorer-d334 - AI Pair Programmer"
+    echo ""
+    echo "Usage: ./forge dev \"your request\""
+    echo ""
+    echo "Examples:"
+    echo "  ./forge dev \"build a fibonacci function in C\""
+    echo "  ./forge dev \"debug this function\""
+    echo "  ./forge dev \"create a capsule for daily health check\""
+    exit 0
+fi
+
+echo "Sending request to Explorer-d334..."
+echo ""
+curl -s "http://localhost:8085/api/chat?message=$(echo "$*" | sed 's/ /%20/g' | sed 's/"/%22/g')"
+echo ""

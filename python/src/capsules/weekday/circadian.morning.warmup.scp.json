@@ -1,0 +1,40 @@
+{
+  "id": "circadian.morning.warmup",
+  "title": "Circadian — Morning Warmup",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.morning.warmup"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fact",
+        "filter": { "tag": "dream_harvest", "range": "last1h" }
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "You have dream-derived actions. Review them. Which feels most alive today?",
+        "mode": "low_intensity",
+        "context": "dream_harvest_results"
+      }
+    },
+    {
+      "primitive": "decay.run",
+      "input": {
+        "scope": "short_term",
+        "rate": 0.02
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Morning warmup: dream harvest loaded into reflection."
+      }
+    }
+  ],
+  "emit_event": "circadian.morning.deepwork"
+}

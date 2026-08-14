@@ -1,0 +1,45 @@
+{
+  "id": "health.recovery.day",
+  "title": "Health — Mandatory Recovery Day",
+  "class": "THAUMIEL",
+  "profile": "health",
+  "triggers": {
+    "on_event": "health.recovery.triggered"
+  },
+  "actions": [
+    {
+      "primitive": "sys.override",
+      "input": {
+        "cancel_all_cron": true,
+        "suppress_all_emits": true,
+        "duration_hours": 24
+      }
+    },
+    {
+      "primitive": "leighton.freeze",
+      "input": {
+        "capsules": "all",
+        "duration_hours": 24,
+        "reason": "mandatory_recovery"
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Recovery day. No building. No goals. Rest.",
+        "mode": "rest_only"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "recovery.day",
+          "reason": "$burnout_risk_reason",
+          "duration": 24
+        }
+      }
+    }
+  ]
+}

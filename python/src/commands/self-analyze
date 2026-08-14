@@ -1,0 +1,5 @@
+#!/bin/bash
+# Run self-analysis on the forge's own code
+
+cd ~/forge
+python3 src/self_awareness.py analyze

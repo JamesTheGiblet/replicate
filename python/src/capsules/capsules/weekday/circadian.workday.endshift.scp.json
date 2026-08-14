@@ -1,0 +1,33 @@
+{
+  "id": "circadian.workday.endshift",
+  "title": "Circadian — End of Workday",
+  "class": "SAFE",
+  "profile": "operational",
+  "triggers": {
+    "on_event": "circadian.workday.endshift"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "session.summary",
+          "tag": "workday_summary",
+          "ts": "$now"
+        },
+        "source_id": "circadian.workday.endshift",
+        "confidence": 0.85,
+        "decay_rate": 0.01
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Summarise today's workday in 3 bullet points: wins, issues, carry-overs.",
+        "mode": "summary"
+      }
+    }
+  ],
+  "emit_event": "circadian.home.reward"
+}

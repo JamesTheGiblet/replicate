@@ -1,0 +1,48 @@
+{
+  "id": "health.anxiety.shield",
+  "title": "Health — Anxiety & Stress Shield",
+  "class": "THAUMIEL",
+  "profile": "health",
+  "triggers": {
+    "on_event": "anxiety.spike.detected"
+  },
+  "actions": [
+    {
+      "primitive": "leighton.freeze",
+      "input": {
+        "capsules": "all_cognitive",
+        "duration_hours": 4,
+        "reason": "anxiety_protocol"
+      }
+    },
+    {
+      "primitive": "schedule.pause",
+      "input": {
+        "duration_hours": 2,
+        "exceptions": ["health.breathing.reminder"]
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "Anxiety detected. No demands. No expectations. Breathe.",
+        "mode": "calming",
+        "voice_only": true
+      }
+    },
+    {
+      "primitive": "notification.suppress",
+      "input": {
+        "duration_hours": 2,
+        "allow_critical": false
+      }
+    },
+    {
+      "primitive": "environment.control",
+      "input": {
+        "action": "reduce_stimuli",
+        "dim_lights": true
+      }
+    }
+  ]
+}

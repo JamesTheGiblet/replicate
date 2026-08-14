@@ -1,0 +1,11 @@
+{
+  "id": "CODE_GENERATION-20260528-075730-5649",
+  "title": "Generated factorial",
+  "class": "MEMORY",
+  "type": "code_generation",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T07:57:30.528577",
+  "content": "Created working recursive factorial function",
+  "metadata": {},
+  "signature": "7a59c5548a82d1d1"
+}

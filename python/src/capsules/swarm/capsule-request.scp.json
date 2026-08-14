@@ -1,0 +1,14 @@
+{
+  "id": "forge/capsule-request",
+  "class": "EUCLID",
+  "intent": "Requests a capsule from a peer node for local execution.",
+  "invoke": "capsule.request",
+  "input": "",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.1.0",
+    "codename": "Marketplace"
+  }
+}

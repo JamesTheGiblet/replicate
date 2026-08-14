@@ -1,0 +1,53 @@
+{
+  "id": "business.invoices.send",
+  "title": "Business — Invoice Generation & Sending",
+  "class": "SAFE",
+  "profile": "business",
+  "triggers": {
+    "cron": "0 10 1 * *",
+    "on_event": "invoice.requested"
+  },
+  "actions": [
+    {
+      "primitive": "invoice.generate",
+      "input": {
+        "customer_id": "$customer_id",
+        "period_start": "$period_start",
+        "period_end": "$period_end",
+        "line_items": "$subscriptions"
+      }
+    },
+    {
+      "primitive": "invoice.send",
+      "input": {
+        "to": "$customer_email",
+        "subject": "Your Forge Systems Invoice",
+        "attachments": ["$invoice_pdf"],
+        "payment_link": "$stripe_payment_link"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "invoice.sent",
+          "invoice_id": "$invoice_id",
+          "customer_id": "$customer_id",
+          "amount": "$amount",
+          "sent_at": "$now",
+          "status": "pending"
+        },
+        "source_id": "business.invoices.send",
+        "confidence": 0.98,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Invoice $invoice_id sent to $customer_email for $$amount"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "hashtable_demo",
+  "type": "function",
+  "params": [{"name": "n", "type": "int"}],
+  "logic": "#define TABLE_SIZE 100\n    struct Entry { int key; int value; } table[TABLE_SIZE];\n    for (int i = 0; i < TABLE_SIZE; i++) table[i].key = -1;\n    // Hash function\n    int hash(int key) { return key % TABLE_SIZE; }\n    // Insert squares\n    for (int i = 1; i <= n; i++) {\n        int key = i;\n        int val = i * i;\n        int h = hash(key);\n        while (table[h].key != -1) {\n            h = (h + 1) % TABLE_SIZE;\n        }\n        table[h].key = key;\n        table[h].value = val;\n    }\n    // Retrieve and display\n    printf(\"Hash Table contents:\\n\");\n    for (int i = 1; i <= n; i++) {\n        int h = hash(i);\n        while (table[h].key != i) {\n            h = (h + 1) % TABLE_SIZE;\n        }\n        printf(\"  %d -> %d\\n\", i, table[h].value);\n    }\n    return 0;"
+}

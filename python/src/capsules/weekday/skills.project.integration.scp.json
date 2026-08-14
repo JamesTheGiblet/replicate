@@ -1,0 +1,38 @@
+{
+  "id": "skills.project.integration",
+  "title": "Skills — Cross-Domain Project Fusion",
+  "class": "EUCLID",
+  "profile": "skills",
+  "triggers": {
+    "on_event": "skills.new_project"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "integrate_skills",
+        "prompt": "This project involves: $project_description. Which of James's skills apply? (carpentry, locksmithing, 3D, firmware, compliance, crypto, dev, OS)",
+        "max_tokens": 256
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "skill.integration",
+          "skills_used": "$skills_list",
+          "project": "$project_id",
+          "ts": "$now"
+        }
+      }
+    },
+    {
+      "primitive": "leighton.bonus",
+      "input": {
+        "reason": "cross_domain_integration",
+        "amount": 0.05
+      }
+    }
+  ]
+}

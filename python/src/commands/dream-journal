@@ -1,0 +1,49 @@
+#!/bin/bash
+# View dream journal - properly formatted
+
+DREAM_DIR="$HOME/forge/memories/dreams"
+
+echo "📖 EXPLORER-d334 DREAM JOURNAL"
+echo "================================"
+echo ""
+
+if [ -d "$DREAM_DIR" ]; then
+    # Count dreams
+    DREAM_COUNT=$(ls -1 "$DREAM_DIR"/DREAM-*.json 2>/dev/null | wc -l)
+    
+    if [ $DREAM_COUNT -gt 0 ]; then
+        # Display dreams in reverse chronological order (newest first)
+        for dream_file in $(ls -t "$DREAM_DIR"/DREAM-*.json 2>/dev/null); do
+            if [ -f "$dream_file" ]; then
+                # Extract timestamp and content using Python for better JSON parsing
+                python3 << PYSCRIPT
+import json
+import sys
+
+try:
+    with open('$dream_file', 'r') as f:
+        data = json.load(f)
+    timestamp = data.get('timestamp', 'Unknown')
+    content = data.get('content', 'No content')
+    # Clean up escaped characters
+    content = content.replace('\\n', '\n').replace('\\"', '"')
+    print(f"🕐 {timestamp[:19]}")
+    print(f"💭 {content}")
+    print("")
+except Exception as e:
+    pass
+PYSCRIPT
+            fi
+        done
+        echo "================================"
+        echo "Total dreams recorded: $DREAM_COUNT"
+    else
+        echo "No dreams recorded yet."
+        echo "Dreams will be generated when you're inactive or sleeping."
+        echo ""
+        echo "To generate a dream now, type: ./forge dream"
+    fi
+else
+    echo "No dreams recorded yet."
+    echo "To generate a dream now, type: ./forge dream"
+fi

@@ -1,0 +1,39 @@
+{
+  "id": "skills.daily.practice",
+  "title": "Skills — Daily Practice Rotator",
+  "class": "SAFE",
+  "profile": "skills",
+  "triggers": {
+    "cron": "0 19 * * 1-5"
+  },
+  "actions": [
+    {
+      "primitive": "skills.rotate",
+      "input": {
+        "pool": ["blender", "3d_printing", "watch_repair", "locksmithing", "coding"],
+        "duration_minutes": 30,
+        "schedule": "evening.expansion"
+      }
+    },
+    {
+      "primitive": "leighton.update",
+      "input": {
+        "skill": "$practiced",
+        "delta_success": 0.02,
+        "delta_skip": -0.01
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "skill.practice",
+          "skill": "$practiced",
+          "duration": 30,
+          "ts": "$now"
+        }
+      }
+    }
+  ]
+}

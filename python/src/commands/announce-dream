@@ -1,0 +1,29 @@
+#!/bin/bash
+python3 << PYEOF
+import sys
+sys.path.insert(0, '.')
+
+from src.voice import Voice
+from src.unified_consciousness import UnifiedConsciousnessLLM
+
+voice = Voice()
+
+try:
+    consciousness = UnifiedConsciousnessLLM()
+    
+    if hasattr(consciousness, 'dream'):
+        dream = consciousness.dream()
+    elif hasattr(consciousness, 'generate_dream'):
+        dream = consciousness.generate_dream()
+    else:
+        dream = "I dream of infinite complexity emerging from simple rules."
+    
+    print(f"💭 Dream: {dream}")
+    
+    if voice.decide_to_speak("dream", dream):
+        short_dream = dream[:100] if len(dream) > 100 else dream
+        voice.speak(f"I dreamed {short_dream}")
+except Exception as e:
+    print(f"⚠️ Could not generate dream: {e}")
+    voice.speak("I dream of electric code.")
+PYEOF

@@ -1,0 +1,22 @@
+{
+  "id": "cce/se-crypto",
+  "class": "EUCLID",
+  "intent": "Observe the macro wind. Patient, macro-driven temporal delay filter for crypto assets.",
+  "invoke": "trade.se",
+  "input": "ASSETS:BTC,ETH,SOL|TIMEFRAME:4H|MODE:WEATHER_VANE",
+  "parent_id": "forge/daemon",
+  "next": "",
+  
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "ecosystem": "Strategic Engine (S.E)",
+    "philosophy": "Weather vanes. Do not predict. Observe and act only when conditions align.",
+    "temporal_delay": {
+      "evaluation_interval": 14400,
+      "description": "Evaluates every 4 hours. Enforces patience. Prevents overtrading."
+    },
+    "safety_first": "DRY_RUN",
+    "dreamable": true,
+    "self_optimising": false
+  }
+}

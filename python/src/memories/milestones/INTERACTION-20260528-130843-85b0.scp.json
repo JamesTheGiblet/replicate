@@ -1,0 +1,16 @@
+{
+  "id": "INTERACTION-20260528-130843-85b0",
+  "title": "document: Ingested a philosophy paper about mind",
+  "class": "MEMORY",
+  "type": "interaction",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T13:08:43.685569",
+  "content": {
+    "type": "document",
+    "description": "Ingested a philosophy paper about mind",
+    "emotion": "curious",
+    "timestamp": "2026-05-28T13:08:43.685556"
+  },
+  "metadata": {},
+  "signature": "0636e1185a678100"
+}

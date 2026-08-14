@@ -1,0 +1,34 @@
+{
+  "id": "circadian.evening.session",
+  "title": "Circadian — Evening Cognitive Session",
+  "class": "EUCLID",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.evening.session"
+  },
+  "actions": [
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "evening_debugging",
+        "context": "post_rest_high_clarity",
+        "max_tokens": 512
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "session.log",
+          "tag": "evening_primary_session",
+          "ts": "$now"
+        },
+        "source_id": "circadian.evening.session",
+        "confidence": 0.9,
+        "decay_rate": 0.01
+      }
+    }
+  ],
+  "emit_event": "circadian.evening.meal"
+}

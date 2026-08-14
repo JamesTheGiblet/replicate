@@ -1,0 +1,12 @@
+{
+  "name": "code_generation",
+  "type": "reflex",
+  "description": "Automatic: Generate C code from natural language descriptions",
+  "original_skill": "code_generation",
+  "mastery_achieved": true,
+  "trust": 0.8600000000000003,
+  "response_time": "instant",
+  "triggers": [
+    "code_generation"
+  ]
+}

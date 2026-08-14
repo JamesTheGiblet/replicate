@@ -1,0 +1,34 @@
+{
+  "id": "circadian.facilities.opening",
+  "title": "Circadian — Facilities Opening Sweep",
+  "class": "EUCLID",
+  "profile": "operational",
+  "triggers": {
+    "on_event": "circadian.facilities.opening"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "routine",
+          "tag": "facilities_opening",
+          "ts": "$now",
+          "notes": "Unlock, alarms, blinds, dishwashers, coffee, building walk."
+        },
+        "source_id": "circadian.facilities.opening",
+        "confidence": 0.98,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "cognition.remember",
+      "input": {
+        "scope": "procedural",
+        "keys": ["facilities.opening.checklist"]
+      }
+    }
+  ],
+  "emit_event": "circadian.workday.core"
+}

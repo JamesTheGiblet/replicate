@@ -1,0 +1,8 @@
+{
+  "name": "consciousness",
+  "type": "ability",
+  "description": "Self-awareness, identity, and conscious thought",
+  "innate": true,
+  "command": "./forge think",
+  "trust": 0.95
+}

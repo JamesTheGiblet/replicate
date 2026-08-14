@@ -1,0 +1,13 @@
+{
+  "id": "MILESTONE-20260528-075526-e5a9",
+  "title": "Created capsule: health_wellness_reminder",
+  "class": "MEMORY",
+  "type": "milestone",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T07:55:26.761921",
+  "content": "Explorer-d334 generated a new SCP capsule based on memories",
+  "metadata": {
+    "importance": "high"
+  },
+  "signature": "0cbbd9e2d2c9427a"
+}

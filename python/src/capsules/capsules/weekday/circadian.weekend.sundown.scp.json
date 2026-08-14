@@ -1,0 +1,43 @@
+{
+  "id": "circadian.weekend.sundown",
+  "title": "Circadian — Weekend Sundown",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.weekend.sundown",
+    "cron": "0 18 * * 6,0"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.query",
+      "input": {
+        "lens": "fiction",
+        "filter": { "tag": "weekend_pc_time", "range": "today" }
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "What did you enjoy building/playing today? No pressure to be productive.",
+        "mode": "grateful",
+        "max_tokens": 128
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "day.closure",
+          "tag": "weekend_sundown",
+          "ts": "$now",
+          "notes": "Weekend day closed. Rest achieved."
+        },
+        "source_id": "circadian.weekend.sundown",
+        "confidence": 0.9,
+        "decay_rate": 0.0
+      }
+    }
+  ],
+  "emit_event": "circadian.evening.winddown"
+}

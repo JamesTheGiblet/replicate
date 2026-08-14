@@ -1,0 +1,41 @@
+{
+  "id": "circadian.weekend.wake",
+  "title": "Circadian — Weekend Wake",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "cron": "0 10 * * 6,0"
+  },
+  "actions": [
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Weekend mode: unstructured freedom engaged."
+      }
+    },
+    {
+      "primitive": "cognition.reflect",
+      "input": {
+        "prompt": "No goals. Just check in: how does the body feel?",
+        "mode": "ultra_light",
+        "max_tokens": 64
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "weekend.marker",
+          "tag": "wake_weekend",
+          "ts": "$now",
+          "notes": "Weekend mode active. No performance metrics."
+        },
+        "source_id": "circadian.weekend.wake",
+        "confidence": 0.95,
+        "decay_rate": 0.0
+      }
+    }
+  ],
+  "emit_event": "circadian.weekend.morning_flow"
+}

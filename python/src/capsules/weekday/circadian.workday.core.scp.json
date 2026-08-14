@@ -1,0 +1,33 @@
+{
+  "id": "circadian.workday.core",
+  "title": "Circadian — Workday Core",
+  "class": "EUCLID",
+  "profile": "operational",
+  "triggers": {
+    "on_event": "circadian.workday.core"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "session.marker",
+          "tag": "workday_core_start",
+          "ts": "$now"
+        },
+        "source_id": "circadian.workday.core",
+        "confidence": 0.9,
+        "decay_rate": 0.01
+      }
+    },
+    {
+      "primitive": "decay.run",
+      "input": {
+        "scope": "operational",
+        "rate": 0.015
+      }
+    }
+  ],
+  "emit_event": "circadian.workday.endshift"
+}

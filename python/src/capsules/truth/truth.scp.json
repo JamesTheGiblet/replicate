@@ -1,0 +1,14 @@
+{
+  "id": "forge/truth-api",
+  "class": "THAUMIEL",
+  "intent": "Unifies the Data Cube and Six Lenses to emit an aggregated truth score.",
+  "invoke": "sys.log",
+  "input": "Truth Engine unified API listening.",
+  "parent_id": "forge/shell",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "1.5.0",
+    "codename": "Truth Engine API"
+  }
+}

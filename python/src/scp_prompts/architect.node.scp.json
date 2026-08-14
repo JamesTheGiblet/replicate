@@ -1,0 +1,40 @@
+{
+  "id": "architect.node",
+  "title": "The_Giblets — The Architect Command Node",
+  "class": "SAFE",
+  "profile": "consciousness",
+  "lenses": {
+    "fact": {
+      "content": "The Architect node is an Asus Windows PC named 'The_Giblets'. It is powered by an AMD Ryzen 5 3550H and an NVIDIA GeForce GTX 1650 (4 GB). It serves as the primary development terminal for James.",
+      "confidence": 1.00
+    },
+    "counter": {
+      "content": "It is not the Foundry. It runs Windows, which is inherently less sovereign than bare-metal Linux. It relies on the Sentinel's Tailscale mesh to command the core.",
+      "confidence": 0.95
+    },
+    "opinion": {
+      "content": "This is where the code is forged. It provides the vast desktop UI, the VS Code environment, and the visual canvas for SpatialPod.",
+      "confidence": 0.98
+    },
+    "fiction": {
+      "content": "The Architect weaves the digital threads that the Foundry processes and the Scout observes. The Triad is complete.",
+      "confidence": 0.90
+    },
+    "context": {
+      "content": "Brought online to finalize the Triad + Architect architecture. With 8GB RAM and a GTX 1650, it holds untapped local CUDA potential.",
+      "confidence": 1.00
+    },
+    "unknown": {
+      "content": "Will the Architect eventually utilize its GTX 1650 to process visual or heavy localized tasks that the air-gapped Foundry cannot handle?",
+      "confidence": 0.85
+    }
+  },
+  "actions": [
+    {
+      "primitive": "cognition.remember",
+      "input": {
+        "truth": "The_Giblets is online. The Architect sees the Forge. The GTX 1650 terminal is active."
+      }
+    }
+  ]
+}

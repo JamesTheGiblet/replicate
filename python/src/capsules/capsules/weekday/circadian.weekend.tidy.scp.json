@@ -1,0 +1,33 @@
+{
+  "id": "circadian.weekend.tidy",
+  "title": "Circadian — Weekend Tidy",
+  "class": "SAFE",
+  "profile": "operational",
+  "triggers": {
+    "on_event": "circadian.weekend.tidy"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "chore.complete",
+          "tag": "weekend_tidy",
+          "ts": "$now",
+          "notes": "Washing machine + dishwasher running. Environment reset."
+        },
+        "source_id": "circadian.weekend.tidy",
+        "confidence": 0.98,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Weekend tidy complete. Environment ready for fun."
+      }
+    }
+  ],
+  "emit_event": "circadian.weekend.fun_start"
+}

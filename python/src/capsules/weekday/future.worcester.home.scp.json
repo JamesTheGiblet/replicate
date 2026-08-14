@@ -1,0 +1,47 @@
+{
+  "id": "future.worcester.home",
+  "title": "Future — Worcester Home & Family",
+  "class": "THAUMIEL",
+  "profile": "life",
+  "triggers": {
+    "on_load": true
+  },
+  "actions": [
+    {
+      "primitive": "financial.plan",
+      "input": {
+        "goal": "buy_home_worcester",
+        "timeline_years": 5,
+        "monthly_target": "$calculated"
+      }
+    },
+    {
+      "primitive": "schedule.family",
+      "input": {
+        "tammi_time": "priority",
+        "child_routine": "structured",
+        "work_hours": "school_hours_aligned"
+      }
+    },
+    {
+      "primitive": "leighton.set_baseline",
+      "input": {
+        "capsule": "future.worcester",
+        "weight": 1.6,
+        "reason": "Life goal: home, family, stability"
+      }
+    },
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "life.goal",
+          "goal": "worcester_home",
+          "target_date": "$date",
+          "progress": "$percentage"
+        }
+      }
+    }
+  ]
+}

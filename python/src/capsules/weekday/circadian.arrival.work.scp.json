@@ -1,0 +1,34 @@
+{
+  "id": "circadian.arrival.work",
+  "title": "Circadian — Work Arrival",
+  "class": "SAFE",
+  "profile": "operational",
+  "triggers": {
+    "on_event": "circadian.arrival.work"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "fact",
+        "payload": {
+          "type": "status",
+          "tag": "arrived_at_work",
+          "ts": "$now"
+        },
+        "source_id": "circadian.arrival.work",
+        "confidence": 0.95,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "cognition.infer",
+      "input": {
+        "goal": "workday_ideas",
+        "context": "arrival_window",
+        "max_tokens": 256
+      }
+    }
+  ],
+  "emit_event": "circadian.facilities.opening"
+}

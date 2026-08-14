@@ -1,0 +1,32 @@
+{
+  "id": "health.breathing.reminder",
+  "title": "Health — Diaphragm Breathing Support",
+  "class": "SAFE",
+  "profile": "health",
+  "triggers": {
+    "cron": "*/30 * * * *"
+  },
+  "actions": [
+    {
+      "primitive": "notification.send",
+      "input": {
+        "title": "Breathe",
+        "body": "Diaphragm check. Slow breath. 4 in, 6 out.",
+        "sound": "gentle_chime"
+      }
+    },
+    {
+      "primitive": "health.respiratory.log",
+      "input": {
+        "action": "breathing_exercise",
+        "duration_seconds": 30
+      }
+    },
+    {
+      "primitive": "posture.remind",
+      "input": {
+        "message": "Sit upright. Shoulders back. Breathe deep."
+      }
+    }
+  ]
+}

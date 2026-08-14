@@ -1,0 +1,22 @@
+{
+  "id": "cce/oe-sentinel",
+  "class": "SAFE",
+  "intent": "Watch everything, record everything, build the dataset. Never trade. Never interfere. Detect anomalies.",
+  "invoke": "trade.oe",
+  "input": "MODE:ANOMALY_DETECT|TARGET:ALL_ENGINES|TIMEFRAME:15m",
+  "parent_id": "forge/daemon",
+  "next": "",
+  
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "ecosystem": "Observer Engine (O.E)",
+    "philosophy": "O.E engines are memory. They build the dataset that powers cross-engine intelligence.",
+    "temporal_delay": {
+      "evaluation_interval": 900,
+      "description": "Evaluates every 15 minutes. Snapshots the ecosystem and detects deviations."
+    },
+    "safety_first": "PASSIVE",
+    "dreamable": true,
+    "self_optimising": false
+  }
+}

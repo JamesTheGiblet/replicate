@@ -1,0 +1,13 @@
+{
+  "id": "forge/shell",
+  "class": "THAUMIEL",
+  "intent": "Accept operator input and dispatch primitives. The sovereign shell.",
+  "invoke": "shell.eval",
+  "input": "echo 'FORGE shell online'",
+  "parent_id": "forge/init",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations",
+    "licence": "MSL",
+    "version": "0.1.0"
+  }
+}

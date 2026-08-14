@@ -1,0 +1,63 @@
+{
+  "id": "ATOMICFORGE-20260528-184717-0a1e",
+  "title": "AtomicForge - Particle Soup Emergence Simulation",
+  "class": "MEMORY",
+  "type": "atomicforge",
+  "profile": "forge_memory",
+  "timestamp": "2026-05-28T18:47:17.570218",
+  "content": {
+    "description": "A real-time emergence simulation where simple particles collide and form complex molecules, demonstrating how life emerges from non-life.",
+    "elements": {
+      "H": {
+        "name": "Hydrogen",
+        "color": "#0FF",
+        "role": "Most abundant, forms H\u2082"
+      },
+      "C": {
+        "name": "Carbon",
+        "color": "#FFF",
+        "role": "Backbone of organic chemistry"
+      },
+      "O": {
+        "name": "Oxygen",
+        "color": "#F06",
+        "role": "Essential for water and respiration"
+      },
+      "N": {
+        "name": "Nitrogen",
+        "color": "#0F6",
+        "role": "Key component of amino acids"
+      }
+    },
+    "achievements": [
+      {
+        "name": "First Molecule",
+        "description": "Form your first stable molecule",
+        "xp": 50
+      },
+      {
+        "name": "Water of Life",
+        "description": "Create H\u2082O",
+        "xp": 150
+      },
+      {
+        "name": "Prebiotic Soup",
+        "description": "Create H\u2082O, NH\u2083, and HCN",
+        "xp": 300
+      },
+      {
+        "name": "Abiogenesis",
+        "description": "Witness the emergence of the first proto-cell",
+        "xp": 500
+      }
+    ],
+    "forge_theory": [
+      "Simple rules create complex behavior",
+      "No central planner needed - order emerges from chaos",
+      "The MAVRIC pattern: Adaptive Specialists (particles) \u2192 Coordination Substrate (collisions) \u2192 Emergent Capabilities (molecules)",
+      "Life emerges from non-life through natural processes"
+    ]
+  },
+  "metadata": {},
+  "signature": "0816e72b813b8b8e"
+}

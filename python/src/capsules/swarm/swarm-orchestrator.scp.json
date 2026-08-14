@@ -1,0 +1,15 @@
+{
+  "id": "forge/swarm-orchestrator",
+  "class": "THAUMIEL",
+  "intent": "Initialise the Swarm registry and route tasks to edge nodes by capability.",
+  "invoke": "sys.log",
+  "input": "Swarm Orchestrator online. Awaiting citizens.",
+  "parent_id": "forge/init",
+  "next": "discovery.scp.json",
+  "meta": {
+    "author": "James Gilbert / Giblets Creations / Forge Theory Labs",
+    "licence": "MSL",
+    "version": "1.0.0",
+    "codename": "Myriad Orchestrator"
+  }
+}

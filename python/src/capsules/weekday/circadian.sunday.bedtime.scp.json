@@ -1,0 +1,42 @@
+{
+  "id": "circadian.sunday.bedtime",
+  "title": "Circadian — Sunday Bedtime",
+  "class": "SAFE",
+  "profile": "cognitive",
+  "triggers": {
+    "on_event": "circadian.sunday.bedtime",
+    "cron": "0 22 * * 0"
+  },
+  "actions": [
+    {
+      "primitive": "datacube.insert",
+      "input": {
+        "lens": "context",
+        "payload": {
+          "type": "sleep.marker",
+          "tag": "sunday_bedtime",
+          "ts": "$now",
+          "notes": "10pm bedtime. Alcohol-free Sunday."
+        },
+        "source_id": "circadian.sunday.bedtime",
+        "confidence": 0.99,
+        "decay_rate": 0.0
+      }
+    },
+    {
+      "primitive": "dream.run",
+      "input": {
+        "profile": "sunday_recovery",
+        "duration": 420,
+        "tagwith": "monday_preparation"
+      }
+    },
+    {
+      "primitive": "sys.log",
+      "input": {
+        "message": "Sunday bedtime 22:00. Monday reset sequence armed."
+      }
+    }
+  ],
+  "emit_event": "circadian.monday.reset"
+}

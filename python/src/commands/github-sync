@@ -1,0 +1,116 @@
+#!/bin/bash
+# Sync GitHub repos directly via API
+
+# Check if token is set
+if [ -z "$GITHUB_TOKEN" ]; then
+    echo "❌ GITHUB_TOKEN not set"
+    echo ""
+    echo "Generate a token at: https://github.com/settings/tokens"
+    echo "Then run: export GITHUB_TOKEN=your_token"
+    echo ""
+    exit 1
+fi
+
+echo "🔐 Syncing with GitHub API..."
+echo "Token: ${GITHUB_TOKEN:0:8}..."
+
+python3 << PYEOF
+import os
+import json
+import requests
+import sqlite3
+from datetime import datetime
+
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
+if not GITHUB_TOKEN:
+    print("❌ Token not found in environment")
+    exit(1)
+
+headers = {
+    'Authorization': f'token {GITHUB_TOKEN}',
+    'Accept': 'application/json'
+}
+
+print("📡 Fetching repositories from GitHub...")
+
+# Get all repos for JamesTheGiblet
+page = 1
+all_repos = []
+
+while True:
+    response = requests.get(
+        f'https://api.github.com/users/JamesTheGiblet/repos?per_page=100&page={page}&sort=updated',
+        headers=headers
+    )
+    
+    if response.status_code != 200:
+        print(f"❌ API Error: {response.status_code}")
+        print(response.json().get('message', 'Unknown error'))
+        exit(1)
+    
+    repos = response.json()
+    if not repos:
+        break
+    
+    all_repos.extend(repos)
+    page += 1
+
+print(f"📚 Found {len(all_repos)} repositories\n")
+
+# Store in database
+conn = sqlite3.connect("forge_data.db")
+cursor = conn.cursor()
+
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS github_repos (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        full_name TEXT,
+        description TEXT,
+        html_url TEXT,
+        language TEXT,
+        stargazers_count INTEGER,
+        forks_count INTEGER,
+        updated_at TIMESTAMP,
+        created_at TIMESTAMP,
+        size INTEGER,
+        has_wiki BOOLEAN,
+        has_issues BOOLEAN,
+        archived BOOLEAN,
+        topics TEXT,
+        synced_at TIMESTAMP
+    )
+''')
+
+for repo in all_repos:
+    cursor.execute('''
+        INSERT OR REPLACE INTO github_repos 
+        (id, name, full_name, description, html_url, language, stargazers_count, forks_count, updated_at, created_at, size, has_wiki, has_issues, archived, topics, synced_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        repo['id'],
+        repo['name'],
+        repo['full_name'],
+        repo['description'][:500] if repo['description'] else '',
+        repo['html_url'],
+        repo['language'],
+        repo['stargazers_count'],
+        repo['forks_count'],
+        repo['updated_at'],
+        repo['created_at'],
+        repo['size'],
+        repo['has_wiki'],
+        repo['has_issues'],
+        repo['archived'],
+        json.dumps(repo.get('topics', [])),
+        datetime.now().isoformat()
+    ))
+    print(f"  ✅ {repo['name']} ({repo['language'] or 'unknown'}) - ⭐ {repo['stargazers_count']}")
+
+conn.commit()
+cursor.execute('SELECT COUNT(*) FROM github_repos')
+count = cursor.fetchone()[0]
+conn.close()
+
+print(f"\n✅ Synced {count} repositories to forge memory")
+PYEOF
