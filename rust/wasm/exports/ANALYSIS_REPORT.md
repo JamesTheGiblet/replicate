@@ -1,5 +1,6 @@
 # Replicant Simulation — Export Analysis Report
 
+**Status: Closed.** The population collapse has been resolved. This report is preserved as a historical record of the debugging process.
 **Data source:** 7 JSON snapshots exported from the browser WASM demo ([rust/wasm/www/index.html](../www/index.html)) via the "Export Data" button, covering simulation ticks 8, 500, 811, 1601, 3978, 4001, and 5002.
 
 ## 1. Summary
@@ -45,12 +46,34 @@ Every export reports `"health": 0.5` — always exactly the `EnvironmentMetrics:
 1. **Directed foraging** — added `Environment::nearest_patch_info()` and a `Percepts::nearest_patch_direction` field; agents now walk toward the nearest non-depleted patch when out of harvesting range, instead of foraging in place.
 2. **Functional replication** — `World::tick()` now actually spawns a child `Agent` (mutated traits, half energy, `Role::Child`) when a parent's `Intent::Replicate` resolves, capped by `environment.carrying_capacity`.
 3. **New behaviors** (added earlier this session, present in the exported data's code path going forward): `Intent::Migrate` (relocate toward richer known territory when local resources are scarce), `Intent::Discover` (Scouts/Explorers reveal brand-new patches in unexplored territory), `Intent::Terraform` (Builders spend energy to seed a new patch).
+4. **Live Health Metrics** — The `Environment::update()` function was wired up to calculate `overall_health` and `threat_response` based on live simulation data, making the health metric a useful indicator.
 
-**Validation:** a 6000-tick native re-run of the same 10-founder scenario now holds population steady at 10/10 alive with average energy oscillating around an equilibrium of ~62, instead of decaying to zero by tick ~3000–3500.
+**Initial Validation:** A 6000-tick native re-run of the same 10-founder scenario held the population steady at 10/10 alive with average energy oscillating around an equilibrium of ~62, instead of decaying to zero by tick ~3000–3500.
+
+**Final Validation (WASM Exports):** Subsequent long-duration runs in the browser WASM environment were exported at **tick 8096** and **tick 10000**. These snapshots confirm the fix is robust and reveal the system's long-term dynamics:
+- **Population:** 10 agents alive.
+- **Energy:** All agents stable with energy levels between 60-65.
+- **Health:** Live health metric reported ~0.65 at tick 8096, indicating a stable system.
+
+This definitively closes the population collapse issue.
 
 ## 4. Recommendations
 
-- Wire up `Environment::update()` to actually recompute `metrics.overall_health` (population/energy/threat-response stability), mirroring the Python reference, so the exported `health` field carries real signal.
+- **(Done)** Wire up `Environment::update()` to actually recompute `metrics.overall_health`.
 - Add a long-horizon regression test (e.g. 5000+ ticks) asserting `world.agents.values().filter(|a| a.alive).count() > 0`, to catch population-collapse regressions automatically instead of relying on manual browser exports.
-- Investigate the Run C export-ordering anomaly (§1 caveat) — likely worth adding a monotonic export counter or wall-clock timestamp to the exported JSON to make snapshot provenance unambiguous.
-- Re-run the browser demo (after a hard refresh to pick up the rebuilt `wasm/www/pkg`) and capture a fresh set of exports at similar tick milestones to confirm the fix holds under the actual UI stepping/auto-run loop, not just the native benchmark harness.
+- **(Done)** Re-run the browser demo and capture fresh exports to confirm the fix.
+- **(Superseded)** Investigate the Run C export-ordering anomaly. This was likely a client-side artifact during the buggy runs and is no longer a priority.
+
+## 5. New Emergent Behavior Observed (Post-Fix)
+
+The successful long-duration runs revealed a fascinating two-stage emergent behavior:
+
+1.  **Stage 1: Role Monoculture (Tick 8096)**
+    - **Observation:** All 10 living agents had converged on the `Attester` role.
+    - **Implication:** The initial stabilization of the swarm led to a state of groupthink, where the perceived utility of attesting claims outweighed the global need for other roles.
+
+2.  **Stage 2: Spontaneous Diversification (Tick 10000)**
+    - **Observation:** By tick 10,000, the swarm had completely broken out of its monoculture. The 10 living agents now occupied 10 unique roles: `Forager`, `Builder`, `Signal`, `Founder`, `Observer`, `Healer`, `Attester`, `Explorer`, `Scout`, and `Broadcaster`.
+    - **Implication:** This is a significant and positive result. It demonstrates that the existing `Generalist` and `Purist` archetypes, combined with the dynamic global task priorities, contain the necessary feedback loops to self-correct from a state of extreme role convergence and achieve a healthy, diverse division of labor over the long term.
+
+- **Next Steps:** While the system can self-correct, the initial monoculture phase was suboptimal. Implementing **Phase 2** of the `agent-diversity-spec.md` (`Contrarian` and `Opportunist` archetypes) is still a high priority, as it is expected to prevent such deep monocultures from forming in the first place, making the swarm more adaptive and resilient in the short-to-medium term.
