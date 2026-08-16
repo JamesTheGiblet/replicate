@@ -25,3 +25,4 @@ rust/target/
 __pycache__/
 *.db-shm
 *.db-wal
+*.db
