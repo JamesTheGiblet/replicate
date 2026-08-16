@@ -9,7 +9,7 @@ echo "🧬 Building Replicant WASM..."
 wasm-pack build --target web --out-dir www --scope replicant
 
 # Copy HTML files if not already there
-cp wasm/www/index.html wasm/www/
+cp index.html.working www/
 
 echo "✅ WASM build complete!"
 echo "📁 Files in wasm/www/"

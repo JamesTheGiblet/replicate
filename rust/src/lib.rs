@@ -15,8 +15,6 @@ pub mod founders;
 pub mod awareness;
 
 // WASM module (only included when targeting wasm)
-#[cfg(target_arch = "wasm32")]
-pub mod wasm;
 
 // Re-exports
 pub use core::*;

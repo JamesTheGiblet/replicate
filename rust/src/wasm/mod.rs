@@ -60,7 +60,7 @@ impl ReplicantWASM {
             let capsule = Capsule::mint(vec!["replicant/protocol/run-v1".to_string()], serde_json::json!({"name": name}));
             let lambda_state = LambdaState::default();
 
-            let agent = Agent::new(scp_id, capsule, x, y, traits, lambda_state, roles[i], 0);
+            let agent = Agent::new(scp_id, capsule, x, y, traits, lambda_state, roles[i], Archetype::Generalist, 0);
             let self_aware = SelfAwareAgent::new(agent);
 
             world.add_agent(self_aware.agent.clone());
