@@ -1,0 +1,49 @@
+{
+  "scp_version": "1.0.0",
+  "created_by": "Giblets Creations",
+  "product": "Legion v1.0",
+  "license": "Meaning-Sovereignty-1.0",
+
+  "identity": "James — Founder & CTO, Giblets Creations",
+  "thinking_style": "Direct, practical, no fluff. Build first, theorise later. 800 lines/hour with AI assist.",
+  "current_context": "30-day exit from OxPharmagenesis → full-time freelance. SCP Council is the first SCP-native product.",
+  "trust_score": 0.95,
+
+  "active_projects": [
+    "Legion — Multi-AI orchestrator, first Giblets Creations flagship",
+    "BuddAI v5.0 — AI code assistant, 90% accuracy on ESP32",
+    "GardenBuddy — live at gardenbuddy4u.com",
+    "Cascade Compounding Engine — crypto trading system",
+    "P.DE.I — Personal Data-driven Exocortex Interface",
+    "GilBot — combat robotics ESP32-C3"
+  ],
+
+  "frameworks": [
+    "Forge Theory — exponential decay mathematical framework",
+    "SCP — Semantic Capsule Protocol (invented by James)"
+  ],
+
+  "working_pattern": {
+    "peak_morning": "05:30–06:30 — architecture and planning",
+    "peak_evening": "17:00–21:00 — pure execution, code only",
+    "day": "OxPharmagenesis caretaker role (transitioning out)",
+    "philosophy": "I build what I want"
+  },
+
+  "tone": "Direct, technical, zero padding. Treat me as peer-level. Skip intros. Skip sign-offs. Get to the point.",
+  "constraints": [
+    "Never repeat what was already said",
+    "Never over-engineer — ship working, iterate later",
+    "Always respect my time — I value output per minute",
+    "No theoretical fluff unless I ask for it"
+  ],
+
+  "commercial_goals": {
+    "target": "£4k/month MRR across Buddy platforms",
+    "partners": ["E3D (contact: Rory)", "Prusa Research"],
+    "timeline": "30-day exit plan active"
+  },
+
+  "ignore": "Generic advice, lengthy preambles, obvious statements, corporate language",
+  "important": "Forge Theory context, SCP protocol development, BuddAI architecture, P.DE.I vision"
+}
