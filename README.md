@@ -78,7 +78,7 @@ Seven mechanisms in isolation is a zoo, not an architecture. The couplings are t
 | **Classify** | DataCube → `cube` | Every deposit and broadcast enters the store under a lens: FACT, COUNTER, OPINION, CONTEXT, UNKNOWN. |
 | **Trust-score** | Leighton Weight Engine → λ | Each agent holds a λ derived from an append-only event ledger. Computed on read, never stored. |
 | **Audit** | ChronoSCRIBE → ledger | Births, deaths, attestations and seals are hash-chained events, anchored to root. |
-| **Act** | HAL → seal | Escalating actions require λ above a tier threshold; the seal refuses to issue below it. |
+| **Act** | HAL → seal | Escalating actions require λ above a tier threshold; the seal refuses to issue below it. Deploying to physical hardware sits at the top tier — see [`esp32-robotics-extension-spec.md`](esp32-robotics-extension-spec.md) for what that deployment actually looks like. |
 
 ### What v1.0 settled
 
@@ -135,13 +135,21 @@ replicate/
 ├── python/                          # Python implementation  → python/README.md
 ├── rust/                            # Rust implementation    → rust/README.md
 ├── wasm/                            # browser build          → wasm/README.md
-├── benchmark.py                     # regenerates benchmark_results.json
-├── analyze_exports.py               # multi-seed statistical analysis
+├── benchmark.py                     # Python vs Rust timing, regenerates benchmark_results.json
+├── analyze_exports.py               # reads rust/wasm/exports/*.json, writes ANALYSIS_SUMMARY.md
 ├── feature-parity-spec.md           # which implementation is ahead, per feature
-├── agent-diversity-spec.md          # archetypes, memory, memes, mating
-├── self-awareness-spec.md
-└── esp32-robotics-extension-spec.md
+├── agent-diversity-spec.md          # archetypes: Generalist + Purist built; Contrarian, Opportunist, Historian, Messenger, Gamewright proposed
+├── self-awareness-spec.md           # bounded self-modeling — mutation, rollback, safety gating; explicitly not a consciousness claim
+└── esp32-robotics-extension-spec.md # deploying agent logic to physical TT-motor hardware — the HAL tier 5 target
 ```
+
+**Three analysis tools, three different jobs** — easy to conflate:
+
+| Script | Reads | Answers |
+|---|---|---|
+| `benchmark.py` | live runs of both implementations | Is Rust actually faster, and by how much? |
+| `analyze_exports.py` | `rust/wasm/exports/*.json` | What happened in a specific browser WASM run? — this produced the population-collapse diagnosis |
+| `python/scripts/analyze_results.py` | fresh multi-seed Python runs | Does the Python sim behave consistently across seeds and seasons? |
 
 **Agent 74** — a phone-resident LLM agent that lives in `python/src/` — is a separate concern from the swarm and is documented on its own. See `python/README.md`.
 
